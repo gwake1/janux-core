@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="adapt"/>
+	<classpathentry kind="src" path="springmvc.contributed"/>
+	<classpathentry kind="src" path="springmvc"/>
+	<classpathentry kind="src" path="bus"/>
+	<classpathentry kind="src" path="biz"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Janux_All"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>
