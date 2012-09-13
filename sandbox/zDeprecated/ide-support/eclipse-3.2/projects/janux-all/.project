@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>janux-all</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bus</name>
+			<type>2</type>
+			<locationURI>janux_maven/modules/bus/src/java</locationURI>
+		</link>
+		<link>
+			<name>springmvc.contributed</name>
+			<type>2</type>
+			<locationURI>janux_maven/ui/springmvc/src/java.contributed</locationURI>
+		</link>
+		<link>
+			<name>biz</name>
+			<type>2</type>
+			<locationURI>janux_maven/modules/biz/src/java</locationURI>
+		</link>
+		<link>
+			<name>adapt</name>
+			<type>2</type>
+			<locationURI>janux_maven/modules/adapt/src/java</locationURI>
+		</link>
+		<link>
+			<name>springmvc</name>
+			<type>2</type>
+			<locationURI>janux_maven/ui/springmvc/src/java</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

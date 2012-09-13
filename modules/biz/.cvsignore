@@ -1,0 +1,10 @@
+.bashrc
+build.properties
+.checkstyle
+.classpath
+.cvsignore
+logs
+.project
+.settings
+target
+.vimrc

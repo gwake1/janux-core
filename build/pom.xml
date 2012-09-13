@@ -1,0 +1,322 @@
+<!-- Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Copyright 2005-2012 janux.org -->
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>pom janux-project</name>
+	<description>An Open Source eBusiness Integration Infrastructure</description>
+	<url>http://www.janux.org</url>
+
+	<groupId>janux</groupId>
+	<artifactId>janux-project</artifactId>
+	<packaging>pom</packaging>
+	<version>0.4.02-SNAPSHOT</version>
+
+	<properties>
+
+		<janux.version>0.4.02-SNAPSHOT</janux.version>
+
+		<!-- 
+			change this to an absolute path in your $HOME/.m2/settings.xml
+			TODO: Change this to download assets from the repository, rather than from a project path
+		-->
+		<janux.home>.</janux.home>
+
+		<!-- Name of the folder to which shared assets will be exploded during a build -->
+		<janux.shared.dir>${project.build.directory}/janux-shared</janux.shared.dir>
+
+		<!-- versions of grouped dependency poms in lib folder -->
+		<spring.version>3.0.5.RELEASE</spring.version>
+
+		<!-- 
+			We define this here because the dependencyManagement element 
+			does not auto-configure a dependency defined in a plugin
+		-->
+		<connector.mysql.version>5.0.5</connector.mysql.version>
+		<connector.postgresql.version>8.3-603.jdbc3</connector.postgresql.version>
+
+		<!-- 
+			log4j default configurations 
+			These are not yet in use, are provided as reference, and are meant
+			to serve as the basis for future archetypes - pp-2011-11-09
+		-->
+		<!--
+		<janux.logging.default.Path>./target</janux.logging.default.Path>
+		<janux.logging.default.Logger>AppLogger</janux.logging.default.Logger>
+		<janux.logging.default.Pattern>%d{ISO8601} | %-7.7t | %-5p | %-16.16c{1} | %m | %c%n</janux.logging.default.Pattern>
+		-->
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
+		<module>lib</module>
+		<module>shared</module>
+		<module>template/persist-hibernate</module>
+	</modules>
+
+	<inceptionYear>2005</inceptionYear>
+
+	<organization>
+		<name>Janux</name>
+		<url>http://www.janux.org/</url>
+	</organization>
+
+	<scm>
+		<connection>scm:svn:http://source.janux.org/svn/janux/trunk</connection>
+		<developerConnection>scm:svn:http://source.janux.org/svn/janux/trunk</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<system>Bugzilla</system>
+		<url>http://demeter.janux.org/bugzilla</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>philippe.paravicini</id>
+			<name>Philippe Paravicini</name>
+			<email>philippe.paravicini@janux.org</email>
+			<timezone>-8</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+
+		<developer>
+			<id>daniel.mora</id>
+			<name>Daniel Mora</name>
+			<email>daniel.mora@janux.org</email>
+			<timezone>-3</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+
+		<developer>
+			<id>alberto.buffagni</id>
+			<name>Alberto Buffagni</name>
+			<email>alberto.buffagni@janux.org</email>
+			<timezone>-3</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+
+		<developer>
+			<id>david.fairchild</id>
+			<name>David Fairchild</name>
+			<email>david.fairchild@janux.org</email>
+			<timezone>-8</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+
+	</developers>
+	
+	<repositories>
+
+		<repository>
+			<id>org.janux.lib.maven2</id>
+			<name>Janux Remote Repository</name>
+			<url>http://lib.janux.org/maven2</url>
+		</repository>
+
+		<repository>
+			<id>com.springsource.repository.bundles.external</id>
+			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/external</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>ibiblio</id>
+			<layout>default</layout>
+			<name>Ibiblio Repository</name>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>Java-Net</id>
+			<name>Java Net</name>
+			<url>http://download.java.net/maven/2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+
+			<!-- jdbc connectors currently supported -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${connector.mysql.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${connector.postgresql.version}</version>
+			</dependency>
+			<!-- end jdbc connectors -->
+
+			<!-- trg search facade implementation -->
+			<dependency>
+				<groupId>com.trg</groupId>
+				<artifactId>trg-search</artifactId>
+				<version>0.5.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.trg</groupId>
+				<artifactId>trg-search-hibernate</artifactId>
+				<version>0.5.1</version>
+			</dependency>
+			<!-- end trg search facade -->
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<build>
+
+		<resources>
+
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+
+			<resource>
+				<directory>src/main/resources-filtered</directory>
+				<filtering>true</filtering>
+			</resource>
+
+		</resources>
+
+		<pluginManagement>	<!-- Plugins in this section can be inherited by child modules -->
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<includes>
+							<include>**/*Test.java</include>
+						</includes>
+						<excludes>
+							<exclude>**/Abstract*.java</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+
+				<!-- Unpack shared assets to target/janux-shared -->
+				<plugin>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>unpack-shared-resources</id>
+							<goals>
+								<goal>unpack</goal>
+							</goals>
+							<phase>generate-test-resources</phase>
+							<configuration>
+								<artifactItems>
+									<artifactItem>
+										<groupId>janux</groupId>
+										<artifactId>janux-shared</artifactId>
+										<version>${janux.version}</version>
+										<type>zip</type>
+										<outputDirectory>${janux.shared.dir}</outputDirectory>
+									</artifactItem>
+								</artifactItems>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!--
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+				</plugin>
+				-->
+
+			</plugins>
+
+		</pluginManagement>
+
+	</build>
+
+</project>

@@ -1,0 +1,1 @@
+source payment/drop.sql;
