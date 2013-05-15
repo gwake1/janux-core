@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.0.xsd
+	"
+>
+	<bean name="GeographyServiceMock" class="biz.janux.geography.GeographyServiceMockImpl"/>
+
+	<bean name="BusinessUnitServiceMock" class="biz.janux.payment.BusinessUnitServiceMockImpl"/>
+
+	<bean name="CreditCardStorageServiceMock" class="biz.janux.payment.CreditCardStorageServiceMockImpl">
+		<property name="creditCardMask"          ref="creditCardMask"/>
+		<property name="creditCardValidator"     ref="creditCardValidator"/>
+		<property name="encryptedStorageService" ref="encryptedStorageServiceMock"/>
+		<property name="businessUnitService"     ref="BusinessUnitServiceMock"/>
+	</bean>
+
+	<bean name="CreditCardTypeServiceMock" class="biz.janux.payment.CreditCardTypeServiceMockImpl"/>
+
+	<bean name="encryptedStorageServiceMock" class="biz.janux.payment.EncryptedStorageServiceMockImpl">
+		<!-- <property name="credential" ref="mockCredential"/> -->
+		<property name="credentials" ref="mockCredentialMap"/>
+	</bean>
+
+			<!--
+			<util:map>
+				<entry>
+					<key><util:constant static-field="biz.janux.payment.EncryptedStorageServiceMockImpl.KEY_CREDENTIAL1"/></key>
+					<ref local="mockCredential1"/>
+				</entry>
+				<entry>
+					<key><util:constant static-field="biz.janux.payment.EncryptedStorageServiceMockImpl.KEY_CREDENTIAL2"/></key>
+					<ref local="mockCredential2"/>
+				</entry>
+			</util:map>
+			-->
+
+
+	<util:map id="mockCredentialMap">
+		<entry>
+			<key><util:constant static-field="biz.janux.payment.EncryptedStorageServiceMockImpl.KEY_CREDENTIAL1"/></key>
+			<bean id="mockCredential1" class="biz.janux.payment.Credential">
+				<property name="username" value="buddyBoy"/>
+				<!-- this decrypts to the string 'aVeryLongPassword' with default key 'initializeMe' -->
+				<property name="password" value="s6Qh0xxF5KFuSFICXHaMp4G06EVl3HXq"/>
+			</bean>
+		</entry>
+
+		<entry>
+			<key><util:constant static-field="biz.janux.payment.EncryptedStorageServiceMockImpl.KEY_CREDENTIAL2"/></key>
+			<bean id="mockCredential2" class="biz.janux.payment.Credential">
+				<property name="username" value="powerGirl"/>
+				<!-- this decrypts to the string 'aSecondPassword' with default key 'initializeMe' -->
+				<property name="password" value="mTdUzBKAF09vVPJ8Tt8lrQ=="/>
+			</bean>
+		</entry>
+	</util:map>
+
+	<!-- The following two beans are mostly used for testing and should not be necessary in a production environment -->
+	<bean id="CreditCardFactory" class="biz.janux.payment.mock.CreditCardFactoryImplPersistent">
+		<property name="creditCardTypeService" ref="CreditCardTypeService"></property>
+	</bean>
+	
+	<bean id="MerchantAccountFactory" class="biz.janux.payment.MerchantAccountFactoryImpl"/>
+
+	<bean id="BusinessUnitFactory" class="biz.janux.payment.mock.BusinessUnitFactoryImpl"/>
+	
+</beans>

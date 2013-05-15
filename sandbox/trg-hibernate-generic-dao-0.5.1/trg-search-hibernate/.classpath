@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/dmora/.m2/repository/org/hibernate/hibernate-core/3.3.1.GA/hibernate-core-3.3.1.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/dmora/.m2/repository/org/slf4j/slf4j-log4j13/1.0.1/slf4j-log4j13-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/dmora/.m2/repository/org/springframework/spring/2.5.6/spring-2.5.6.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/trg-search"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

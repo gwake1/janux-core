@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="project.janux.org title">
+  <bannerLeft>
+    <name>Maven</name>
+    <src>http://maven.apache.org/images/apache-maven-project.png</src>
+    <href>http://project.janux.org/</href>
+  </bannerLeft>
+  <bannerRight>
+    <src>http://maven.apache.org/images/maven-small.gif</src>
+  </bannerRight>
+  <body>
+    <links>
+      <item name="Apache" href="http://www.apache.org/" />
+      <item name="Maven 1.x" href="http://maven.apache.org/maven-1.x/"/>
+      <item name="Maven 2" href="http://maven.apache.org/"/>
+    </links>
+
+		<menu>
+      <item name="Overview" href="index.html"/>
+      <item name="Download" href="download.html"/>
+      <item name="Getting Started" href="getting_started.html"/>
+		</menu>
+
+    <menu name="Projects">
+      <item name="Janux People"   href="people/index.html" />
+      <item name="Janux Payment"  href="payment/index.html"/>
+      <item name="Janux Security" href="security/index.html"/>
+      <!-- <item name="Road Map" href="roadmap.html" /> -->
+    </menu>
+
+		<!-- this does not seem to be a valid element
+		<poweredBy>
+			<logo name="poweredBy" href="http://project.janux.org/"
+						img="http://maven.apache.org/images/logos/maven-feather.png"/>
+		</poweredBy>
+		-->
+
+		<!-- outputs pages for configured reports; one report causess error finding commons-logging-1.0.4 resource -->
+    <!-- <menu ref="reports"/> -->
+
+  </body>
+</project>

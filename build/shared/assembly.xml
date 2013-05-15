@@ -1,0 +1,18 @@
+<assembly>
+	<!-- <id>shared-resources</id> -->
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>sql</directory>
+		</fileSet>
+		<fileSet>
+			<directory>resources</directory>
+		</fileSet>
+		<fileSet>
+			<directory>resources-filtered</directory>
+		</fileSet>
+	</fileSets>
+</assembly>
