@@ -1,8 +1,11 @@
 <html>
 <body>
-<p>The central concept in the biz.janux.people package is that of a Party, an entity that represents both Person and Organization entities, as illustrated below:</p>
+<p>The <code>biz.janux.people</code> package represents {@link biz.janux.people.Person Persons} and {@link biz.janux.people.Organization Organizations} using the key concept of a {@link biz.janux.people.Party Party}, which makes it possible to treat Person and Organizations interchangeably in the context of a contract, a business relationship or other relationships that may be entered between people and organization.
+</p><p>
+{@link biz.janux.people.Person} and {@link biz.janux.people.Organization} both extend from {@link biz.janux.people.Party}.  The party interface is quite simple, it is limited to having a name and a map of {@link biz.janux.people.ContactMethod ContactMethods}, as illustrated below: 
 <img src="doc-files/biz_janux_people_Party.png"></img>
-<p>In addition, a Party extends the Contacteable interface:</p>
+<p>In addition, a Party extends {@link biz.janux.people.Contacteable} and thus has a map of {@link biz.janux.people.ContactMethod ContactMethods}:
 <img src="doc-files/biz_janux_people_Contacteable.png"></img>
 </body>
 </html>
+<!-- vim: set fo=rq wrap : -->
