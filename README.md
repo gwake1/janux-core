@@ -12,4 +12,4 @@ fashion and can interoperate with applications written in other languages.
 
 Read more about the project at <a href="http://www.janux.org">www.janux.org</a>.
 
-To build the project, consult the <a href="http://github.com/janux/BuildMe.md">BuildMe File</a>.
+To build the project, consult the <a href="http://github.com/janux/janux-core/blob/master/BuildMe.md">BuildMe File</a>.
