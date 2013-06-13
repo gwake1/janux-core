@@ -1,5 +1,6 @@
-README for Janux-0.4.02 as of 2013-06-11
+Janux Core
 ==========
+Janux-0.4.02 - 2013-06-11
 
 Thank you for your interest in Janux !
 
