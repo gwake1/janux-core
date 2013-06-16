@@ -63,15 +63,13 @@ Copyright 2005-2012 janux.org -->
 			drop user '${janux.db.user}'@'${janux.db.host}';
 		</sql.drop.all>
 
-		<!--	create the janux database and user -->
-		<echo>Create the janux database and user</echo>
 		<sql.create.user.db>
 			create database ${janux.db.name};
 			grant all on ${janux.db.name}.* to '${janux.db.user}'@'${janux.db.host}'
 			identified by '${janux.db.password}';
 		</sql.create.user.db>
 
-		<args.base>-v -u ${janux.db.user} -h ${janux.db.host} -p${janux.db.password} ${janux.db.name}</args.base>
+		<args.base>--local-infile -v -u ${janux.db.user} -h ${janux.db.host} -p${janux.db.password} ${janux.db.name}</args.base>
 
 		<args.recreate>${args.base} -e "source recreate.sql"</args.recreate>
 		<args.seed    >${args.base} -e "source seed.sql"</args.seed>
@@ -98,6 +96,31 @@ Copyright 2005-2012 janux.org -->
 		-->
 		<pluginManagement>	
 			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<echo>janux.db.executable: ${janux.db.executable}</echo>
+									<echo>args.base: ${args.base}</echo>
+									<echo>janux.db.drive: ${janux.db.driver}</echo>
+									<echo>datasource: jdbc:${janux.db.type}://${janux.db.host}:${janux.db.port}/</echo>
+									<echo>janux.db.admin.user: ${janux.db.admin.user}</echo>
+									<echo>profile-default</echo>
+									<echo>Displaying environment variables</echo>
+									<echo>skipRecreate = ${skipRecreate}</echo>
+								</tasks>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
