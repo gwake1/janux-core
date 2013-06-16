@@ -54,6 +54,11 @@ Copyright 2005-2012 janux.org -->
 
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+
+			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 			</plugin>
 
@@ -92,7 +97,8 @@ Copyright 2005-2012 janux.org -->
 					</plugin>
 
 
-					<!-- utility plugin; uncomment to troubleshoot profile variables -->
+					<!-- there is a default config of this plugin in build/template/persist-hibernate/pom.xml -->
+					<!-- uncomment this here in case of doubt to troubleshoot profile variables -->
 					<!--
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -105,8 +111,11 @@ Copyright 2005-2012 janux.org -->
 								</goals>
 								<configuration>
 									<tasks>
-										<echo>profile-default</echo>
-										<echo>Displaying environment variables</echo>
+										<echo>janux.db.executable: ${janux.db.executable}</echo>
+										<echo>args.base: ${args.base}</echo>
+										<echo>janux.db.drive: ${janux.db.driver}</echo>
+										<echo>datasource: jdbc:${janux.db.type}://${janux.db.host}:${janux.db.port}/</echo>
+										<echo>janux.db.admin.user: ${janux.db.admin.user}</echo>
 										<echo>skipRecreate = ${skipRecreate}</echo>
 									</tasks>
 								</configuration>
