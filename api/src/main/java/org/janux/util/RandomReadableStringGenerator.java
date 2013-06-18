@@ -22,10 +22,10 @@ package org.janux.util;
  * <a href="http://ostermiller.org/utils/RandPass.html">Stephen Ostermiller's RandPass utility class</a>
  * 
  * @author  <a href="mailto:philippe.paravicini@janux.org">Philippe Paravicini</a>
- * @version $Revision: 1.1 $ - $Date: 2005-12-19 21:12:53 $
+ * @since 2005-12-19
  ***************************************************************************************************
  */
-public interface RandomReadbleStringGenerator extends RandomStringGenerator
+public interface RandomReadableStringGenerator extends RandomStringGenerator
 {
 	/** returns a random string with the specified length */
 	String getString(int length);
