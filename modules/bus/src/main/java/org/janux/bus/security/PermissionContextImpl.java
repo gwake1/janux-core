@@ -178,7 +178,7 @@ public class PermissionContextImpl implements PermissionContext, java.io.Seriali
 	/** 
 	 * returns the highest sequential bit position of all the bits in the permissionBit List, 
 	 * or -1 if this PermissionContext has no PermissionBits assigned to it; the
-	 * value returned by this method should be equal to * (getPermissionBits().size() - 1)
+	 * value returned by this method should be equal to (getPermissionBits().size() - 1)
 	 * but we expressly iterate through the permission bits and assert that fact
 	 */
 	private short getMaxBitPosition()

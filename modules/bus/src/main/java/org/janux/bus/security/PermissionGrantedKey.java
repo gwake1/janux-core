@@ -23,13 +23,13 @@ import org.janux.util.JanuxToStringStyle;
 /**
  ***************************************************************************************************
  * This is an implementation class used to represent the key that indexes a Permission Granted map.
- * Generally, when assigning permissions to a PermissionsCapable entity in the context of a
+ * Generally, when assigning permissions to a PermissionHolder entity in the context of a
  * PermissionContext, a single bitmask is sufficient to assign a combination of Permissions, and it
  * is not necessary to have multiple bitmasks for the same Permission Context, since, in
  * the case of multiple bitmasks for the same Permission Context, it would be possible to derive an
  * equivalent single bitmask by bitwise 'or-ing' the multiple bitmasks.
  *
- * The exception to this is in the case where a PermissionsCapable entity (for example a Role)
+ * The exception to this is in the case where a PermissionHolder entity (for example a Role)
  * inherits a set of Permissions, and it is desireable to do something like:
  *
  * Add Read/Write permissions to PRODUCT Permission context, but deny the permission to Purge
@@ -42,7 +42,7 @@ import org.janux.util.JanuxToStringStyle;
  * one could simply refrain from assigning the undesired permission, rather than having to use an
  * permission bitmask with the 'isDeny' set to true.  
  *
- * Nevertheless, in the case of a PermissionsCapable entity that inherits other permissions, one may
+ * Nevertheless, in the case of a PermissionHolder entity that inherits other permissions, one may
  * want to make sure that we add to the inherited permissions, as well as be assured that other
  * permissions are denied.  In other to do this, it necessary to assign two PermissionGranted
  * bitmasks, one with isDeny set to false, and one set to true.  Therefore, the key to the

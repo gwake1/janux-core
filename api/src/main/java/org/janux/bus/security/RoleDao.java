@@ -56,5 +56,5 @@ public interface RoleDao extends DataAccessObject
 
 
 	/** returns a new Role instance */
-	PermissionsCapable newRole();
+	PermissionHolder newRole();
 }

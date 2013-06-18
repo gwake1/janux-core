@@ -38,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision: 1.8 $ - $Date: 2007-12-27 00:51:17 $
  ***************************************************************************************************
  */
-public class PermissionsManager implements PermissionsCapable, Serializable
+public class PermissionsManager implements PermissionHolder, Serializable
 {
 	private static final long serialVersionUID = 20070617L;
 
