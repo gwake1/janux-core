@@ -27,7 +27,7 @@ Copyright 2005-2012 janux.org -->
 	<parent><!-- defined in build/pom.xml -->
 		<groupId>janux</groupId>
 		<artifactId>janux-project</artifactId>
-		<version>0.4.02-SNAPSHOT</version>
+		<version>0.5-SNAPSHOT</version>
 	</parent>
 	
 	<properties>

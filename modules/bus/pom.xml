@@ -23,7 +23,7 @@ Copyright 2005-2012 janux.org -->
 	<parent><!-- defined in build/template/persist-hibernate/pom.xml -->
 		<groupId>janux</groupId>
 		<artifactId>janux-persist-hibernate</artifactId>
-		<version>0.4.02-SNAPSHOT</version>
+		<version>0.5-SNAPSHOT</version>
 	</parent>
 
 	<build>

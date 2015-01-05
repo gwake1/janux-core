@@ -21,7 +21,7 @@ Copyright 2005-2012 janux.org -->
 	<groupId>janux</groupId>
 	<artifactId>janux-master</artifactId>
 	<packaging>pom</packaging>
-	<version>0.4.02-SNAPSHOT</version>
+	<version>0.5-SNAPSHOT</version>
 
 	<name>pom janux-master</name>
 	<description>Used to build the whole janux project</description>

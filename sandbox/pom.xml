@@ -21,7 +21,7 @@ Copyright 2005-2012 janux.org -->
 	<groupId>janux</groupId>
 	<artifactId>janux-sandbox</artifactId>
 	<packaging>pom</packaging>
-	<version>0.4.02-SNAPSHOT</version>
+	<version>0.5-SNAPSHOT</version>
 
 	<name>pom janux-sandbox-master</name>
 	<description>Used to specify which projects to build in the sandbox as part of the global build</description>

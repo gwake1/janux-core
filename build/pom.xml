@@ -26,11 +26,11 @@ Copyright 2005-2012 janux.org -->
 	<groupId>janux</groupId>
 	<artifactId>janux-project</artifactId>
 	<packaging>pom</packaging>
-	<version>0.4.02-SNAPSHOT</version>
+	<version>0.5-SNAPSHOT</version>
 
 	<properties>
 
-		<janux.version>0.4.02-SNAPSHOT</janux.version>
+		<janux.version>0.5-SNAPSHOT</janux.version>
 
 		<!-- 
 			change this to an absolute path in your $HOME/.m2/settings.xml
