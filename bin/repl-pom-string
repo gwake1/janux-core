@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# find . -name 'pom.xml' ! -path '*.git*'
+find . -name 'pom.xml' -exec perl -i -pe 's/janux-project/janux-build/' {} \;
