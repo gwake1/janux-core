@@ -133,16 +133,12 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 		return this.getPermissionsManager().hasPermissions(permissionContext, permissionNames);
 	}
 
-	public boolean hasPermissions(String permissionContext, String permissionName) {
-		return this.getPermissionsManager().hasPermissions(permissionContext, permissionName);
+	public boolean hasPermission(String permissionContext, String permissionName) {
+		return this.getPermissionsManager().hasPermission(permissionContext, permissionName);
 	}   
 
 	public String[] getPermissions(String permissionContext) {
 		return this.getPermissionsManager().getPermissions(permissionContext);
-	}
-
-	public void grantPermissions(String permissionContext, String[] permissionNames) {
-		throw new UnsupportedOperationException("grantPermissions not implemented yet");
 	}
 
 	public boolean hasPermissions(String permissionContext, long requiredPerms) { 
@@ -153,11 +149,19 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 		return this.getPermissionsManager().getPermissionsValue(permissionContext);
 	}
 
+	public void grantPermissions(PermissionContext permissionContext, String[] permissionNames) {
+		this.getPermissionsManager().grantPermissions(permissionContext, permissionNames);
+	}
+
 	public void grantPermissions(PermissionContext permissionContext, long permissionsGranted) {
 		this.getPermissionsManager().grantPermissions(permissionContext, permissionsGranted);
 	}
 
 	public void denyPermissions(PermissionContext permissionContext, long permissionsGranted) {
+		this.getPermissionsManager().denyPermissions(permissionContext, permissionsGranted);
+	}
+
+	public void denyPermissions(PermissionContext permissionContext, String[] permissionsGranted) {
 		this.getPermissionsManager().denyPermissions(permissionContext, permissionsGranted);
 	}
 

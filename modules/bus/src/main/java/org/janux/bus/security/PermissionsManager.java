@@ -107,7 +107,7 @@ public class PermissionsManager implements PermissionHolder, Serializable
 		return hasPermissions(permContextName, requiredPerms);
 	}
 
-	public boolean hasPermissions(String permContextName, String permissionName)
+	public boolean hasPermission(String permContextName, String permissionName)
 	{
 		boolean hasPermissions = false;
 		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
@@ -236,6 +236,10 @@ public class PermissionsManager implements PermissionHolder, Serializable
 	}
 
 
+	public void grantPermissions(PermissionContext permContext, String[] permsGranted) {
+		throw new UnsupportedOperationException("grantPermissions(permContext, String[]) has not yet been implemented");
+	}
+
 	public void denyPermissions(PermissionContext permContext, long permsDenied)
 	{
 		this.validatePermissions(permContext, permsDenied);
@@ -247,6 +251,11 @@ public class PermissionsManager implements PermissionHolder, Serializable
 			this.getPermissionsGranted().remove(new PermissionGrantedKey(permContext, true));
 		else 
 			this.setPermissionGranted(permContext, true, permsDenied); 
+	}
+
+	public void denyPermissions(PermissionContext permContext, String[] permsDenied)
+	{
+		throw new UnsupportedOperationException("denyPermissions(permContext, String[]) has not yet been implemented");
 	}
 
 

@@ -109,7 +109,7 @@ public class PermissionContextImpl implements PermissionContext, java.io.Seriali
 	}
 
 
-	public long getValue(String[] permBitNames) 
+	public long getPermissionsAsNumber(String[] permBitNames) 
 	{
 		long permsValue = 0;
 
@@ -126,6 +126,12 @@ public class PermissionContextImpl implements PermissionContext, java.io.Seriali
 
 		return permsValue;
 	}
+
+
+	public long getValue(String[] permBitNames) {
+		return this.getPermissionsAsNumber(permBitNames);
+	}
+
 
 	public long getMaxValue() {
 		return (long)Math.pow(2.0, this.getPermissionBits().size()) - 1;

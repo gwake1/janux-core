@@ -56,10 +56,10 @@ public interface PermissionHolder extends PermissionsCapable
 	boolean hasPermissions(String permissionContext, String[] permissionNames);
 
 	/** 
-	 * Given a permission context, and the names of a permission available in that context, 
+	 * Given a permission context, and the name of a permission available in that context, 
 	 * this method returns true if this role has the permission named
 	 */
-	boolean hasPermissions(String permissionContext, String permissionName);
+	boolean hasPermission(String permissionContext, String permissionName);
 
 
 	/** 
@@ -121,20 +121,37 @@ public interface PermissionHolder extends PermissionsCapable
 
 
 	/** 
+	 * Given a permission context and a string array representing multiple permissions available in
+	 * that context, this method grants the permissions indicated to this PermissionHolder Entity.
+	 * <p>
+	 * The permissions granted by this method replace any direct permissions that the PermissionHolder may
+	 * already have in this PermissionContext, and are in addition to any permissions that this entity
+	 * may inherit from its Roles.  If you would like to remove all Permissions granted directly to
+	 * this entity within a Permission Context, pass an empty or null array.
+	 * </p><p>
+	 * Note that passing an empty or null array will not work to revoke permissions that this
+	 * entity may have inherited from its Roles; in such case you should call denyPermissions to
+	 * explicitly deny the permissions in question.
+	 * </p>
+	 *
+	 * @see #denyPermissions
+	 *
+	 * @param permissionContext a valid PermissionContext
+	 * @param permissionsGranted
+	 * 	an array of strings representing permissions that are to be granted to this PermissionHolder
+	 * 	Entity, for example ["READ","UPDATE"]; the permissions must be available in the named PermissionContext
+	 */
+	void grantPermissions(PermissionContext permissionContext, String[] permissionsGranted);
+
+	/** 
 	 * In the case of an implementation that uses bitmasks to store permissions, and given a
 	 * permission context and a long value representing multiple permissions available in that
 	 * context, this method grants the permissions indicated to this PermissionHolder Entity.
 	 * <p>
-	 * The permissions granted by this method are added to any permissions that this entity may
-	 * inherit from its Roles.  If you would like to remove all Permissions granted directly to this
-	 * entity within a Permission Context, set the bitmask to 0.
-	 * </p><p>
-	 * Note that setting the Permissions bitmask to 0 will not work to revoke permissions that this
-	 * entity may have inherited from its Roles; in such case you should call denyPermissions to
-	 * explicitly deny the permissions in question.  This will create an 'isDeny' bitmask that will
-	 * block inherited permissions.
+	 * Note that it's more explicit to use {@link #grantPermissions(PermissionContext,
+	 * String[])}, and possibly safer since some implementations may not use bitmasks
 	 * </p>
-	 *
+	 * @see #grantPermissions(PermissionContex, String[])
 	 * @see #denyPermissions
 	 *
 	 * @param permissionContext a valid PermissionContext
@@ -156,15 +173,23 @@ public interface PermissionHolder extends PermissionsCapable
 	 * sub-role, but denies the Permissions to CREATE and PURGE.
 	 * </p><p>
 	 * <p>
-	 * On the other hand, assume that we only have the 'PRODUCT ADMIN' Role and that we want to revoke
-	 * its 'PURGE' Permission, in the Permission Context 'PRODUCT'.  We could call denyPermissions to
-	 * do so, but this will create an 'isDeny' bitmask in addition to the existing 'allow' bitmask one
-	 * through which the 'PURGE' Permission was originally granted. Instead, it would be simpler to call
-	 * {@link #grantPermissions(PermissionContext,long)} again with the proper 'allow' bitmask that 
-	 * no longer enables the 'PURGE' permission.  
+	 * On the other hand, assume that we only have the 'PRODUCT ADMIN' Role that does not aggregate
+	 * any other Roles, and that we want to revoke its 'PURGE' Permission, in the Permission Context
+	 * 'PRODUCT'.  We could call denyPermissions to do so, but this will create an 'isDeny' bitmask in
+	 * addition to the existing 'allow' bitmask one through which the 'PURGE' Permission was
+	 * originally granted. Instead, it would be simpler to call {@link #grantPermissions(PermissionContext,long)} 
+	 * again with the proper 'allow' bitmask that no longer enables the 'PURGE' permission.  
 	 * </p>
 	 */
-	void denyPermissions(PermissionContext permissionContext, long permissionsValue);
+	void denyPermissions(PermissionContext permissionContext, String[] permissionsDenied);
+
+	/**
+	 * Equivalent to {@link #denyPermissions(PermissionContext, String[])} in implementations that use
+	 * bitmasks to define permissions
+	 *
+	 * @see #denyPermissions(PermissionContext, String[])
+	 */
+	void denyPermissions(PermissionContext permissionContext, long permissionsDenied);
 
 	// do we need these to explicitly act upon the permissions granted to the entity directly ?
 	//void setPermissionsGranted(PermissionContext permissionContext, boolean isDeny, long permissionsValue);

@@ -160,8 +160,8 @@ public class AccountImpl extends PersistentAbstract  implements Account, java.io
 	}
 
 
-	public boolean hasPermissions(String permissionContext, String permissionName) {
-		return this.getPermissionsManager().hasPermissions(permissionContext, permissionName);
+	public boolean hasPermission(String permissionContext, String permissionName) {
+		return this.getPermissionsManager().hasPermission(permissionContext, permissionName);
 	}
 
 	public String[] getPermissions(String permissionContext) {
@@ -184,8 +184,16 @@ public class AccountImpl extends PersistentAbstract  implements Account, java.io
 		this.getPermissionsManager().grantPermissions(permissionContext, permissionsGranted);
 	}
 
-	public void denyPermissions(PermissionContext permissionContext, long permissionsGranted) {
-		this.getPermissionsManager().denyPermissions(permissionContext, permissionsGranted);
+	public void grantPermissions(PermissionContext permissionContext, String[] permissionsGranted) {
+		this.getPermissionsManager().grantPermissions(permissionContext, permissionsGranted);
+	}
+
+	public void denyPermissions(PermissionContext permissionContext, long permissionsDenied) {
+		this.getPermissionsManager().denyPermissions(permissionContext, permissionsDenied);
+	}
+
+	public void denyPermissions(PermissionContext permissionContext, String[] permissionsDenied) {
+		this.getPermissionsManager().denyPermissions(permissionContext, permissionsDenied);
 	}
 
 	public Long getPermissionsGranted(String permissionSetName) {

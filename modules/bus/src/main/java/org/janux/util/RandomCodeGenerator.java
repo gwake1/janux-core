@@ -29,7 +29,7 @@ import com.Ostermiller.util.RandPass;
  * @version $Revision: 1.4 $ - $Date: 2008-03-31 20:44:36 $
  ***************************************************************************************************
  */
-public class RandomCodeGenerator implements RandomReadbleStringGenerator
+public class RandomCodeGenerator implements RandomReadableStringGenerator
 {
 	transient Log log = LogFactory.getLog(this.getClass());
 

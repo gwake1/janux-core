@@ -63,10 +63,16 @@ public interface PermissionContext extends Sorteable
 	public void addPermissionBit(PermissionBit permissionBit); 
 
 	/** 
-	 * convenience method that returns the sum of values of a set of PermissionBits specified by name;
-	 * for example, in the example above getValue({READ, UPDATE}) would return 3
+	 * @deprecated use {@link #getPermissionsAsNumber} instead
 	 */
 	long getValue(String[] permNames);
+
+	/** 
+	 * In the case of an implementation that uses bitmasks to represent permissions, this is a
+	 * Convenience method that returns the sum of values of a set of PermissionBits specified by name;
+	 * for example, in the example above getPermissionsAsNumber({READ, UPDATE}) would return 3
+	 */
+	long getPermissionsAsNumber(String[] permNames);
 
 	/** 
 	 * returns the maximum value that the permission bitmask can take, should be equal to

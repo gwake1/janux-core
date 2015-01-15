@@ -38,7 +38,7 @@ import org.janux.util.JanuxToStringStyle;
  * one which adds the desired permissions, and a 'subtractive' one which removes others (a
  * PermissionGranted with the 'isDeny' flag set to true)
  * 
- * Of course, if the PermissionCapable entity does not inherit any permissions from a parent entity,
+ * Of course, if the PermissionHolder entity does not inherit any permissions from a parent entity,
  * one could simply refrain from assigning the undesired permission, rather than having to use an
  * permission bitmask with the 'isDeny' set to true.  
  *
