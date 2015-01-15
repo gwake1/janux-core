@@ -28,6 +28,8 @@ Copyright 2005-2012 janux.org -->
 		<groupId>janux</groupId>
 		<artifactId>janux-project</artifactId>
 		<version>0.5-SNAPSHOT</version>
+		<!-- prevents maven warning that the parent project is not in the parent directory -->
+		<relativePath></relativePath>
 	</parent>
 
 	<properties>
@@ -54,6 +56,7 @@ Copyright 2005-2012 janux.org -->
 		</dependency>
 		
 		<!-- jasypt for encrypt and decrypt -->
+		<!-- TODO: abstract this away -->
 		<dependency>
 			<groupId>org.jasypt</groupId>
 			<artifactId>jasypt</artifactId>
