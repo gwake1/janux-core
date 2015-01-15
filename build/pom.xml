@@ -37,6 +37,7 @@ Copyright 2005-2012 janux.org -->
 			TODO: Change this to download assets from the repository, rather than from a project path
 		-->
 		<janux.home>.</janux.home>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Name of the folder to which shared assets will be exploded during a build -->
 		<janux.shared.dir>${project.build.directory}/janux-shared</janux.shared.dir>
@@ -274,31 +275,6 @@ Copyright 2005-2012 janux.org -->
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
 					<version>2.6</version>
-				</plugin>
-
-				<!-- Unpack shared assets to target/janux-shared -->
-				<plugin>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>unpack-shared-resources</id>
-							<goals>
-								<goal>unpack</goal>
-							</goals>
-							<phase>generate-test-resources</phase>
-							<configuration>
-								<artifactItems>
-									<artifactItem>
-										<groupId>janux</groupId>
-										<artifactId>janux-shared</artifactId>
-										<version>${janux.version}</version>
-										<type>zip</type>
-										<outputDirectory>${janux.shared.dir}</outputDirectory>
-									</artifactItem>
-								</artifactItems>
-							</configuration>
-						</execution>
-					</executions>
 				</plugin>
 
 				<!--

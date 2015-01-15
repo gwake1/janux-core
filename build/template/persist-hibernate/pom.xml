@@ -31,7 +31,7 @@ Copyright 2005-2012 janux.org -->
 
 	<parent>
 		<groupId>janux</groupId>
-		<artifactId>janux-build</artifactId>
+		<artifactId>janux-project</artifactId>
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
@@ -237,6 +237,31 @@ Copyright 2005-2012 janux.org -->
 					</executions>
 				</plugin>
 
+				<!-- Unpack shared assets to target/janux-shared -->
+				<plugin>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>unpack-shared-resources</id>
+							<goals>
+								<goal>unpack</goal>
+							</goals>
+							<phase>generate-test-resources</phase>
+							<configuration>
+								<artifactItems>
+									<artifactItem>
+										<groupId>janux</groupId>
+										<artifactId>janux-shared</artifactId>
+										<version>${janux.version}</version>
+										<type>zip</type>
+										<outputDirectory>${janux.shared.dir}</outputDirectory>
+									</artifactItem>
+								</artifactItems>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
 				<plugin>
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>2.7</version>
@@ -350,13 +375,6 @@ Copyright 2005-2012 janux.org -->
 
 
 	<dependencies>
-
-		<dependency>
-			<groupId>janux</groupId>
-			<artifactId>janux-lib-util</artifactId>
-			<version>${janux.version}</version>
-			<type>pom</type>
-		</dependency>
 
 		<dependency>
 			<groupId>janux</groupId>
