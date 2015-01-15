@@ -13,7 +13,7 @@
 
   <parent>
 		<groupId>janux</groupId>
-		<artifactId>janux-project</artifactId>
+		<artifactId>janux-build</artifactId>
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 

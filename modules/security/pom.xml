@@ -1,0 +1,255 @@
+<!-- Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Copyright 2005-2012 janux.org -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+	<name>jar janux-security</name>
+  <description>Janux Authentication and Authorization</description>
+
+  <artifactId>janux-security</artifactId>
+  <packaging>jar</packaging>
+
+
+
+	<!-- defined in build/template/persist-hibernate/pom.xml -->
+	<!--
+	<parent>
+		<groupId>janux</groupId>
+		<artifactId>janux-persist-hibernate</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+	-->
+
+	<parent><!-- defined in build/pom.xml -->
+		<groupId>janux</groupId>
+		<artifactId>janux-build</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<testResources>
+			<testResource>
+				<directory>${janux.shared.dir}/resources/persist</directory>
+			</testResource>
+
+			<testResource>
+				<directory>${janux.shared.dir}/resources-filtered/persist</directory>
+				<filtering>true</filtering>
+			</testResource>
+
+			<testResource>
+				<directory>${janux.shared.dir}/resources/security</directory>
+			</testResource>
+
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>false</filtering>
+			</testResource>
+
+			<testResource>
+				<directory>src/test/resources-filtered</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+
+			<!--
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+			</plugin>
+			-->
+		</plugins>
+
+	</build>
+
+	<profiles>
+		<!-- by default recreate the db prior to running tests -->
+		<profile>
+			<id>profile-default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+					</plugin>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+					</plugin>
+
+
+					<!-- there is a default config of this plugin in build/template/persist-hibernate/pom.xml -->
+					<!-- uncomment this here in case of doubt to troubleshoot profile variables -->
+					<!--
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo>janux.db.executable: ${janux.db.executable}</echo>
+										<echo>args.base: ${args.base}</echo>
+										<echo>janux.db.drive: ${janux.db.driver}</echo>
+										<echo>datasource: jdbc:${janux.db.type}://${janux.db.host}:${janux.db.port}/</echo>
+										<echo>janux.db.admin.user: ${janux.db.admin.user}</echo>
+										<echo>skipRecreate = ${skipRecreate}</echo>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					-->
+
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- 
+			Profile used to suppress the drop/create sql scripts.
+			Running this profile  is useful if you want to run a test(s) 
+			without the overhead of recreating the test database.
+
+			Run the profile by invoking:
+
+				mvn test -DskipRecreate=true
+			or
+				mvn test -P profile-skipRecreate
+
+			pp-20120507: It would be nice if, by default, if maven.test.skip is false, the dbs are not
+			recreated; unfortunately, there can only be one <property> element inside <activation> and, as
+			of this writing, I don't see a way to implement that in maven2; so for the time being, when
+			passing maven.test.skip=true, it is also necessary to pass skipRecreate=true to prevent the
+			sql scripts from running.
+		-->
+		<profile>
+			<id>profile-skipRecreate</id>
+			<activation>
+				<property>
+					<name>skipRecreate</name>
+					<value>true</value>
+				</property>
+			</activation>
+
+			<build>
+				<plugins>
+
+					<!-- utility plugin; uncomment to troubleshoot profile variables -->
+					<!--
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo>profile-skipRecreate</echo>
+										<echo>Displaying environment variables</echo>
+										<echo>skipRecreate is: ${skipRecreate}</echo>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					-->
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+
+  <dependencies>
+
+    <dependency>
+      <groupId>janux</groupId>
+      <artifactId>janux-api</artifactId>
+			<version>${janux.version}</version>
+    </dependency>
+
+		<!--
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency> 
+		-->
+
+		<!-- used in JanuxUserDetails to clone from AccountImpl -->
+		<!--
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils-core</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		
+		<!-- jasypt for encryption and decryption -->
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.ibm.icu</groupId>
+	    	<artifactId>icu4j</artifactId>
+	    	<version>4.0.1</version>
+		</dependency>
+
+  </dependencies>
+
+</project>

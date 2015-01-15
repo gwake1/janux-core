@@ -19,12 +19,12 @@ Copyright 2005-2012 janux.org -->
 >
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>pom janux-project</name>
+	<name>pom janux-build</name>
 	<description>An Open Source eBusiness Integration Infrastructure</description>
 	<url>http://www.janux.org</url>
 
 	<groupId>janux</groupId>
-	<artifactId>janux-project</artifactId>
+	<artifactId>janux-build</artifactId>
 	<packaging>pom</packaging>
 	<version>0.5-SNAPSHOT</version>
 
