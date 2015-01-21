@@ -78,7 +78,7 @@ import java.util.List;
  * @since 0.1
  ***************************************************************************************************
  */
-public interface Role extends org.janux.util.Sorteable, PermissionHolder
+public interface Role extends org.janux.util.Sorteable, AuthorizationHolder
 {
 	/** a unique short-hand name for this role */
 	String getName();

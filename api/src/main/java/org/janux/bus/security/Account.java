@@ -43,7 +43,7 @@ import org.janux.bus.persistence.Persistent;
  * @since 0.1
  ***************************************************************************************************
  */
-public interface Account extends Persistent, PermissionHolder, Comparable
+public interface Account extends Persistent, AuthorizationHolder, Comparable
 {
 	/** A unique name that identifies this Account - returns the same value as the getUsername inherited frmo the UserDetails interface */
 	String getName();

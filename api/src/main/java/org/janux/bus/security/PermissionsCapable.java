@@ -16,12 +16,12 @@ package org.janux.bus.security;
 
 /**
  *************************************************************************************************
- * Deprecated, in 0.5 renamed to {@link PermissionHolder} which was made an alias of
+ * Deprecated, in 0.5 renamed to {@link AuthorizationHolder} which was made an alias of
  * PermissionsCapable; this empty interface will be removed in a future release, please do not use
  * in any new implementations
  *
  * @author  <a href="mailto:philippe.paravicini@janux.org">Philippe Paravicini</a>
- * @deprecated renamed in 0.5 to PermissionHolder
+ * @deprecated renamed in 0.5 to AuthorizationHolder
  * @since 0.1
  *************************************************************************************************
  */

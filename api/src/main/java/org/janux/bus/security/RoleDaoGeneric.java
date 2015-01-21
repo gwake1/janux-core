@@ -60,5 +60,5 @@ public interface RoleDaoGeneric<T extends Role>
 
 
 	/** returns a new Role instance */
-	PermissionHolder newRole();
+	AuthorizationHolder newRole();
 }

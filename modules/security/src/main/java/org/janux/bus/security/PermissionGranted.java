@@ -39,7 +39,7 @@ class PermissionGranted implements java.io.Serializable
 	private boolean deny = false;
 	private int  sortOrder;
 	private PermissionContext permissionContext;
-	private PermissionHolder owner;
+	private AuthorizationHolder owner;
 
 	/** plain vanilla constructor */
 	PermissionGranted() {}
@@ -69,11 +69,11 @@ class PermissionGranted implements java.io.Serializable
 	}
 
 
-	public PermissionHolder getOwner() {
+	public AuthorizationHolder getOwner() {
 		return this.owner;
 	}
 	
-	public void setOwner(PermissionHolder owner) {
+	public void setOwner(AuthorizationHolder owner) {
 		this.owner = owner;
 	}
 
