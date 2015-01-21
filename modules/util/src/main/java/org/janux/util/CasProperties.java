@@ -1,8 +1,8 @@
 /* Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+	 you may not use this file except in compliance with the License.
+	 You may obtain a copy of the License at
 
-  http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,12 +14,10 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.util;
 
-import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
-
 /**
  * Wrapper for CAS properties used as a bean in CAS client applications.
  * This is useful for configuring application context cas properties using 
- * the {@link PropertyOverrideConfigurer}
+ * spring's PropertyOverrideConfigurer
  *
  * @author  <a href="mailto:moradaniel@janux.org">Daniel Mora</a>
  */

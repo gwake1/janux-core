@@ -24,7 +24,6 @@ Copyright 2005-2012 janux.org -->
 
 	<artifactId>janux-lib-util</artifactId>
 	<packaging>pom</packaging>
-	<!-- <version>${janux.lib.util.version}</version> -->
 
 	<parent>
 		<groupId>janux</groupId>
@@ -34,6 +33,11 @@ Copyright 2005-2012 janux.org -->
 	</parent>
 
   <dependencies>
+		<dependency>
+			<groupId>janux</groupId>
+			<artifactId>janux-util</artifactId>
+			<version>${janux.version}</version>
+		</dependency>
 		<!-- standard apache utility libraries -->
 		<dependency>
 			<groupId>commons-collections</groupId>
