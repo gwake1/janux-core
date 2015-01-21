@@ -129,8 +129,16 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 		return this.getPermissionsManager().getPermissionContexts();
 	}
 
+	public boolean can(String[] permissionNames, String permissionContext) {
+		return this.getPermissionsManager().can(permissionNames, permissionContext);
+	}
+
 	public boolean hasPermissions(String permissionContext, String[] permissionNames) {
 		return this.getPermissionsManager().hasPermissions(permissionContext, permissionNames);
+	}
+
+	public boolean can(String permissionName, String permissionContext) {
+		return this.getPermissionsManager().can(permissionName, permissionContext);
 	}
 
 	public boolean hasPermission(String permissionContext, String permissionName) {
@@ -139,6 +147,10 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 
 	public String[] getPermissions(String permissionContext) {
 		return this.getPermissionsManager().getPermissions(permissionContext);
+	}
+
+	public boolean can(long requiredPerms, String permissionContext) { 
+		return this.getPermissionsManager().can(requiredPerms, permissionContext);
 	}
 
 	public boolean hasPermissions(String permissionContext, long requiredPerms) { 

@@ -96,7 +96,7 @@ public class PermissionsManager implements PermissionHolder, Serializable
 	}
 
 
-	public boolean hasPermissions(String permContextName, String[] permNames)
+	public boolean can(String[] permNames, String permContextName)
 	{
 		long requiredPerms = 0;
 		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
@@ -107,7 +107,13 @@ public class PermissionsManager implements PermissionHolder, Serializable
 		return hasPermissions(permContextName, requiredPerms);
 	}
 
-	public boolean hasPermission(String permContextName, String permissionName)
+
+	public boolean hasPermissions(String permContextName, String[] permNames) {
+		return this.can(permNames, permContextName);
+	}
+
+
+	public boolean can(String permissionName, String permContextName)
 	{
 		boolean hasPermissions = false;
 		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
@@ -119,6 +125,11 @@ public class PermissionsManager implements PermissionHolder, Serializable
 		}
 		
 		return hasPermissions;
+	}
+
+
+	public boolean hasPermission(String permContextName, String permissionName) {
+		return this.can(permissionName, permContextName);
 	}
 
 
@@ -195,7 +206,7 @@ public class PermissionsManager implements PermissionHolder, Serializable
 	*/
 
 
-	public boolean hasPermissions(String permContextName, long requiredPerms)
+	public boolean can(long requiredPerms, String permContextName)
 	{ 
 		if (requiredPerms < 1) 
 		{
@@ -205,6 +216,10 @@ public class PermissionsManager implements PermissionHolder, Serializable
 		}
 			
 		return (this.getPermissionsValue(permContextName) & requiredPerms) == requiredPerms;
+	}
+
+	public boolean hasPermissions(String permContextName, long requiredPerms) {
+		return this.can(requiredPerms, permContextName);
 	}
 
 

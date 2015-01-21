@@ -52,15 +52,29 @@ public interface PermissionHolder extends PermissionsCapable
 	/** 
 	 * Given a permission context, and the names of permissions available in that context, 
 	 * this method returns true if this role has all the permissions named
+	 *
+	 * @since 0.5.0
+	 */
+	boolean can(String[] permissionNames, String permissionContext);
+
+	/**
+	 * @deprecated as of 0.5.0 use {@link can(String[], String)} instead
 	 */
 	boolean hasPermissions(String permissionContext, String[] permissionNames);
 
 	/** 
 	 * Given a permission context, and the name of a permission available in that context, 
 	 * this method returns true if this role has the permission named
+	 *
+	 * @since 0.5.0
+	 */
+	boolean can(String permissionName, String permissionContext);
+
+	/**
+	 * @deprecated as of 0.5.0 use {@link can(String, String)} instead, but note that the
+	 * parameter order in that method are inverted
 	 */
 	boolean hasPermission(String permissionContext, String permissionName);
-
 
 	/** 
 	 * Given a permission context, and a list of names of permissions available in that context, this
@@ -116,6 +130,13 @@ public interface PermissionHolder extends PermissionsCapable
 	 * In the case of an implementation that uses bitmasks to store permissions, and given a
 	 * permission context and a long value representing multiple permissions available in that
 	 * context, this method returns true if this role has all the permissions indicated
+	 *
+	 * @since 0.5.0
+	 */
+	boolean can(long permissionsValue, String permissionContext);
+
+	/**
+	 * @deprecated as of 0.5.0 use {@link can(long, String)} instead
 	 */
 	boolean hasPermissions(String permissionContext, long permissionsValue);
 
