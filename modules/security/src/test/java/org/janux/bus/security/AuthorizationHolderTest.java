@@ -29,25 +29,25 @@ import org.apache.commons.logging.LogFactory;
  * @see
  ***************************************************************************************************
  */
-public class PermissionsManagerTest extends TestCase
+public class AuthorizationHolderTest extends TestCase
 {
 	Log log = LogFactory.getLog(this.getClass());
 	//static Log log = LogFactory.getLog(FooSetup.class);
 	
 	private MockObjectFactory mock = new MockObjectFactory();
 
-	static final String PERM_MAN = "aPermissionManager";
+	static final String PERM_MAN = "aPermission";
 	
 	private PermissionContext  workContext = mock.getPermissionContext(mock.CTX_WORK);
 	private String WORK = workContext.getName();
-	private PermissionsManager permsMan    = new PermissionsManager(PERM_MAN);
+	private AuthorizationHolderBase authHolder    = new AuthorizationHolderBase(PERM_MAN);
 
 
-	public PermissionsManagerTest() {
+	public AuthorizationHolderTest() {
 		super();
 	}
 
-	public PermissionsManagerTest(String name) {
+	public AuthorizationHolderTest(String name) {
 		super(name);
 	}
 
@@ -61,31 +61,31 @@ public class PermissionsManagerTest extends TestCase
 
 	public void testGrantPermissions()
 	{
-		permsMan.grantPermissions(workContext, workContext.getMaxValue());
-		assertTrue(permsMan.can(workContext.getMaxValue(), WORK));
-		assertTrue(permsMan.hasPermissions(WORK, workContext.getMaxValue()));
+		authHolder.grantPermissions(workContext, workContext.getMaxValue());
+		assertTrue(authHolder.can(workContext.getMaxValue(), WORK));
+		assertTrue(authHolder.hasPermissions(WORK, workContext.getMaxValue()));
 
 		for (PermissionBit permBit : workContext.getPermissionBits())
 		{
 			log.debug("testing hasPermissions '" + permBit.getName() + "': " + permBit.getValue());
 			log.debug("testing can '" + permBit.getValue() + "': " + permBit.getName());
 
-			assertTrue(permsMan.can( permBit.getValue(), WORK ));
-			assertTrue(permsMan.can( new String[] {permBit.getName()}, WORK ));
-			assertTrue(permsMan.can( permBit.getName(), WORK ));
+			assertTrue(authHolder.can( permBit.getValue(), WORK ));
+			assertTrue(authHolder.can( new String[] {permBit.getName()}, WORK ));
+			assertTrue(authHolder.can( permBit.getName(), WORK ));
 
-			assertTrue(permsMan.hasPermissions( WORK, permBit.getValue() ));
-			assertTrue(permsMan.hasPermissions( WORK, new String[] {permBit.getName()} ));
-			assertTrue(permsMan.hasPermission(  WORK, permBit.getName() ));
+			assertTrue(authHolder.hasPermissions( WORK, permBit.getValue() ));
+			assertTrue(authHolder.hasPermissions( WORK, new String[] {permBit.getName()} ));
+			assertTrue(authHolder.hasPermission(  WORK, permBit.getName() ));
 		}
 
 		// test that when we set a permission of 0 we remove the permission record
-		permsMan.grantPermissions(workContext, 0);
-		assertNull(permsMan.permissionsGranted.get(new PermissionGrantedKey(workContext, false)));
+		authHolder.grantPermissions(workContext, 0);
+		assertNull(authHolder.permissionsGranted.get(new PermissionGrantedKey(workContext, false)));
 
 		try { 
 			log.debug("Test null permissionContext");
-			permsMan.grantPermissions(null, 0);
+			authHolder.grantPermissions(null, 0);
 			fail("null permissionContexts are not allowed");
 		}
 		catch (IllegalArgumentException e) {
@@ -94,7 +94,7 @@ public class PermissionsManagerTest extends TestCase
 
 		try { 
 			log.debug("Test negative permission value Failure");
-			permsMan.grantPermissions(workContext, -1);
+			authHolder.grantPermissions(workContext, -1);
 			fail("negative permissions are not allowed");
 		}
 		catch (IllegalArgumentException e) {
@@ -103,7 +103,7 @@ public class PermissionsManagerTest extends TestCase
 
 		try { 
 			log.debug("Test maximum permission Failure");
-			permsMan.grantPermissions(workContext, workContext.getMaxValue() + 1);
+			authHolder.grantPermissions(workContext, workContext.getMaxValue() + 1);
 			fail("permissions outside the range are not allowed");
 		}
 		catch (IllegalArgumentException e) {
@@ -112,74 +112,74 @@ public class PermissionsManagerTest extends TestCase
 	}
 
 	/** 
-	 * tests a PermissionsManager that does not have Roles attached to it (and
+	 * tests a AuthorizationHolderBase that does not have Roles attached to it (and
 	 * hence no inherited Permissions
 	 */
 	public void testHasPermissionsWithoutRoles()
 	{
-		permsMan.grantPermissions(workContext, workContext.getMaxValue());
+		authHolder.grantPermissions(workContext, workContext.getMaxValue());
 
-		assertTrue(permsMan.can( workContext.getMaxValue(), WORK));
-		assertTrue(permsMan.hasPermissions(WORK, workContext.getMaxValue()));
+		assertTrue(authHolder.can( workContext.getMaxValue(), WORK));
+		assertTrue(authHolder.hasPermissions(WORK, workContext.getMaxValue()));
 
 		for (PermissionBit permBit : workContext.getPermissionBits())
 		{
 			log.debug("testing hasPermissions '" + permBit.getName() + "': " + permBit.getValue());
 			log.debug("testing can '" + permBit.getValue() + "': " + permBit.getName());
-			assertTrue(permsMan.can( permBit.getValue(), WORK ));
-			assertTrue(permsMan.hasPermissions( WORK, new String[] {permBit.getName()} ));
+			assertTrue(authHolder.can( permBit.getValue(), WORK ));
+			assertTrue(authHolder.hasPermissions( WORK, new String[] {permBit.getName()} ));
 		}
 
 		String[] READ          = {mock.PERM_READ};
 		String[] READ_UPDATE   = {mock.PERM_READ, mock.PERM_UPDATE};
 		String[] READ_DISABLE  = {mock.PERM_READ, mock.PERM_DISABLE};
 
-		permsMan.grantPermissions(workContext, workContext.getValue(READ));
+		authHolder.grantPermissions(workContext, workContext.getValue(READ));
 
-		assertTrue(permsMan.can(  workContext.getValue(READ), WORK ));
-		assertTrue(permsMan.can(  READ, WORK ));
+		assertTrue(authHolder.can(  workContext.getValue(READ), WORK ));
+		assertTrue(authHolder.can(  READ, WORK ));
 
-		assertFalse(permsMan.can( workContext.getValue(READ_UPDATE), WORK ));
-		assertFalse(permsMan.can( READ_UPDATE, WORK ));
+		assertFalse(authHolder.can( workContext.getValue(READ_UPDATE), WORK ));
+		assertFalse(authHolder.can( READ_UPDATE, WORK ));
 
 
-		assertTrue(permsMan.hasPermissions(  WORK, workContext.getValue(READ) ));
-		assertTrue(permsMan.hasPermissions(  WORK, READ ));
+		assertTrue(authHolder.hasPermissions(  WORK, workContext.getValue(READ) ));
+		assertTrue(authHolder.hasPermissions(  WORK, READ ));
 
-		assertFalse(permsMan.hasPermissions( WORK, workContext.getValue(READ_UPDATE) ));
-		assertFalse(permsMan.hasPermissions( WORK, READ_UPDATE ));
-
-		for (int i=0; i < READ.length ; i++) {
-			assertEquals( READ[i], permsMan.getPermissions(WORK)[i] );
-		}
-
-		permsMan.grantPermissions(workContext, workContext.getValue(READ_UPDATE));
-
-		assertTrue(permsMan.can(  workContext.getValue(READ), WORK ));
-		assertTrue(permsMan.can(  READ, WORK ));
-
-		assertTrue(permsMan.hasPermissions(  WORK, workContext.getValue(READ) ));
-		assertTrue(permsMan.hasPermissions(  WORK, READ ));
+		assertFalse(authHolder.hasPermissions( WORK, workContext.getValue(READ_UPDATE) ));
+		assertFalse(authHolder.hasPermissions( WORK, READ_UPDATE ));
 
 		for (int i=0; i < READ.length ; i++) {
-			assertEquals( READ_UPDATE[i], permsMan.getPermissions(WORK)[i] );
+			assertEquals( READ[i], authHolder.getPermissions(WORK)[i] );
 		}
 
-		assertTrue(permsMan.can(  workContext.getValue(READ_UPDATE), WORK ));
-		assertTrue(permsMan.can(  READ_UPDATE, WORK ));
+		authHolder.grantPermissions(workContext, workContext.getValue(READ_UPDATE));
 
-		assertFalse(permsMan.can( workContext.getValue(READ_DISABLE), WORK ));
-		assertFalse(permsMan.can( READ_DISABLE, WORK ));
+		assertTrue(authHolder.can(  workContext.getValue(READ), WORK ));
+		assertTrue(authHolder.can(  READ, WORK ));
 
-		assertTrue(permsMan.hasPermissions(  WORK, workContext.getValue(READ_UPDATE) ));
-		assertTrue(permsMan.hasPermissions(  WORK, READ_UPDATE ));
+		assertTrue(authHolder.hasPermissions(  WORK, workContext.getValue(READ) ));
+		assertTrue(authHolder.hasPermissions(  WORK, READ ));
 
-		assertFalse(permsMan.hasPermissions( WORK, workContext.getValue(READ_DISABLE) ));
-		assertFalse(permsMan.hasPermissions( WORK, READ_DISABLE ));
+		for (int i=0; i < READ.length ; i++) {
+			assertEquals( READ_UPDATE[i], authHolder.getPermissions(WORK)[i] );
+		}
+
+		assertTrue(authHolder.can(  workContext.getValue(READ_UPDATE), WORK ));
+		assertTrue(authHolder.can(  READ_UPDATE, WORK ));
+
+		assertFalse(authHolder.can( workContext.getValue(READ_DISABLE), WORK ));
+		assertFalse(authHolder.can( READ_DISABLE, WORK ));
+
+		assertTrue(authHolder.hasPermissions(  WORK, workContext.getValue(READ_UPDATE) ));
+		assertTrue(authHolder.hasPermissions(  WORK, READ_UPDATE ));
+
+		assertFalse(authHolder.hasPermissions( WORK, workContext.getValue(READ_DISABLE) ));
+		assertFalse(authHolder.hasPermissions( WORK, READ_DISABLE ));
 
 		try { 
 			log.debug("Test querying for 0 perms failure");
-			permsMan.can(0, WORK);
+			authHolder.can(0, WORK);
 			fail("querying for 0 perms not allowed");
 		}
 		catch (IllegalArgumentException e) {
@@ -188,7 +188,7 @@ public class PermissionsManagerTest extends TestCase
 
 		try { 
 			log.debug("Test querying for negative perms failure");
-			permsMan.can(-1, WORK);
+			authHolder.can(-1, WORK);
 			fail("querying for neg perms not allowed");
 		}
 		catch (IllegalArgumentException e) {
@@ -196,4 +196,4 @@ public class PermissionsManagerTest extends TestCase
 		}
 	}
 
-} // end class PermissionsManagerTest
+} // end class AuthorizationHolderTest

@@ -43,7 +43,7 @@ public class AccountImpl extends PersistentAbstract  implements Account, java.io
 	private List<Role> roles;
 	private Set<AccountSetting> settings;
 	private List<PermissionGranted> permissionsGrantedList;
-	private PermissionsManager permsManager;
+	private AuthorizationHolderBase permsManager;
 
 
 	/** plain vanilla constructor */
@@ -141,10 +141,10 @@ public class AccountImpl extends PersistentAbstract  implements Account, java.io
 
 
 
-	private PermissionsManager getPermissionsManager() 
+	private AuthorizationHolderBase getPermissionsManager() 
 	{
 		if (this.permsManager == null)
-			this.permsManager = new PermissionsManager(this.getName(), this.getRoles(), null);
+			this.permsManager = new AuthorizationHolderBase(this.getName(), this.getRoles(), null);
 
 		return this.permsManager;
 	}

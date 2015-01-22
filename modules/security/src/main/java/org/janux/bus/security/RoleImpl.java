@@ -43,7 +43,7 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 	private List<PermissionGranted> permissionsGrantedList;
 	private Map<PermissionGrantedKey, Long> permissionsGranted;
 	private List<Role> roles;
-	private PermissionsManager permsManager;
+	private AuthorizationHolderBase permsManager;
 
 	/** plain vanilla constructor */
 	public RoleImpl() {}
@@ -110,10 +110,10 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 	}
 
 
-	private PermissionsManager getPermissionsManager() 
+	private AuthorizationHolderBase getPermissionsManager() 
 	{
 		if (this.permsManager == null)
-			this.permsManager = new PermissionsManager(this.getName(), this.getRoles(), this.getPermissionsGranted());
+			this.permsManager = new AuthorizationHolderBase(this.getName(), this.getRoles(), this.getPermissionsGranted());
 
 		return this.permsManager;
 	}

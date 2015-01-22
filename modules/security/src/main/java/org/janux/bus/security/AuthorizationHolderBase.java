@@ -38,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision: 1.8 $ - $Date: 2007-12-27 00:51:17 $
  ***************************************************************************************************
  */
-public class PermissionsManager implements AuthorizationHolder, Serializable
+public class AuthorizationHolderBase implements AuthorizationHolder, Serializable
 {
 	private static final long serialVersionUID = 20070617L;
 
@@ -53,13 +53,13 @@ public class PermissionsManager implements AuthorizationHolder, Serializable
 	protected Map<PermissionGrantedKey, Long> permissionsGranted;
 	private Map<String, Long> permsUnionMap;
 
-	public PermissionsManager() {}
+	public AuthorizationHolderBase() {}
 
-	public PermissionsManager(String name) {
+	public AuthorizationHolderBase(String name) {
 		this(name, null, null);
 	}
 
-	public PermissionsManager(String name, List<Role> roles, Map<PermissionGrantedKey, Long> permissionsGranted) 
+	public AuthorizationHolderBase(String name, List<Role> roles, Map<PermissionGrantedKey, Long> permissionsGranted) 
 	{
 		this.name = name;
 		this.roles = roles;

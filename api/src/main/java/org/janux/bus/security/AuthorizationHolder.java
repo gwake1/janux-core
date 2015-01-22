@@ -30,6 +30,7 @@ import java.util.Map;
  * @since 0.5.0 (renamed in 0.5 from PermissionsCapable, which dates from 0.1)
  *************************************************************************************************
  */
+@SuppressWarnings("deprecation")
 public interface AuthorizationHolder extends PermissionsCapable
 {
 
