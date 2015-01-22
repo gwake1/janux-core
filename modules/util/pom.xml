@@ -12,13 +12,13 @@ limitations under the License.
 
 Copyright 2005-2012 janux.org -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
 	<name>jar janux-util</name>
-  <description>Utility classes that are shared by various projects</description>
+	<description>Utility classes that are shared by various projects</description>
 
-  <artifactId>janux-util</artifactId>
-  <packaging>jar</packaging>
+	<artifactId>janux-util</artifactId>
+	<packaging>jar</packaging>
 
 
 	<parent><!-- defined in build/pom.xml -->
@@ -42,30 +42,20 @@ Copyright 2005-2012 janux.org -->
 
 	</build>
 
-  <dependencies>
+	<dependencies>
 
-    <dependency>
-      <groupId>janux</groupId>
-      <artifactId>janux-api</artifactId>
+		<dependency>
+			<groupId>janux</groupId>
+			<artifactId>janux-api</artifactId>
 			<version>${janux.version}</version>
-    </dependency>
+		</dependency>
 
-    <dependency>
-      <groupId>janux</groupId>
-      <artifactId>janux-lib-util</artifactId>
+		<dependency>
+			<groupId>janux</groupId>
+			<artifactId>janux-lib-util</artifactId>
 			<version>${janux.version}</version>
 			<type>pom</type>
-			<!-- 
-				Prevent janux-util from depending on itself, 
-				which dependency is inherited from its parent janux-project
-			-->
-			<exclusions>
-				<exclusion>
-					<groupId>janux</groupId>
-					<artifactId>janux-util</artifactId>
-				</exclusion>
-			</exclusions>
-    </dependency>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

@@ -33,11 +33,6 @@ Copyright 2005-2012 janux.org -->
 	</parent>
 
   <dependencies>
-		<dependency>
-			<groupId>janux</groupId>
-			<artifactId>janux-util</artifactId>
-			<version>${janux.version}</version>
-		</dependency>
 
 		<!-- standard apache utility libraries -->
 		<dependency>

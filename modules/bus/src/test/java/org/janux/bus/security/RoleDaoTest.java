@@ -160,7 +160,7 @@ public class RoleDaoTest extends TransactionalBusTestAbstract
 	 */
 	public void testRoleWithAggrRolesAndPerms()
 	{
-		PermissionHolder role = roleDao.findByName(SUPERVISOR);
+		AuthorizationHolder role = roleDao.findByName(SUPERVISOR);
 		assertNotNull(SUPERVISOR, role);
 
 		assertTrue("can take holiday",           role.hasPermissions(CTX_HOL, HOL_PERM_TAKE));
@@ -187,7 +187,7 @@ public class RoleDaoTest extends TransactionalBusTestAbstract
 	 */
 	public void testRoleWithMultiLevelAggrRoles()
 	{
-		PermissionHolder role = roleDao.findByName(GODDESS);
+		AuthorizationHolder role = roleDao.findByName(GODDESS);
 		assertNotNull(GODDESS, role);
 
 		assertTrue("can take holiday",           role.hasPermissions(CTX_HOL, HOL_PERM_TAKE));
@@ -216,7 +216,7 @@ public class RoleDaoTest extends TransactionalBusTestAbstract
 		Role role = roleDao.findByName(SUPER_HUMAN);
 		assertNotNull(SUPER_HUMAN, role);
 
-		PermissionHolder aggrRole = role.getRoles().get(0);
+		AuthorizationHolder aggrRole = role.getRoles().get(0);
 		assertNotNull(ENGINEER, aggrRole);
 
 		assertTrue(ENGINEER + " can take holidays", aggrRole.hasPermissions(CTX_HOL, HOL_PERM_TAKE));
@@ -260,7 +260,7 @@ public class RoleDaoTest extends TransactionalBusTestAbstract
 		assertEquals("holiday permissions", HOL_PERM_TAKE + HOL_PERM_APPROVE, role.getPermissionsValue(CTX_HOL));
 	}
 
-	private void assertWorkManager(PermissionHolder role)
+	private void assertWorkManager(AuthorizationHolder role)
 	{
 		assertNotNull(role);
 
@@ -277,5 +277,5 @@ public class RoleDaoTest extends TransactionalBusTestAbstract
 		assertTrue("can create, perform & assign work", role.hasPermissions(CTX_WORK, WORK_PERM_CREATE + WORK_PERM_PERFORM + WORK_PERM_ASSIGN));
 	}
 
-} // end class PermissionDaoTest
+} // end class RoleDaoTest
 
