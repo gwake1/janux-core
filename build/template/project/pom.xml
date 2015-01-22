@@ -39,6 +39,12 @@ Copyright 2005-2012 janux.org -->
 			<version>${janux.version}</version>
 			<type>pom</type>
 		</dependency>
+
+		<dependency>
+			<groupId>janux</groupId>
+			<artifactId>janux-api</artifactId>
+			<version>${janux.version}</version>
+		</dependency>
 		
 	</dependencies>
 </project>

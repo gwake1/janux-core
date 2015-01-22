@@ -38,6 +38,7 @@ Copyright 2005-2012 janux.org -->
 			<artifactId>janux-util</artifactId>
 			<version>${janux.version}</version>
 		</dependency>
+
 		<!-- standard apache utility libraries -->
 		<dependency>
 			<groupId>commons-collections</groupId>

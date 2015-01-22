@@ -29,6 +29,8 @@ Copyright 2005-2012 janux.org -->
 	<modules>
 		<module>build</module><!-- build meta information -->
 		<module>api</module>
+		<module>modules/util</module>
+		<module>modules/security</module>
 		<module>modules/bus</module>
 		<!-- <module>modules/adapt</module> -->
 		<module>modules/biz</module>

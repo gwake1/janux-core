@@ -50,6 +50,23 @@ Copyright 2005-2012 janux.org -->
 			<version>${janux.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>janux</groupId>
+      <artifactId>janux-lib-util</artifactId>
+			<version>${janux.version}</version>
+			<type>pom</type>
+			<!-- 
+				Prevent janux-util from depending on itself, 
+				which dependency is inherited from its parent janux-project
+			-->
+			<exclusions>
+				<exclusion>
+					<groupId>janux</groupId>
+					<artifactId>janux-util</artifactId>
+				</exclusion>
+			</exclusions>
+    </dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
