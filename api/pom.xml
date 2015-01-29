@@ -32,6 +32,11 @@ Copyright 2005-2012 janux.org -->
 		<relativePath></relativePath>
 	</parent>
 
+	<!-- suppresses a lot of spurrious javadoc warnings introduced in java-8 -->
+	<properties>
+		<additionalparam>-Xdoclint:none</additionalparam>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
