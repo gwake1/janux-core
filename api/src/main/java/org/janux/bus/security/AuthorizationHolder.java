@@ -163,7 +163,15 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 * 	an array of strings representing permissions that are to be granted to this AuthorizationHolder
 	 * 	Entity, for example ["READ","UPDATE"]; the permissions must be available in the named PermissionContext
 	 */
-	void grantPermissions(PermissionContext permissionContext, String[] permissionsGranted);
+	void grantPermissions(String[] permissionsGranted, PermissionContext permissionContext);
+
+
+	/** 
+	 * Same as {@link #grantPermissions(String[], PermissionContext)}
+	 * but takes a single permission as an argument, rather than an array 
+	 */
+	void grantPermission(String permissionGranted, PermissionContext permissionContext);
+
 
 	/** 
 	 * In the case of an implementation that uses bitmasks to store permissions, and given a
@@ -203,10 +211,16 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 * again with the proper 'allow' bitmask that no longer enables the 'PURGE' permission.  
 	 * </p>
 	 */
-	void denyPermissions(PermissionContext permissionContext, String[] permissionsDenied);
+	void denyPermissions(String[] permissionsDenied, PermissionContext permissionContext);
+
+	/** 
+	 * Same as {@link #denyPermissions(String[], PermissionContext)} 
+	 * but takes a single permission as an argument, rather than an array 
+	 */
+	void denyPermission(String permissionDenied, PermissionContext permissionContext);
 
 	/**
-	 * Equivalent to {@link #denyPermissions(PermissionContext, String[])} in implementations that use
+	 * Equivalent to {@link #denyPermissions(String[], PermissionContext)} in implementations that use
 	 * bitmasks to define permissions
 	 *
 	 * @see #denyPermissions(PermissionContext, String[])
@@ -217,4 +231,15 @@ public interface AuthorizationHolder extends PermissionsCapable
 	//void setPermissionsGranted(PermissionContext permissionContext, boolean isDeny, long permissionsValue);
 	//void Long getPermissionsGranted(PermissionContext permissionContext, boolean isDeny, long permissionsValue);
 
+	/** If true, this Role is a super user with all Permissions */
+	boolean isSuper();
+
+	/** set/unset whether this AuthorizationHolder is a super user with all Permissions */
+	void setSuper(boolean isSuper);
+
+	/** Alias for {@link #isSuper} */
+	boolean isAlmighty();
+
+	/** Alias for {@link #setSuper} */
+	void setAlmighty(boolean isAlmighty);
 }

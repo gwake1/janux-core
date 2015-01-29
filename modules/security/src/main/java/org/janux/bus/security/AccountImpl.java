@@ -27,10 +27,11 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import org.janux.bus.persistence.PersistentAbstract;
+import org.janux.bus.persistence.Persistent;
 import org.janux.util.JanuxToStringStyle;
 
-public class AccountImpl extends PersistentAbstract  implements Account, java.io.Serializable
+public class AccountImpl extends AuthorizationHolderBase
+implements Persistent, Account, java.io.Serializable
 {
 	private static final long serialVersionUID = 2012032001;
 	private String    name;
@@ -45,16 +46,17 @@ public class AccountImpl extends PersistentAbstract  implements Account, java.io
 	private List<PermissionGranted> permissionsGrantedList;
 	private AuthorizationHolderBase permsManager;
 
+	protected Integer id = new Integer(Persistent.UNSAVED_ID);
 
 	/** plain vanilla constructor */
 	public AccountImpl() {}
 
-	public String getName() {
-		return this.name;
+	public Integer getId() {
+		return this.id;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 
@@ -130,91 +132,6 @@ public class AccountImpl extends PersistentAbstract  implements Account, java.io
 	}
 
 
-	public List<Role> getRoles() {
-		if (this.roles == null) { this.roles = new ArrayList<Role>(); }
-		return this.roles;
-	}
-	
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-
-
-	private AuthorizationHolderBase getPermissionsManager() 
-	{
-		if (this.permsManager == null)
-			this.permsManager = new AuthorizationHolderBase(this.getName(), this.getRoles(), null);
-
-		return this.permsManager;
-	}
-
-
-
-	public Map<String, PermissionContext> getPermissionContexts() {
-		return this.getPermissionsManager().getPermissionContexts();
-	}
-
-	public boolean can(String[] permissionNames, String permissionContext) {
-		return this.getPermissionsManager().can(permissionNames, permissionContext);
-	}
-
-	public boolean hasPermissions(String permissionContext, String[] permissionNames) {
-		return this.getPermissionsManager().hasPermissions(permissionContext, permissionNames);
-	}
-
-	public boolean can(String permissionName, String permissionContext) {
-		return this.getPermissionsManager().can(permissionName, permissionContext);
-	}
-
-	public boolean hasPermission(String permissionContext, String permissionName) {
-		return this.getPermissionsManager().hasPermission(permissionContext, permissionName);
-	}
-
-	public String[] getPermissions(String permissionContext) {
-		return this.getPermissionsManager().getPermissions(permissionContext);
-	}
-
-	public void grantPermissions(String permissionContext, String[] permissionNames) {
-		throw new UnsupportedOperationException("grantPermissions not implemented yet");
-	}
-
-	public boolean can(long requiredPerms, String permissionContext) { 
-		return this.getPermissionsManager().can(requiredPerms, permissionContext);
-	}
-
-	public boolean hasPermissions(String permissionContext, long requiredPerms) { 
-		return this.getPermissionsManager().hasPermissions(permissionContext, requiredPerms);
-	}
-
-	public long getPermissionsValue(String permissionContext) {
-		return this.getPermissionsManager().getPermissionsValue(permissionContext);
-	}
-
-	public void grantPermissions(PermissionContext permissionContext, long permissionsGranted) {
-		this.getPermissionsManager().grantPermissions(permissionContext, permissionsGranted);
-	}
-
-	public void grantPermissions(PermissionContext permissionContext, String[] permissionsGranted) {
-		this.getPermissionsManager().grantPermissions(permissionContext, permissionsGranted);
-	}
-
-	public void denyPermissions(PermissionContext permissionContext, long permissionsDenied) {
-		this.getPermissionsManager().denyPermissions(permissionContext, permissionsDenied);
-	}
-
-	public void denyPermissions(PermissionContext permissionContext, String[] permissionsDenied) {
-		this.getPermissionsManager().denyPermissions(permissionContext, permissionsDenied);
-	}
-
-	public Long getPermissionsGranted(String permissionSetName) {
-		throw new UnsupportedOperationException("getPermissionsGranted(permissionSetName) has not yet been implemented");
-	}
-	
-	public void setPermissionsGranted(String permissionSetName, Long permissions) {
-		throw new UnsupportedOperationException(
-				"setPermissionsGranted(permissionSetName, permissions) has not yet been implemented");
-	}
 	
 
 	public String toString() 

@@ -24,32 +24,43 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.StandardToStringStyle;
 
-import org.janux.bus.persistence.PersistentAbstract;
+import org.janux.bus.persistence.Persistent;
 import org.janux.util.JanuxToStringStyle;
 
 /**
  * @author  <a href="mailto:philippe.paravicini@janux.org">Philippe Paravicini</a>
  * @version $Revision: 1.8 $ - $Date: 2007-01-11 23:13:10 $
  */
-public class RoleImpl extends PersistentAbstract implements Role, java.io.Serializable
+public class RoleImpl extends AuthorizationHolderBase implements Persistent, Role, java.io.Serializable
 {
 	private static final long serialVersionUID = 2012032701;
-	// private Integer id;
-	private String  name;
 	private String  description;
 	private Integer sortOrder;
-	private boolean enabled;
+	private boolean enabled = true;
 
 	private List<PermissionGranted> permissionsGrantedList;
 	private Map<PermissionGrantedKey, Long> permissionsGranted;
 	private List<Role> roles;
-	private AuthorizationHolderBase permsManager;
+
+	protected Integer id = new Integer(Persistent.UNSAVED_ID);
 
 	/** plain vanilla constructor */
 	public RoleImpl() {}
 
+	public RoleImpl(String name) {
+		this(name, null, null, null);
+	}
 
-	/*
+	public RoleImpl(String name, String description) {
+		this(name, description, null, null);
+	}
+
+	public RoleImpl(String name, String description, List<Role> roles, Map<PermissionGrantedKey, Long> permissionsGranted) 
+	{
+		super(name, roles, permissionsGranted);
+		this.setDescription(description);
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -57,17 +68,7 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	*/
 
-	public String getName() {
-		return this.name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/** Human readable description of this Role */
 	public String getDescription() {
 		return this.description;
 	}
@@ -76,15 +77,6 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 		this.description = description;
 	}
 
-
-	public List<Role> getRoles() {
-		if (this.roles == null) { this.roles = new ArrayList<Role>(); }
-		return this.roles;
-	}
-	
-	public void setRoles(List<Role> aggrRoles) {
-		this.roles = aggrRoles;
-	}
 
 
 	/*
@@ -110,82 +102,11 @@ public class RoleImpl extends PersistentAbstract implements Role, java.io.Serial
 	}
 
 
-	private AuthorizationHolderBase getPermissionsManager() 
-	{
-		if (this.permsManager == null)
-			this.permsManager = new AuthorizationHolderBase(this.getName(), this.getRoles(), this.getPermissionsGranted());
-
-		return this.permsManager;
-	}
-
-
 	/*
 	public Set<String> getPermissionContextStrings() {
 		return this.getPermissionsManager().getPermissionContextStrings();
 	}
 	*/
-
-	public Map<String, PermissionContext> getPermissionContexts() {
-		return this.getPermissionsManager().getPermissionContexts();
-	}
-
-	public boolean can(String[] permissionNames, String permissionContext) {
-		return this.getPermissionsManager().can(permissionNames, permissionContext);
-	}
-
-	public boolean hasPermissions(String permissionContext, String[] permissionNames) {
-		return this.getPermissionsManager().hasPermissions(permissionContext, permissionNames);
-	}
-
-	public boolean can(String permissionName, String permissionContext) {
-		return this.getPermissionsManager().can(permissionName, permissionContext);
-	}
-
-	public boolean hasPermission(String permissionContext, String permissionName) {
-		return this.getPermissionsManager().hasPermission(permissionContext, permissionName);
-	}   
-
-	public String[] getPermissions(String permissionContext) {
-		return this.getPermissionsManager().getPermissions(permissionContext);
-	}
-
-	public boolean can(long requiredPerms, String permissionContext) { 
-		return this.getPermissionsManager().can(requiredPerms, permissionContext);
-	}
-
-	public boolean hasPermissions(String permissionContext, long requiredPerms) { 
-		return this.getPermissionsManager().hasPermissions(permissionContext, requiredPerms);
-	}
-
-	public long getPermissionsValue(String permissionContext) {
-		return this.getPermissionsManager().getPermissionsValue(permissionContext);
-	}
-
-	public void grantPermissions(PermissionContext permissionContext, String[] permissionNames) {
-		this.getPermissionsManager().grantPermissions(permissionContext, permissionNames);
-	}
-
-	public void grantPermissions(PermissionContext permissionContext, long permissionsGranted) {
-		this.getPermissionsManager().grantPermissions(permissionContext, permissionsGranted);
-	}
-
-	public void denyPermissions(PermissionContext permissionContext, long permissionsGranted) {
-		this.getPermissionsManager().denyPermissions(permissionContext, permissionsGranted);
-	}
-
-	public void denyPermissions(PermissionContext permissionContext, String[] permissionsGranted) {
-		this.getPermissionsManager().denyPermissions(permissionContext, permissionsGranted);
-	}
-
-	public Long getPermissionsGranted(String permissionSetName) {
-		throw new UnsupportedOperationException("getPermissionsGranted(permissionSetName) has not yet been implemented");
-	}
-	
-	public void setPermissionsGranted(String permissionSetName, Long permissions) {
-		throw new UnsupportedOperationException(
-				"setPermissionsGranted(permissionSetName, permissions) has not yet been implemented");
-	}
-	
 
 	public Integer getSortOrder() {
 		return this.sortOrder;

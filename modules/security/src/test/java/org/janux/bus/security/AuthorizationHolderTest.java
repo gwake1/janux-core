@@ -36,11 +36,11 @@ public class AuthorizationHolderTest extends TestCase
 	
 	private MockObjectFactory mock = new MockObjectFactory();
 
-	static final String PERM_MAN = "aPermission";
+	static final String PERM_MAN = "MANAGER";
 	
 	private PermissionContext  workContext = mock.getPermissionContext(mock.CTX_WORK);
 	private String WORK = workContext.getName();
-	private AuthorizationHolderBase authHolder    = new AuthorizationHolderBase(PERM_MAN);
+	private AuthorizationHolderBase authHolder = new AuthorizationHolderBase(PERM_MAN);
 
 
 	public AuthorizationHolderTest() {

@@ -25,6 +25,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.janux.util.CompUtils;
 
 public class PermissionContextImpl implements PermissionContext, java.io.Serializable
 {
@@ -44,8 +45,18 @@ public class PermissionContextImpl implements PermissionContext, java.io.Seriali
 	/** plain vanilla constructor */
 	public PermissionContextImpl() {}
 
-	public PermissionContextImpl(String name) {
+	public PermissionContextImpl(String name, String description) {
+		if (CompUtils.isNull(name)) {
+			String msg = "The name of a PermissionContext must be non-null and contain at least one non-white space character";
+			log.error(msg);
+			throw new IllegalArgumentException(msg);
+		}
 		this.name = name;
+		this.description = description;
+	}
+ 
+	public PermissionContextImpl(String name) {
+		this(name, null);
 	}
  
 	public Integer getId() {

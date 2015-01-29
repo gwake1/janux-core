@@ -39,7 +39,7 @@ public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 	/** plain vanilla constructor */
 	public PermissionBitImpl() {}
 
-	public PermissionBitImpl(String name) 
+	public PermissionBitImpl(String name, String description) 
 	{
 		if (CompUtils.isNull(name)) {
 			String msg = "The name of a PermissionBit must be non-null and contain at least one non-white space character";
@@ -48,6 +48,12 @@ public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 		}
 
 		this.setName(name);
+		this.setDescription(description);
+	}
+
+	public PermissionBitImpl(String name) 
+	{
+		this(name, null);
 	}
 
 

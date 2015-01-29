@@ -14,8 +14,6 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.bus.security;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -23,10 +21,7 @@ import org.apache.commons.logging.LogFactory;
  ***************************************************************************************************
  * Singleton class used to create sample PermissionContext and Roles for testing purposes
  *
- * @author  <a href="mailto:philippe.paravicini@eCommerceStudio.com">Philippe Paravicini</a>
- * @version $Revision: 1.1 $ - $Date: 2006-12-07 01:55:18 $
- *
- * @see
+ * @author  <a href="mailto:pparavicini@janux.org">Philippe Paravicini</a>
  ***************************************************************************************************
  */
 public class MockObjectFactory

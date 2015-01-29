@@ -44,13 +44,15 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 	protected transient Log log = LogFactory.getLog(this.getClass());
 
-	private String name;
-	private List<Role> roles;
+	protected String name;
+	protected List<Role> roles;
+	protected boolean isSuper;
 
-	private Map<String, PermissionContext> permissionContexts;
+	protected Map<String, PermissionContext> permissionContexts;
 
 	/** this is declared as protected simply for testing purposes */
 	protected Map<PermissionGrantedKey, Long> permissionsGranted;
+
 	private Map<String, Long> permsUnionMap;
 
 	public AuthorizationHolderBase() {}
@@ -66,13 +68,25 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 		this.permissionsGranted = permissionsGranted;
 	}
 
-	private List<Role> getRoles()
-	{
-		if (this.roles == null)
-			this.roles = new ArrayList<Role>();
 
+	public String getName() {
+		return this.name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public List<Role> getRoles() {
+		if (this.roles == null) { this.roles = new ArrayList<Role>(); }
 		return this.roles;
 	}
+	
+	public void setRoles(List<Role> aggrRoles) {
+		this.roles = aggrRoles;
+	}
+
 
 
 	public Map<String, PermissionContext> getPermissionContexts()
@@ -95,16 +109,41 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 		return permissionContexts;
 	}
 
+	public boolean can(long requiredPerms, String permContextName)
+	{ 
+		// TODO: improve this so that the denied permissions are applied on 'top' of
+		// a super user: i.e. grant All Perms except A,B,C.
+		if (this.isSuper()) {
+			return true;
+		} else {
+			if (requiredPerms < 1) 
+			{
+				// String msg = this.name + ".hasPermissions(" + permContextName + ", " + requiredPerms + "): when querying for permissions you must provide a permission strictly greater than 0. ";
+				String msg = String.format("%s.can(%s,%s): when querying for permissions you must provide a permission strictly greater than 0.", this.name, permContextName, requiredPerms);
+				log.error(msg);
+				throw new IllegalArgumentException(msg);
+			}
+				
+			return (this.getPermissionsValue(permContextName) & requiredPerms) == requiredPerms;
+		}
+	}
+
+	public boolean hasPermissions(String permContextName, long requiredPerms) {
+		return this.can(requiredPerms, permContextName);
+	}
+
 
 	public boolean can(String[] permNames, String permContextName)
 	{
 		long requiredPerms = 0;
 		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
 
-		if (permContext != null)
-			requiredPerms = permContext.getValue(permNames);
-
-		return hasPermissions(permContextName, requiredPerms);
+		if (permContext == null) { // no permissions have been granted in that context
+			return false;
+		} else {
+			requiredPerms = permContext.getPermissionsAsNumber(permNames);
+			return this.can(requiredPerms, permContextName);
+		}
 	}
 
 
@@ -115,16 +154,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 	public boolean can(String permissionName, String permContextName)
 	{
-		boolean hasPermissions = false;
-		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
-
-		if (permContext != null)
-		{
-			long requiredPerms = permContext.getPermissionBit(permissionName).getValue();
-			hasPermissions = this.hasPermissions(permContextName, requiredPerms);
-		}
-		
-		return hasPermissions;
+		return this.can(new String[] {permissionName}, permContextName);
 	}
 
 
@@ -142,7 +172,8 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 		{
 			for ( PermissionBit permBit : permContext.getPermissionBits() )
 			{
-				if ( this.hasPermissions(permContextName, permBit.getValue()) )
+				// if ( this.hasPermissions(permContextName, permBit.getValue()) )
+				if ( this.can( permBit.getValue(), permContextName ) )
 					permGrantedNames.add(permBit.getName());
 			}
 		}
@@ -206,22 +237,6 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 	*/
 
 
-	public boolean can(long requiredPerms, String permContextName)
-	{ 
-		if (requiredPerms < 1) 
-		{
-			String msg = this.name + ".hasPermissions(" + permContextName + ", " + requiredPerms + "): when querying for permissions you must provide a permission strictly greater than 0. ";
-			log.error(msg);
-			throw new IllegalArgumentException(msg);
-		}
-			
-		return (this.getPermissionsValue(permContextName) & requiredPerms) == requiredPerms;
-	}
-
-	public boolean hasPermissions(String permContextName, long requiredPerms) {
-		return this.can(requiredPerms, permContextName);
-	}
-
 
 	public long getPermissionsValue(String permContextName)
 	{
@@ -251,9 +266,14 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 	}
 
 
-	public void grantPermissions(PermissionContext permContext, String[] permsGranted) {
-		throw new UnsupportedOperationException("grantPermissions(permContext, String[]) has not yet been implemented");
+	public void grantPermissions(String[] permsGranted, PermissionContext permContext) {
+		this.grantPermissions(permContext, permContext.getValue(permsGranted));
 	}
+
+	public void grantPermission(String permGranted, PermissionContext permContext) {
+		this.grantPermissions(new String[] {permGranted}, permContext);
+	}
+
 
 	public void denyPermissions(PermissionContext permContext, long permsDenied)
 	{
@@ -268,24 +288,37 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 			this.setPermissionGranted(permContext, true, permsDenied); 
 	}
 
-	public void denyPermissions(PermissionContext permContext, String[] permsDenied)
+	public void denyPermissions(String[] permsDenied, PermissionContext permContext)
 	{
-		throw new UnsupportedOperationException("denyPermissions(permContext, String[]) has not yet been implemented");
+		this.denyPermissions(permContext, permContext.getPermissionsAsNumber(permsDenied));
+	}
+
+	public void denyPermission(String permDenied, PermissionContext permContext)
+	{
+		this.denyPermissions(new String[] {permDenied}, permContext);
 	}
 
 
+	/** @return the permissions granted directly to this AuthorizationHolder, as a Long */
 	private Long getPermissionGranted(PermissionContext permContext, boolean isDeny)
 	{
 		PermissionGrantedKey permGrantedKey = new PermissionGrantedKey(permContext, isDeny);
 		return this.getPermissionsGranted().get(permGrantedKey);
 	}
 
+
+	/** Grant a permission directly to this Role */
 	private void setPermissionGranted(PermissionContext permContext, boolean isDeny, Long value)
 	{
 		PermissionGrantedKey permGrantedKey = new PermissionGrantedKey(permContext, isDeny);
 		this.getPermissionsGranted().put(permGrantedKey, value);
 	}
 
+
+	/** 
+	 * @return a Map of the permissions held directly by this AuthorizationHolder, 
+	 * rather than those inherited from a Role
+	 */
 	protected Map<PermissionGrantedKey, Long> getPermissionsGranted()
 	{
 		if (this.permissionsGranted == null)
@@ -296,7 +329,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 
 	/** 
-	 * makes sure that the perms provided are between 0 and permContext.getMaxValue(),
+	 * validates that the perms provided are between 0 and permContext.getMaxValue(),
 	 * @throws IllegalArgumentException the perms provided are not between 0 and permContext.getMaxValue(),
 	 */
 	private void validatePermissions(PermissionContext permContext, long perms)
@@ -344,8 +377,9 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 	
 
 	/** 
-	 * iterates over all aggregated Roles and, for each PermissionContext, 
-	 * calculates the union of all Permissions granted
+	 * Iterates over all aggregated Roles and, for each PermissionContext, 
+	 * calculates the union of all Permissions granted; 
+	 * this is where the heavy lifting of this bitmask-based implementation occurs
 	 */
 	private Map<String, Long> getPermsUnionMap()
 	{
@@ -392,7 +426,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 					long inheritedPerms = (permsUnionMap.get(context) != null) ? permsUnionMap.get(context).longValue() : 0;
 					//long permGranted    = permissionsGranted.get(permGrantedKey).getPermissions();
-					long permGranted    = permissionsGranted.get(permGrantedKey);
+					long permGranted    = this.getPermissionsGranted().get(permGrantedKey);
 
 					// substract or add the permission
 					long permsUnion = permGrantedKey.isDeny() ?  (inheritedPerms - (permGranted & inheritedPerms)) : inheritedPerms | permGranted;
@@ -410,6 +444,25 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 		}
 
 		return this.permsUnionMap;
+	}
+
+	
+	public boolean isSuper() {
+		return this.isSuper;
+	}
+
+	public void setSuper(boolean isSuper) {
+		log.warn(String.format("Setting %s to Super User!", this.name));
+		this.isSuper = isSuper;
+	}
+
+
+	public boolean isAlmighty() {
+		return this.isSuper();
+	}
+
+	public void setAlmighty(boolean isAlmighty) {
+		this.setSuper(isAlmighty);
 	}
 
 
