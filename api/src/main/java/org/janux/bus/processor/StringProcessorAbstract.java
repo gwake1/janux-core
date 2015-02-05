@@ -26,8 +26,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -53,7 +53,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class StringProcessorAbstract implements StringProcessor
 {
-	protected transient Log log = LogFactory.getLog(this.getClass());
+	protected transient Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private Charset incomingCharset;	
 	private Charset outgoingCharset;

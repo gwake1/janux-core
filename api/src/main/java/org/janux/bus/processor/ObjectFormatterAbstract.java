@@ -14,8 +14,8 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.bus.processor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,7 +32,7 @@ import java.io.OutputStream;
  */
 public abstract class ObjectFormatterAbstract implements ObjectFormatter
 {
-	protected transient Log log = LogFactory.getLog(this.getClass());
+	protected transient Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public void process(InputStream in, OutputStream out) 
 	{

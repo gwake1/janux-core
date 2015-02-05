@@ -52,8 +52,9 @@ Copyright 2005-2012 janux.org -->
 
 	<dependencies>
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
 		
 		<!-- jasypt for encrypt and decrypt -->
