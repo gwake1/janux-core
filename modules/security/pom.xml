@@ -21,7 +21,7 @@ Copyright 2005-2012 janux.org -->
   <packaging>jar</packaging>
 
 
-	<parent><!-- defined in build/pom.xml -->
+	<parent><!-- defined in build/template/project/pom.xml -->
 		<groupId>janux</groupId>
 		<artifactId>janux-project</artifactId>
 		<version>0.5-SNAPSHOT</version>
@@ -54,12 +54,6 @@ Copyright 2005-2012 janux.org -->
 			<groupId>janux</groupId>
 			<artifactId>janux-util</artifactId>
 			<version>${janux.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
 		</dependency>
 		
 		<!-- jasypt for encryption and decryption -->

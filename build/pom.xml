@@ -71,6 +71,7 @@ Copyright 2005-2012 janux.org -->
 	<modules>
 		<module>lib</module>
 		<module>shared</module>
+		<module>template/project</module>
 		<module>template/persist-hibernate</module>
 	</modules>
 
