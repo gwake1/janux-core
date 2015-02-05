@@ -34,6 +34,12 @@ Copyright 2005-2012 janux.org -->
 
 	<dependencies>
 		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>janux</groupId>
 			<artifactId>janux-lib-util</artifactId>
 			<version>${janux.version}</version>

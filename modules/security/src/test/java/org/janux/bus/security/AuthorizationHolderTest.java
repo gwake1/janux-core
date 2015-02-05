@@ -16,8 +16,8 @@ package org.janux.bus.security;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  ***************************************************************************************************
@@ -31,8 +31,8 @@ import org.apache.commons.logging.LogFactory;
  */
 public class AuthorizationHolderTest extends TestCase
 {
-	Log log = LogFactory.getLog(this.getClass());
-	//static Log log = LogFactory.getLog(FooSetup.class);
+ Logger log = LoggerFactory.getLogger(this.getClass());
+	//static Logger log = LoggerFactory.getLogger(FooSetup.class);
 	
 	private MockObjectFactory mock = new MockObjectFactory();
 

@@ -19,13 +19,13 @@ import org.janux.util.CompUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 {
 
-	protected transient Log log = LogFactory.getLog(this.getClass());
+	protected transient Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private static final long serialVersionUID = -4731199333208246315L;
 	private String name;

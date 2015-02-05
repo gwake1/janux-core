@@ -45,7 +45,8 @@ Copyright 2005-2012 janux.org -->
 		<!-- versions of grouped dependency poms in lib folder -->
 		<spring.version>3.0.5.RELEASE</spring.version>
 
-		<slf4j.version>1.7.10</slf4j.version>
+		<!-- matches the slf4-api dependency of the latest version of logback -->
+		<slf4j.version>1.7.6</slf4j.version>
 
 		<!-- 
 			We define this here because the dependencyManagement element 

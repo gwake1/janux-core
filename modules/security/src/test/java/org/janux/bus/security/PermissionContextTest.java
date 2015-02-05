@@ -19,13 +19,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.extensions.TestSetup;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** @author  <a href="mailto:philippe.paravicini@eCommerceStudio.com">Philippe Paravicini</a> */
 public class PermissionContextTest extends TestCase
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	PermissionContext permContext;
 

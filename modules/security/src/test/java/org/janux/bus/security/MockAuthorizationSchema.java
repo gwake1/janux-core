@@ -17,8 +17,8 @@ package org.janux.bus.security;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  ***************************************************************************************************
@@ -32,7 +32,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class MockAuthorizationSchema
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public static final String READ   = "READ";
 	public static final String UPDATE = "UPDATE";

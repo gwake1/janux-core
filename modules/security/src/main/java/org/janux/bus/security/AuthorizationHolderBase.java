@@ -24,8 +24,8 @@ import java.io.Serializable;
 
 import org.janux.util.Chronometer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -42,7 +42,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 {
 	private static final long serialVersionUID = 20070617L;
 
-	protected transient Log log = LogFactory.getLog(this.getClass());
+	protected transient Logger log = LoggerFactory.getLogger(this.getClass());
 
 	protected String name;
 	protected List<Role> roles;

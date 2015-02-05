@@ -22,14 +22,14 @@ import java.util.ArrayList;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.janux.util.CompUtils;
 
 public class PermissionContextImpl implements PermissionContext, java.io.Serializable
 {
-	protected transient Log log = LogFactory.getLog(this.getClass());
+	protected transient Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private static final long serialVersionUID = 1;
 
