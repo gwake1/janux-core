@@ -20,8 +20,8 @@ import java.util.Set;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.janux.bus.persistence.TransactionalTestAbstract;
 import org.janux.bus.test.TransactionalBusTestAbstractGeneric;
 
@@ -34,7 +34,7 @@ import org.janux.bus.test.TransactionalBusTestAbstractGeneric;
  */
 public class AccountServiceGenericTest extends TransactionalBusTestAbstractGeneric
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	protected AccountService accountServiceGeneric;
 
@@ -66,23 +66,23 @@ public class AccountServiceGenericTest extends TransactionalBusTestAbstractGener
 	{
 		Account account = accountServiceGeneric.findAccountByName(ACCOUNT_HERA);
 		assertNotNull(account);
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 
 		account = accountServiceGeneric.findAccountByName("heracles");
 		assertNotNull(account);
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 
 		account = accountServiceGeneric.findAccountByName("ariadne");
 		assertNotNull(account);
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 
 		account = accountServiceGeneric.findAccountByName("dilbert");
 		assertNotNull(account);
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 
 		account = accountServiceGeneric.findAccountByName("topham");
 		assertNotNull(account);
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 	}
 
 	public void testAccountSettings()
@@ -93,7 +93,7 @@ public class AccountServiceGenericTest extends TransactionalBusTestAbstractGener
 		final String settingValue2 = "456";
 		Account account = accountServiceGeneric.findAccountByName(ACCOUNT_HERA);
 		assertNotNull(account);
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 		
 		Set<AccountSetting> settings = account.getSettings();
 		AccountSetting setting1 = new AccountSettingImpl(settingTag1,settingValue1);
@@ -106,7 +106,7 @@ public class AccountServiceGenericTest extends TransactionalBusTestAbstractGener
 		
 		Account modifiedAccount = accountServiceGeneric.findAccountByName(ACCOUNT_HERA);
 		assertNotNull(account);
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 		
 		settings = modifiedAccount.getSettings();
 		assertNotNull(settings);
@@ -148,7 +148,7 @@ public class AccountServiceGenericTest extends TransactionalBusTestAbstractGener
 				
 		assertEquals(ACCOUNT_HERA, testPasswordEncrypted, accountHera.getPassword());
 		
-		if (log.isDebugEnabled()) log.debug(account);
+		if (log.isDebugEnabled()) log.debug(account.toString());
 		
 	}
 

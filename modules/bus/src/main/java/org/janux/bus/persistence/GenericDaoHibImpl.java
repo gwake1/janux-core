@@ -19,8 +19,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
@@ -52,7 +52,7 @@ public abstract class GenericDaoHibImpl<T, ID extends Serializable, S extends Se
 		HibernateDataAccessObjectGeneric 
 {
 	/** Properties*/
-	protected Log log = LogFactory.getLog(this.getClass());
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	protected RandomStringGenerator uuidGenerator;
 	

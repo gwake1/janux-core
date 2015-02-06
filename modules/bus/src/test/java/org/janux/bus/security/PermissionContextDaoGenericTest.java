@@ -18,8 +18,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.janux.bus.persistence.EntityNotFoundException;
 import org.janux.bus.persistence.TransactionalTestAbstract;
 import org.janux.bus.test.TransactionalBusTestAbstractGeneric;
@@ -33,7 +33,7 @@ import org.janux.bus.test.TransactionalBusTestAbstractGeneric;
  */
 public class PermissionContextDaoGenericTest extends TransactionalBusTestAbstractGeneric
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	protected PermissionContextDaoGeneric permContextDaoGeneric;
 

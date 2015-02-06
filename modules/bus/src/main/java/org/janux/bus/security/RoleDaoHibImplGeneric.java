@@ -77,7 +77,7 @@ public class RoleDaoHibImplGeneric
 		this.initializeRoles(role);
 
 		if (log.isInfoEnabled()) log.info("successfully retrieved role with name: '" + name + "' in " + timer.printElapsedTime());
-		if (log.isDebugEnabled()) log.debug(role);
+		if (log.isDebugEnabled()) log.debug(role.toString());
 
 		return role;
 	}

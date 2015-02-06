@@ -14,8 +14,8 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.bus.dataloader.test;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
 
 import org.janux.bus.dataloader.Loader;
@@ -33,7 +33,7 @@ import org.janux.bus.dataloader.FileLoaderAbstract;
  */
 public class FileLoaderImpl extends FileLoaderAbstract
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 
 	/** simply calls parent constructor */

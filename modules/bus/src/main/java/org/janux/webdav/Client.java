@@ -42,12 +42,12 @@ import org.apache.commons.httpclient.URIException;
 import org.apache.webdav.lib.WebdavResource;
 import org.apache.webdav.lib.properties.ResourceTypeProperty;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Client
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * The WebDAV resource.
 	 */

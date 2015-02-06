@@ -17,8 +17,8 @@ package org.janux.bus.persistence;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
@@ -37,7 +37,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class DataAccessHibImplAbstract extends HibernateDaoSupport implements HibernateDataAccessObject {
 
-	protected Log log = LogFactory.getLog(this.getClass());
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public static Object firstResult(List results) {
 		return (results != null && results.size()>0) ? results.get(0) : null;

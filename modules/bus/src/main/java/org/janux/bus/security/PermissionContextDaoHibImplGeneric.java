@@ -71,7 +71,7 @@ public class PermissionContextDaoHibImplGeneric
 		}
 
 		if (log.isInfoEnabled()) log.info("successfully retrieved context with name: '" + name + "' in " + timer.printElapsedTime());
-		if (log.isDebugEnabled()) log.debug(context);
+		if (log.isDebugEnabled()) log.debug(context.toString());
 
 		return context;
 	}

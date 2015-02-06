@@ -47,18 +47,22 @@ Copyright 2005-2012 janux.org -->
 			<version>2.3</version>
 		</dependency>
 
+		<!--
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.0.4</version>
 		</dependency>
+		-->
 		<!-- end standard apache utility libraries -->
 
+		<!--
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
 		</dependency>
+		-->
 
 		<!-- 
 			Used to generate human-readable random strings 

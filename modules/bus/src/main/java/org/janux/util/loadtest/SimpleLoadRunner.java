@@ -17,8 +17,8 @@ package org.janux.util.loadtest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.janux.util.loadtest.ui.Displayable;
 
 
@@ -32,7 +32,7 @@ import org.janux.util.loadtest.ui.Displayable;
  */
 public class SimpleLoadRunner implements LoadRunner
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private String threadNamePrefix = "Thread";
 	private int numThreads = 5;

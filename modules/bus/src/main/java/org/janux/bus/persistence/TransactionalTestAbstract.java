@@ -14,8 +14,8 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.bus.persistence;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -54,7 +54,7 @@ import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
  */
 public abstract class TransactionalTestAbstract extends AbstractDependencyInjectionSpringContextTests 
 {
-	protected Log log = LogFactory.getLog(this.getClass());
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/** 
 	 * gets wired by name, requires a bean named 'transactionManager' in the ApplicationContext

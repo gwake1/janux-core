@@ -14,8 +14,8 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.bus.dataloader;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,7 +24,7 @@ import java.io.*;
 
 public abstract class FileLoaderAbstract implements Loader
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private String[] filenames;
 	private String charsetName;
