@@ -14,8 +14,6 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.safehaus.uuid.UUID;
 import org.safehaus.uuid.UUIDGenerator;
 
@@ -32,8 +30,6 @@ import org.safehaus.uuid.UUIDGenerator;
  *
  */
 public class RandomBasedGenerator implements RandomStringGenerator {
-
-	transient Log log = LogFactory.getLog(this.getClass());
 
 	public synchronized String getString() {
 	  UUID uuid = UUIDGenerator.getInstance().generateRandomBasedUUID();

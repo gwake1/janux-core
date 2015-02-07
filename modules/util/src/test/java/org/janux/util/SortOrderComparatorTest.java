@@ -16,23 +16,22 @@ package org.janux.util;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  ***************************************************************************************************
  * Tests the SortOrderComparator
  *
  * @author  <a href="mailto:philippe.paravicini@eCommerceStudio.com">Philippe Paravicini</a>
- * @version $Revision: 1.2 $ - $Date: 2006-08-29 21:11:31 $
  *
  * @see SortOrderComparator
  * @see Sorteable
  ***************************************************************************************************
  */
-public class TestSortOrderComparator extends TestCase
+public class SortOrderComparatorTest extends TestCase
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/** executed prior to each test */
 	protected void setUp() { }
@@ -72,5 +71,5 @@ public class TestSortOrderComparator extends TestCase
 		assertTrue("s4:s3", c.compare(s4,s3) == 0);
 	}
 
-} // end class SortOrderComparator
+} // end class SortOrderComparatorTest
 

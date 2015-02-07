@@ -14,8 +14,8 @@ Copyright 2005-2012 janux.org */
 
 package org.janux.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.Ostermiller.util.RandPass;
 
@@ -31,7 +31,7 @@ import com.Ostermiller.util.RandPass;
  */
 public class RandomCodeGenerator implements RandomReadableStringGenerator
 {
-	transient Log log = LogFactory.getLog(this.getClass());
+	transient Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/** @see RandPass#NUMBERS_AND_LETTERS_ALPHABET */
 	public final static char[] ALPHABET_ALPHANUMERIC = RandPass.NUMBERS_AND_LETTERS_ALPHABET;

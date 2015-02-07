@@ -1,0 +1,35 @@
+<configuration debug="false" scan="false">
+
+<!--
+	Sample logback.xml configuration file that provides a standard Console and AppLogger, 
+
+	Copy this file as logback-test.xml and customize it in your local project to
+	provide logging specific to the package structure of a specific persistence
+	implementation. logback-test.xml will automatically override logback.xml
+-->
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{HH:mm:ss.SSS}|%-5level|%msg%ex{1}|%logger{52}%n</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="AppLog" class="ch.qos.logback.core.FileAppender">
+		<file>test.log</file>
+		<append>false</append>
+		<encoder>
+			<Pattern>%d{HH:mm:ss.SSS}|%-5level|%msg%ex{5}|%logger{52}%n</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.janux" level="DEBUG"/>
+	<!-- <logger name="javax.enterprise.system.core" level="INFO"/> -->
+
+	<!-- turn OFF all logging (children can override) 
+	<root level="OFF"> 
+	-->
+	<root level="WARN">
+		<!-- <appender-ref ref="CONSOLE"/> -->
+		<appender-ref ref="AppLog"/>
+	</root>
+</configuration>
