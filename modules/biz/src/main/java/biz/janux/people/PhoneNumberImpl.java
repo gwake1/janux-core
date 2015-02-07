@@ -18,8 +18,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.janux.bus.persistence.PersistentAbstract;
 
 /**
@@ -33,7 +33,7 @@ import org.janux.bus.persistence.PersistentAbstract;
 public class PhoneNumberImpl extends PersistentAbstract implements PhoneNumber
 {
 	private static final long serialVersionUID = 20071204;
-	private static Log log = LogFactory.getLog(PhoneNumberImpl.class);
+	private static Logger log = LoggerFactory.getLogger(PhoneNumberImpl.class);
 	
 	private int countryCode  = -1;
 	private int areaCode     = -1;

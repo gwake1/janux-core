@@ -16,8 +16,8 @@ package biz.janux.geography.aop;
 
 import java.lang.reflect.Method;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.AfterReturningAdvice;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.aop.AfterReturningAdvice;
  */
 public class RuntimeExceptionAfterReturningAdvice implements AfterReturningAdvice {
 
-	protected Log log = LogFactory.getLog(this.getClass());
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	public void afterReturning(Object returnValue, Method method, Object[] args,Object target) throws Throwable {
 		if (log.isDebugEnabled())

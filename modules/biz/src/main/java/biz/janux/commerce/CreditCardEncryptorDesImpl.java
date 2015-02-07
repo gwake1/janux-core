@@ -19,15 +19,15 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @since 0.4
  */
 public class CreditCardEncryptorDesImpl implements CreditCardEncryptor
 {
-	private static Log log = LogFactory.getLog(CreditCardEncryptorDesImpl.class);
+	private static Logger log = LoggerFactory.getLogger(CreditCardEncryptorDesImpl.class);
 	
 	sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
 	sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();

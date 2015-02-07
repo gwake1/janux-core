@@ -19,8 +19,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 // import org.janux.adapt.CompositeProperty;
 // import org.janux.adapt.CompositePropertyImpl;
 import org.janux.bus.persistence.PersistentAbstract;
@@ -40,7 +40,7 @@ import biz.janux.people.net.Url;
  */
 public abstract class PartyAbstract extends PersistentAbstract implements Party
 {
-	private static Log log = LogFactory.getLog(PartyAbstract.class);
+	private static Logger log = LoggerFactory.getLogger(PartyAbstract.class);
 
 	private String code;
 	private ContactMethodManager contactMan = new ContactMethodManager();

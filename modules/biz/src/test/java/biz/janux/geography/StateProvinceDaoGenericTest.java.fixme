@@ -19,6 +19,11 @@ import java.util.Map;
 
 import biz.janux.test.TransactionalBizTestAbstractGeneric;
 
+//// TODO: 
+// for some reason, this test fails when the logback root debug is at 'WARN'
+// with a failure to create a hibernate proxy, but passes when it is set at 'DEBUG'
+//
+
 /**
  * @author   <a href="mailto:philippe.paravicini@janux.org">Philippe Paravicini</a>
  * @version  $Revision: 1.2 $ - $Date: 2006-07-17 05:21:55 $

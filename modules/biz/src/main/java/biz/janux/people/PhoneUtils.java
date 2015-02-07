@@ -14,8 +14,8 @@ Copyright 2005-2012 janux.org */
 
 package biz.janux.people;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -29,7 +29,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class PhoneUtils
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	/** returns the pre-defined non-digit character class: "\D" which is equivalent to [^0-9] */
 	public final static String REGEXP_MATCH_NON_NUMERIC = "\\D";

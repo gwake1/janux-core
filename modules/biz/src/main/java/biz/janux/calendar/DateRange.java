@@ -14,8 +14,8 @@ Copyright 2005-2012 janux.org */
 
 package biz.janux.calendar;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class DateRange implements Serializable, Comparable, Cloneable
 {
 	private static final long serialVersionUID = 5077991174775436270L;
 
-	protected static Log log = LogFactory.getLog(DateRange.class);
+	protected static Logger log = LoggerFactory.getLogger(DateRange.class);
 	/** environment variable for setting minimum year value */
 	public static final String MIN_YEAR_ENV_VAR = "janux.biz.calendar.minyear";
 	/** environment variable for setting maximum year value */

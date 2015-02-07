@@ -51,10 +51,12 @@ public class CountryDaoHibImplGeneric
 		for (Iterator i = l.iterator(); i.hasNext();)
 		{
 			Country c = (Country)i.next();
-			log.debug(c);
+			log.debug(c.toString());
 			log.debug(c.getCode());
 			countries.put(c.getCode(), c);
-			log.debug(countries.keySet());
+			for ( String k : countries.keySet() ) {
+				log.debug(k);
+			}
 		} // end for
 
 		if (log.isInfoEnabled()) log.info("successfully retrieved account '" + countries.keySet().size() + " countries" + "' in " + timer.printElapsedTime());

@@ -24,8 +24,8 @@ import org.janux.util.JanuxToStringStyle;
 
 import biz.janux.people.Party;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  ***************************************************************************************************
@@ -38,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class PostalAddressImpl extends PersistentAbstract implements PostalAddress
 {
-	protected static Log log = LogFactory.getLog(PostalAddressImpl.class);
+	protected static Logger log = LoggerFactory.getLogger(PostalAddressImpl.class);
 
 	private static final long serialVersionUID = 20071205;
 

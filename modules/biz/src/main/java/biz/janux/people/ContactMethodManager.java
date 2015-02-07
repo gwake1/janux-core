@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.io.Serializable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import biz.janux.people.net.Url;
 import biz.janux.people.net.Uri;
@@ -40,7 +40,7 @@ import biz.janux.geography.PostalAddress;
 public class ContactMethodManager implements Contacteable, Serializable, Cloneable
 {
     private static final long serialVersionUID = -7277872471797101296L;
-	private static Log log = LogFactory.getLog(ContactMethodManager.class);
+	private static Logger log = LoggerFactory.getLogger(ContactMethodManager.class);
 	private Map<String, ContactMethod> contactMethods;
 
 	/** plain vanilla empty constructor */

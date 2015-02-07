@@ -16,8 +16,8 @@ package biz.janux.commerce;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:alberto.buffagni@janux.org">Alberto Buffagni</a>
@@ -26,7 +26,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class CreditCardFopServiceImpl implements CreditCardFopService 
 {
-	private static Log log = LogFactory.getLog(CreditCardFopServiceImpl.class);
+	private static Logger log = LoggerFactory.getLogger(CreditCardFopServiceImpl.class);
 
 	private CreditCardFopDao    creditCardFopDao;
 	private CreditCardEncryptor creditCardEncryptor;

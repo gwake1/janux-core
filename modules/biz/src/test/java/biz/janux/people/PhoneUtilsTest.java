@@ -19,8 +19,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.extensions.TestSetup;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  ***************************************************************************************************
@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class PhoneUtilsTest extends TestCase
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public void testMakeNumeric()
 	{

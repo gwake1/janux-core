@@ -15,8 +15,8 @@ Copyright 2005-2012 janux.org */
 package biz.janux.people;
 
 
-//import org.apache.commons.logging.LogFactory;
-//import org.apache.commons.logging.Log;
+//import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
 
 
 /**

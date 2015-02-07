@@ -23,8 +23,8 @@ import org.janux.bus.search.SearchCriteria;
 import org.janux.util.Chronometer;
 import org.springframework.dao.DataAccessException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Used to create, save, retrieve, update and delete Organization objects from persistent storage.
@@ -37,7 +37,7 @@ public class OrganizationDaoHibImplGeneric
 	extends GenericDaoWithFacetsHibImpl<OrganizationImpl, Integer, SearchCriteria, OrganizationFacet> 
 	implements OrganizationDaoGeneric<OrganizationImpl>
 {
-	Log log = LogFactory.getLog(this.getClass());
+ Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public OrganizationImpl load(OrganizationImpl organization, List<OrganizationFacet> facetSet) throws DataAccessException{
 		if(facetSet.contains(OrganizationFacet.CONTACT_METHODS)){
