@@ -28,11 +28,11 @@ Copyright 2005-2012 janux.org -->
 	
 	<modules>
 		<module>payment-api</module>
-		<module>payment</module>
+		<!-- <module>payment</module> -->
+		<!-- <module>payment-json</module> -->
 		<!-- <module>payment-controllers</module> --> <!-- needs crypto extension to run -->
 		<!-- <module>payment-processor</module> -->
-		<module>payment-json</module>
-		<!-- <module>sandbox/payment-client</module> -->
+		<!-- <module>payment-client</module> -->
 		<!-- <module>payment-storage-StrongKey</module> -->
 	</modules>
 
