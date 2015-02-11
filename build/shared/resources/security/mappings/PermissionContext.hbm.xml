@@ -4,7 +4,7 @@
 		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"
 >
 <!-- CVS: $Id: PermissionContext.hbm.xml,v 1.3 2006-08-29 21:00:31 philippe Exp $ -->
-<hibernate-mapping package="org.janux.bus.security" >
+<hibernate-mapping package="org.janux.security" >
 
 <class 
 	name="PermissionContextImpl" 

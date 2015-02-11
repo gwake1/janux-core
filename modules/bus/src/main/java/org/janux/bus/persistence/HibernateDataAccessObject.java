@@ -21,7 +21,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import org.hibernate.Session;
-import org.janux.bus.security.AccountDaoGeneric;
 
 /**
  ***************************************************************************************************

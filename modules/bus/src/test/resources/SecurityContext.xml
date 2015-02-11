@@ -23,14 +23,14 @@
 	 ****************************************************************************
 	-->
 	<!-- the Service Facade -->
-	<bean id="accountService" class="org.janux.bus.security.AccountServiceImpl">
+	<bean id="accountService" class="org.janux.security.AccountServiceImpl">
 		<constructor-arg><ref local="accountDao"/></constructor-arg>
 		<constructor-arg><ref local="roleDao"/></constructor-arg>
 		<constructor-arg><ref local="permContextDao"/></constructor-arg>
 	</bean>
 
 	<!-- manages Account objects -->
-	<bean id="accountDao" class="org.janux.bus.security.AccountDaoHibImpl">
+	<bean id="accountDao" class="org.janux.security.persist.AccountDaoHibImpl">
 		<property name="sessionFactory"><ref bean="hibernateSessionFactory"/></property>
 		<property name="passwordEncryptor"><ref bean="jasyptPasswordEncryptor"/></property>
 	</bean>
@@ -47,12 +47,12 @@
 	</bean>
 
 	<!-- manages PermissionContext objects -->
-	<bean id="roleDao" class="org.janux.bus.security.RoleDaoHibImpl">
+	<bean id="roleDao" class="org.janux.security.persist.RoleDaoHibImpl">
 		<property name="sessionFactory"><ref bean="hibernateSessionFactory"/></property>
 	</bean>
 
 	<!-- manages PermissionContext objects -->
-	<bean id="permContextDao" class="org.janux.bus.security.PermissionContextDaoHibImpl">
+	<bean id="permContextDao" class="org.janux.security.persist.PermissionContextDaoHibImpl">
 		<property name="sessionFactory"><ref bean="hibernateSessionFactory"/></property>
 	</bean>
 

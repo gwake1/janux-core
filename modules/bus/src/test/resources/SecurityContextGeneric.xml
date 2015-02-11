@@ -22,14 +22,14 @@
 	 ****************************************************************************
 	-->
 	<!-- the Service Facade -->
-	<bean id="accountServiceGeneric" class="org.janux.bus.security.AccountServiceImplGeneric">
+	<bean id="accountServiceGeneric" class="org.janux.security.AccountServiceImplGeneric">
 		<constructor-arg><ref local="accountDaoGeneric"/></constructor-arg>
 		<constructor-arg><ref local="roleDaoGeneric"/></constructor-arg>
 		<constructor-arg><ref local="permContextDaoGeneric"/></constructor-arg>
 	</bean>
 
 	<!-- manages Account objects -->
-	<bean id="accountDaoGeneric" class="org.janux.bus.security.AccountDaoHibImplGeneric" parent="abstractGenericDao">
+	<bean id="accountDaoGeneric" class="org.janux.security.persist.AccountDaoHibImplGeneric" parent="abstractGenericDao">
 			<property name="passwordEncryptor"><ref bean="jasyptPasswordEncryptor"/></property>
 	</bean>
 	
@@ -46,20 +46,20 @@
 
 
 	<!-- manages PermissionContext objects -->
-	<bean id="roleDaoGeneric" class="org.janux.bus.security.RoleDaoHibImplGeneric" parent="abstractGenericDao">
+	<bean id="roleDaoGeneric" class="org.janux.security.persist.RoleDaoHibImplGeneric" parent="abstractGenericDao">
 	</bean>
 
 	<!-- manages PermissionContext objects -->
-	<bean id="permContextDaoGeneric" class="org.janux.bus.security.PermissionContextDaoHibImplGeneric" parent="abstractGenericDao">
+	<bean id="permContextDaoGeneric" class="org.janux.security.persist.PermissionContextDaoHibImplGeneric" parent="abstractGenericDao">
 	</bean>
 
 	<aop:config>
-		<aop:pointcut id="readSecurityDaoOperation" expression="execution(* org.janux.bus.security.*HibImpl*.*(..))"/>
+		<aop:pointcut id="readSecurityDaoOperation" expression="execution(* org.janux.security.persist.*HibImpl*.*(..))"/>
 		<aop:advisor advice-ref="txAllPropagationSupport" pointcut-ref="readSecurityDaoOperation"/>
 	</aop:config>
 	
 		<aop:config>
-		<aop:pointcut id="readSecurityServiceOperation" expression="execution(* org.janux.bus.security.*ServiceImpl*.*(..))"/>
+		<aop:pointcut id="readSecurityServiceOperation" expression="execution(* org.janux.security.persist.*ServiceImpl*.*(..))"/>
 		<aop:advisor advice-ref="txAllPropagationSupport" pointcut-ref="readSecurityServiceOperation"/>
 	</aop:config>
 	

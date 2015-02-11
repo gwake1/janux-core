@@ -4,7 +4,7 @@
 		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"
 >
 <!-- CVS: $Id: Role.hbm.xml,v 1.4 2007-01-11 23:13:10 philippe Exp $ -->
-<hibernate-mapping package="org.janux.bus.security" >
+<hibernate-mapping package="org.janux.security" >
 
 <class name="RoleImpl" table="sec_role">
 	<meta attribute="implements">Role</meta>
