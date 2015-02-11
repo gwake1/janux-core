@@ -125,13 +125,13 @@ public class MockAuthorizationSchema
 	{
 		Role role = new RoleImpl(WIDGET_DESIGNER, "A Widget Designer");
 
-		role.grantPermissions(
+		role.grant(
 				new String[] {READ, UPDATE, CREATE, DELETE}, authContexts.get(WIDGET));
 
-		role.grantPermissions(
+		role.grant(
 				new String[] {READ, UPDATE}, authContexts.get(EQUIPMENT));
 
-		role.grantPermission(READ, authContexts.get(USER));
+		role.grant(READ, authContexts.get(USER));
 
 		return role;
 	}
@@ -142,11 +142,11 @@ public class MockAuthorizationSchema
 	{
 		Role role = new RoleImpl(FACILITY_MANAGER, "A Facilities manager");
 
-		role.grantPermissions(
+		role.grant(
 				new String[] {READ, UPDATE, CREATE, DELETE}, authContexts.get(EQUIPMENT));
 
-		role.grantPermission(READ, authContexts.get(WIDGET));
-		role.grantPermission(READ, authContexts.get(USER));
+		role.grant(READ, authContexts.get(WIDGET));
+		role.grant(READ, authContexts.get(USER));
 
 		return role;
 	}
@@ -161,13 +161,13 @@ public class MockAuthorizationSchema
 		role.getRoles().add(role1);
 		role.getRoles().add(role2);
 
-		role.denyPermissions(new String[] {CREATE, DELETE}, authContexts.get(WIDGET));
-		role.denyPermission(CREATE, authContexts.get(EQUIPMENT));
+		role.deny(new String[] {CREATE, DELETE}, authContexts.get(WIDGET));
+		role.deny(CREATE, authContexts.get(EQUIPMENT));
 
 		// test that we can deny a permission that has not been inherited through a
 		// Role; in other words, a redundant and unnecessary 'deny' but it should
 		// not cause anything to break
-		role.denyPermission(CREATE, authContexts.get(USER));
+		role.deny(CREATE, authContexts.get(USER));
 
 		return role;
 	}

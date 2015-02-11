@@ -49,7 +49,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 	protected List<Role> roles;
 	protected boolean isSuper;
 
-	protected Map<String, AuthorizationContext> permissionContexts;
+	protected Map<String, AuthorizationContext> authContexts;
 
 	/** this is declared as protected simply for testing purposes */
 	protected Map<PermissionGrantedKey, Long> permissionsGranted;
@@ -92,22 +92,22 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 	public Map<String, AuthorizationContext> getAuthorizationContexts()
 	{
-		if (this.permissionContexts == null)
+		if (this.authContexts == null)
 		{
-			this.permissionContexts = new HashMap<String, AuthorizationContext>();
+			this.authContexts = new HashMap<String, AuthorizationContext>();
 
 			for (Role aggrRole : this.getRoles()) {
 				//if (log.isDebugEnabled()) log.debug(this.name + ": adding all permission contexts inherited from aggregated Role " + aggrRole.getName() + ": " + aggrRole.getAuthorizationContexts());
-				this.permissionContexts.putAll(aggrRole.getAuthorizationContexts());
+				this.authContexts.putAll(aggrRole.getAuthorizationContexts());
 			}
 
 			for (PermissionGrantedKey permGrantedKey : this.getPermissionsGranted().keySet()) {
 					//if (log.isDebugEnabled()) log.debug(this.name + ": adding native permission context: " + permGranted.getAuthorizationContext().getName());
-					this.permissionContexts.put(permGrantedKey.getAuthorizationContext().getName(), permGrantedKey.getAuthorizationContext());
+					this.authContexts.put(permGrantedKey.getAuthorizationContext().getName(), permGrantedKey.getAuthorizationContext());
 			}
 		}
 
-		return permissionContexts;
+		return authContexts;
 	}
 
 	public boolean can(long requiredPerms, String authContextName)
@@ -183,62 +183,6 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 	}
 
 
-	/*
-	public void grantPermissions(String authContextName, String[] permNames)
-	{
-		AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
-		PermissionGranted permGranted = this.getPermsGrantedMap().get(authContext);
-
-		if ( permGranted == null ) {
-			permGranted = new PermissionGranted(authContext);
-			this.getPermissionsGranted().add(permGranted);
-
-			// force recalculation of the map on next invocation of getPermsGrantedMap
-			this.permsGrantedMap = null; 
-		}
-
-		permGranted.setPermissions(permGranted.getPermissions() | authContext.getValue(permNames));
-	}
-	*/
-
-
-	/*
-	public void setPermissionsGranted(AuthorizationContext authContext, String[] permNames)
-	{
-		//AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
-		PermissionGranted permGranted = this.getPermsGrantedMap().get(authContext);
-
-		// if we are revoking the permissions, remove the permissionsGranted from the list
-		if (permNames == null || permNames.length = 0) {}
-
-
-		if ( permGranted == null ) {
-			permGranted = new PermissionGranted(authContext);
-			this.getPermissionsGranted().add(permGranted);
-			// force recalculation of the map on next invocation of getPermsGrantedMap
-			this.permsGrantedMap = null; 
-		}
-
-		permGranted.setPermissions(authContext.getValue(permNames));
-	}
-	*/
-
-
-	/*
-	public void setPermissionsDenied(String authContextName, String[] permNames)
-	{
-		AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
-
-		permGranted = new PermissionGranted(authContext);
-		permGranted.setPermissions(authContext.getValue(permNames));
-		permGranted.setDeny(true);
-		this.getPermissionsGranted().add(permGranted);
-
-	}
-	*/
-
-
-
 	public long getPermissionsValue(String authContextName)
 	{
 		Long perms = this.getPermsUnionMap().get(authContextName);
@@ -246,7 +190,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 	}
 
 
-	public void grantPermissions(AuthorizationContext authContext, long permsGranted)
+	public void grant(long permsGranted, AuthorizationContext authContext)
 	{
 		this.validatePermissions(authContext, permsGranted);
 
@@ -266,17 +210,21 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 		this.permsUnionMap = null;
 	}
 
-
-	public void grantPermissions(String[] permsGranted, AuthorizationContext authContext) {
-		this.grantPermissions(authContext, authContext.getValue(permsGranted));
+	public void grant(String[] permsGranted, AuthorizationContext authContext) {
+		this.grant(authContext.getValue(permsGranted), authContext);
 	}
 
-	public void grantPermission(String permGranted, AuthorizationContext authContext) {
-		this.grantPermissions(new String[] {permGranted}, authContext);
+	public void grant(String permGranted, AuthorizationContext authContext) {
+		this.grant(new String[] {permGranted}, authContext);
+	}
+
+	public void grantPermissions(AuthorizationContext authContext, long permsGranted) {
+		log.warn("Calling deprecated grantPermissions(AuthorizationContext, long)");
+		this.grant(permsGranted, authContext);
 	}
 
 
-	public void denyPermissions(AuthorizationContext authContext, long permsDenied)
+	public void deny(long permsDenied, AuthorizationContext authContext)
 	{
 		this.validatePermissions(authContext, permsDenied);
 		// if the permission denied is 0, remove the corresponding isDeny record; 
@@ -289,14 +237,20 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 			this.setPermissionGranted(authContext, true, permsDenied); 
 	}
 
-	public void denyPermissions(String[] permsDenied, AuthorizationContext authContext)
+	public void deny(String[] permsDenied, AuthorizationContext authContext)
 	{
-		this.denyPermissions(authContext, authContext.getPermissionsAsNumber(permsDenied));
+		this.deny(authContext.getPermissionsAsNumber(permsDenied), authContext);
 	}
 
-	public void denyPermission(String permDenied, AuthorizationContext authContext)
+	public void deny(String permDenied, AuthorizationContext authContext)
 	{
-		this.denyPermissions(new String[] {permDenied}, authContext);
+		this.deny(new String[] {permDenied}, authContext);
+	}
+
+
+	public void denyPermissions(AuthorizationContext authContext, long permsDenied) {
+		log.warn("Calling deprecated denyPermissions(AuthorizationContext, long)");
+		this.deny(permsDenied, authContext);
 	}
 
 
