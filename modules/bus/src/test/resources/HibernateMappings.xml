@@ -8,7 +8,7 @@
 			<list>
 				<value>/mappings/Account.hbm.xml</value>
 				<value>/mappings/Role.hbm.xml</value>
-				<value>/mappings/PermissionContext.hbm.xml</value>
+				<value>/mappings/AuthorizationContext.hbm.xml</value>
 			</list>
 		</constructor-arg>
 	</bean>

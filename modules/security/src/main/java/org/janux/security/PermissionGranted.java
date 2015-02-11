@@ -18,11 +18,12 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import org.janux.security.metadata.*;
 
 /**
  ***************************************************************************************************
  * Implementation artifact used to store a bit mask of permissions granted to a Role in the context of a
- * PermissionContext, and a sort order in which to display the PermissionContext in the context of the Role;
+ * AuthorizationContext, and a sort order in which to display the AuthorizationContext in the context of the Role;
  * this class is only used to facilitate the hibernate mapping and is not exposed via any of the
  * interfaces
  *
@@ -38,18 +39,18 @@ class PermissionGranted implements java.io.Serializable
 	private long permissions;
 	private boolean deny = false;
 	private int  sortOrder;
-	private PermissionContext permissionContext;
+	private AuthorizationContext authContext;
 	private AuthorizationHolder owner;
 
 	/** plain vanilla constructor */
 	PermissionGranted() {}
 
-	PermissionGranted(PermissionContext permContext) {
-		this.setPermissionContext(permContext);
+	PermissionGranted(AuthorizationContext authContext) {
+		this.setAuthorizationContext(authContext);
 	}
 
 	/**	   
-	 * Permissions granted to the parent Role, in the context of a PermissionContext, and represented as a bit mask
+	 * Permissions granted to the parent Role, in the context of a AuthorizationContext, and represented as a bit mask
 	 */
 	long getPermissions() {
 		return this.permissions;
@@ -60,12 +61,12 @@ class PermissionGranted implements java.io.Serializable
 	}
 
 
-	public PermissionContext getPermissionContext() {
-		return this.permissionContext;
+	public AuthorizationContext getAuthorizationContext() {
+		return this.authContext;
 	}
 	
-	public void setPermissionContext(PermissionContext permissionContext) {
-		this.permissionContext = permissionContext;
+	public void setAuthorizationContext(AuthorizationContext authContext) {
+		this.authContext = authContext;
 	}
 
 
@@ -103,7 +104,7 @@ class PermissionGranted implements java.io.Serializable
 	{
 		ToStringBuilder sb = new ToStringBuilder(this);
 
-		sb.append("context"    , getPermissionContext().getName())
+		sb.append("context"    , getAuthorizationContext().getName())
 			.append("permissions", getPermissions());
 
 		if (isDeny())
@@ -116,9 +117,9 @@ class PermissionGranted implements java.io.Serializable
 
 
 	/** 
-	 * Two PermissionGranted objects are equal if they refer to the same PermissionContext, Role and
+	 * Two PermissionGranted objects are equal if they refer to the same AuthorizationContext, Role and
 	 * have the same value for the isDeny flag - in other words, only one PermissionGranted object may
-	 * exist for each Role/PermissionContext/isDeny combination
+	 * exist for each Role/AuthorizationContext/isDeny combination
 	 */
 	public boolean equals(Object other)
 	{
@@ -128,7 +129,7 @@ class PermissionGranted implements java.io.Serializable
 
 		return new EqualsBuilder()
 			.append(this.getOwner(), castOther.getOwner())
-			.append(this.getPermissionContext(), castOther.getPermissionContext())
+			.append(this.getAuthorizationContext(), castOther.getAuthorizationContext())
 			.append(this.isDeny(), castOther.isDeny())
 			.isEquals();
 	}
@@ -138,7 +139,7 @@ class PermissionGranted implements java.io.Serializable
 	{
 		return new HashCodeBuilder()
 		.append(this.getOwner())
-		.append(this.getPermissionContext())
+		.append(this.getAuthorizationContext())
 		.append(this.isDeny())
 		.toHashCode();
 	}   

@@ -17,9 +17,11 @@ package org.janux.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.janux.security.metadata.*;
+
 /**
  ***************************************************************************************************
- * Singleton class used to create sample PermissionContext and Roles for testing purposes
+ * Singleton class used to create sample AuthorizationContext and Roles for testing purposes
  *
  * @author  <a href="mailto:pparavicini@janux.org">Philippe Paravicini</a>
  ***************************************************************************************************
@@ -61,7 +63,7 @@ public class MockObjectFactory
 	static final String PERM_ASSIGN  = "ASSIGN";
 	static final String PERM_SKIP    = "SKIP";
 
-	static final String[] STANDARD_PERMS = {PERM_READ, PERM_UPDATE, PERM_CREATE, PERM_DISABLE, PERM_PURGE};
+	public static final String[] STANDARD_PERMS = {PERM_READ, PERM_UPDATE, PERM_CREATE, PERM_DISABLE, PERM_PURGE};
 
 	/*
 	static MockObjectFactory singleton;
@@ -73,27 +75,27 @@ public class MockObjectFactory
 	*/
 
 	/** 
-	 * returns a PermissionContext with the name specified, and with the
+	 * returns a AuthorizationContext with the name specified, and with the
 	 * standard permissions 'READ', 'UPDATE', 'CREATE', 'DISABLE', 'PURGE'
 	 */
-	public static PermissionContext getPermissionContext(String name) 
+	public static AuthorizationContext getAuthorizationContext(String name) 
 	{
-		return getPermissionContext(name, STANDARD_PERMS);
+		return getAuthorizationContext(name, STANDARD_PERMS);
 	}
 
 	/** 
-	 * returns a PermissionContext with the name specified, and the Permissions
+	 * returns a AuthorizationContext with the name specified, and the Permissions
 	 * provided in the string, where the bit position of the permissions
 	 * corresponds to the position of the permission name in the string array
 	 */
-	public static PermissionContext getPermissionContext(String name, String[] perms) 
+	public static AuthorizationContext getAuthorizationContext(String name, String[] perms) 
 	{
-		PermissionContext permContext = new PermissionContextImpl(name);
+		AuthorizationContext authContext = new AuthorizationContextImpl(name);
 
 		for (int i=0; i < perms.length ; i++)
-			permContext.addPermissionBit(new PermissionBitImpl(perms[i]));
+			authContext.addPermissionBit(new PermissionBitImpl(perms[i]));
 
-		return permContext;
+		return authContext;
 	}
 
 	/** 
@@ -102,7 +104,7 @@ public class MockObjectFactory
 	 */
 	public static Role getSimpleRole_RoleAdmin() 
 	{
-		PermissionContext ctx_role = getPermissionContext(CTX_ROLE, STANDARD_PERMS);
+		AuthorizationContext ctx_role = getAuthorizationContext(CTX_ROLE, STANDARD_PERMS);
 
 		Role role = new RoleImpl();
 		role.setName(ROLE_ROLE_ADMIN);
@@ -121,7 +123,7 @@ public class MockObjectFactory
 	 */
 	public static Role getComplexRole_AccountAdmin()
 	{
-		PermissionContext ctx_account = getPermissionContext(CTX_ACCOUNT, STANDARD_PERMS);
+		AuthorizationContext ctx_account = getAuthorizationContext(CTX_ACCOUNT, STANDARD_PERMS);
 
 		Role role = new RoleImpl();
 		role.setName(ROLE_ACCOUNT_ADMIN);

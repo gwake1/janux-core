@@ -46,13 +46,13 @@
 		<property name="saltSizeBytes" value="10" />
 	</bean>
 
-	<!-- manages PermissionContext objects -->
+	<!-- manages Role objects -->
 	<bean id="roleDao" class="org.janux.security.persist.RoleDaoHibImpl">
 		<property name="sessionFactory"><ref bean="hibernateSessionFactory"/></property>
 	</bean>
 
-	<!-- manages PermissionContext objects -->
-	<bean id="permContextDao" class="org.janux.security.persist.PermissionContextDaoHibImpl">
+	<!-- manages AuthorizationContext objects -->
+	<bean id="permContextDao" class="org.janux.security.persist.AuthorizationContextDaoHibImpl">
 		<property name="sessionFactory"><ref bean="hibernateSessionFactory"/></property>
 	</bean>
 

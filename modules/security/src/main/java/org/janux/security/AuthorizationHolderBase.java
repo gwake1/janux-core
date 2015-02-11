@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.io.Serializable;
 
+import org.janux.security.metadata.*;
 import org.janux.util.Chronometer;
 
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 	protected List<Role> roles;
 	protected boolean isSuper;
 
-	protected Map<String, PermissionContext> permissionContexts;
+	protected Map<String, AuthorizationContext> permissionContexts;
 
 	/** this is declared as protected simply for testing purposes */
 	protected Map<PermissionGrantedKey, Long> permissionsGranted;
@@ -89,27 +90,27 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 
 
-	public Map<String, PermissionContext> getPermissionContexts()
+	public Map<String, AuthorizationContext> getAuthorizationContexts()
 	{
 		if (this.permissionContexts == null)
 		{
-			this.permissionContexts = new HashMap<String, PermissionContext>();
+			this.permissionContexts = new HashMap<String, AuthorizationContext>();
 
 			for (Role aggrRole : this.getRoles()) {
-				//if (log.isDebugEnabled()) log.debug(this.name + ": adding all permission contexts inherited from aggregated Role " + aggrRole.getName() + ": " + aggrRole.getPermissionContexts());
-				this.permissionContexts.putAll(aggrRole.getPermissionContexts());
+				//if (log.isDebugEnabled()) log.debug(this.name + ": adding all permission contexts inherited from aggregated Role " + aggrRole.getName() + ": " + aggrRole.getAuthorizationContexts());
+				this.permissionContexts.putAll(aggrRole.getAuthorizationContexts());
 			}
 
 			for (PermissionGrantedKey permGrantedKey : this.getPermissionsGranted().keySet()) {
-					//if (log.isDebugEnabled()) log.debug(this.name + ": adding native permission context: " + permGranted.getPermissionContext().getName());
-					this.permissionContexts.put(permGrantedKey.getPermissionContext().getName(), permGrantedKey.getPermissionContext());
+					//if (log.isDebugEnabled()) log.debug(this.name + ": adding native permission context: " + permGranted.getAuthorizationContext().getName());
+					this.permissionContexts.put(permGrantedKey.getAuthorizationContext().getName(), permGrantedKey.getAuthorizationContext());
 			}
 		}
 
 		return permissionContexts;
 	}
 
-	public boolean can(long requiredPerms, String permContextName)
+	public boolean can(long requiredPerms, String authContextName)
 	{ 
 		// TODO: improve this so that the denied permissions are applied on 'top' of
 		// a super user: i.e. grant All Perms except A,B,C.
@@ -118,62 +119,62 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 		} else {
 			if (requiredPerms < 1) 
 			{
-				// String msg = this.name + ".hasPermissions(" + permContextName + ", " + requiredPerms + "): when querying for permissions you must provide a permission strictly greater than 0. ";
-				String msg = String.format("%s.can(%s,%s): when querying for permissions you must provide a permission strictly greater than 0.", this.name, permContextName, requiredPerms);
+				// String msg = this.name + ".hasPermissions(" + authContextName + ", " + requiredPerms + "): when querying for permissions you must provide a permission strictly greater than 0. ";
+				String msg = String.format("%s.can(%s,%s): when querying for permissions you must provide a permission strictly greater than 0.", this.name, authContextName, requiredPerms);
 				log.error(msg);
 				throw new IllegalArgumentException(msg);
 			}
 				
-			return (this.getPermissionsValue(permContextName) & requiredPerms) == requiredPerms;
+			return (this.getPermissionsValue(authContextName) & requiredPerms) == requiredPerms;
 		}
 	}
 
-	public boolean hasPermissions(String permContextName, long requiredPerms) {
-		return this.can(requiredPerms, permContextName);
+	public boolean hasPermissions(String authContextName, long requiredPerms) {
+		return this.can(requiredPerms, authContextName);
 	}
 
 
-	public boolean can(String[] permNames, String permContextName)
+	public boolean can(String[] permNames, String authContextName)
 	{
 		long requiredPerms = 0;
-		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
+		AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
 
-		if (permContext == null) { // no permissions have been granted in that context
+		if (authContext == null) { // no permissions have been granted in that context
 			return false;
 		} else {
-			requiredPerms = permContext.getPermissionsAsNumber(permNames);
-			return this.can(requiredPerms, permContextName);
+			requiredPerms = authContext.getPermissionsAsNumber(permNames);
+			return this.can(requiredPerms, authContextName);
 		}
 	}
 
 
-	public boolean hasPermissions(String permContextName, String[] permNames) {
-		return this.can(permNames, permContextName);
+	public boolean hasPermissions(String authContextName, String[] permNames) {
+		return this.can(permNames, authContextName);
 	}
 
 
-	public boolean can(String permissionName, String permContextName)
+	public boolean can(String permissionName, String authContextName)
 	{
-		return this.can(new String[] {permissionName}, permContextName);
+		return this.can(new String[] {permissionName}, authContextName);
 	}
 
 
-	public boolean hasPermission(String permContextName, String permissionName) {
-		return this.can(permissionName, permContextName);
+	public boolean hasPermission(String authContextName, String permissionName) {
+		return this.can(permissionName, authContextName);
 	}
 
 
-	public String[] getPermissions(String permContextName)
+	public String[] getPermissions(String authContextName)
 	{
 		Set<String> permGrantedNames = new LinkedHashSet<String>();
-		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
+		AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
 		
-		if (permContext != null)
+		if (authContext != null)
 		{
-			for ( PermissionBit permBit : permContext.getPermissionBits() )
+			for ( PermissionBit permBit : authContext.getPermissionBits() )
 			{
-				// if ( this.hasPermissions(permContextName, permBit.getValue()) )
-				if ( this.can( permBit.getValue(), permContextName ) )
+				// if ( this.hasPermissions(authContextName, permBit.getValue()) )
+				if ( this.can( permBit.getValue(), authContextName ) )
 					permGrantedNames.add(permBit.getName());
 			}
 		}
@@ -183,53 +184,53 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 
 	/*
-	public void grantPermissions(String permContextName, String[] permNames)
+	public void grantPermissions(String authContextName, String[] permNames)
 	{
-		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
-		PermissionGranted permGranted = this.getPermsGrantedMap().get(permContext);
+		AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
+		PermissionGranted permGranted = this.getPermsGrantedMap().get(authContext);
 
 		if ( permGranted == null ) {
-			permGranted = new PermissionGranted(permContext);
+			permGranted = new PermissionGranted(authContext);
 			this.getPermissionsGranted().add(permGranted);
 
 			// force recalculation of the map on next invocation of getPermsGrantedMap
 			this.permsGrantedMap = null; 
 		}
 
-		permGranted.setPermissions(permGranted.getPermissions() | permContext.getValue(permNames));
+		permGranted.setPermissions(permGranted.getPermissions() | authContext.getValue(permNames));
 	}
 	*/
 
 
 	/*
-	public void setPermissionsGranted(PermissionContext permContext, String[] permNames)
+	public void setPermissionsGranted(AuthorizationContext authContext, String[] permNames)
 	{
-		//PermissionContext permContext = this.getPermissionContexts().get(permContextName);
-		PermissionGranted permGranted = this.getPermsGrantedMap().get(permContext);
+		//AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
+		PermissionGranted permGranted = this.getPermsGrantedMap().get(authContext);
 
 		// if we are revoking the permissions, remove the permissionsGranted from the list
 		if (permNames == null || permNames.length = 0) {}
 
 
 		if ( permGranted == null ) {
-			permGranted = new PermissionGranted(permContext);
+			permGranted = new PermissionGranted(authContext);
 			this.getPermissionsGranted().add(permGranted);
 			// force recalculation of the map on next invocation of getPermsGrantedMap
 			this.permsGrantedMap = null; 
 		}
 
-		permGranted.setPermissions(permContext.getValue(permNames));
+		permGranted.setPermissions(authContext.getValue(permNames));
 	}
 	*/
 
 
 	/*
-	public void setPermissionsDenied(String permContextName, String[] permNames)
+	public void setPermissionsDenied(String authContextName, String[] permNames)
 	{
-		PermissionContext permContext = this.getPermissionContexts().get(permContextName);
+		AuthorizationContext authContext = this.getAuthorizationContexts().get(authContextName);
 
-		permGranted = new PermissionGranted(permContext);
-		permGranted.setPermissions(permContext.getValue(permNames));
+		permGranted = new PermissionGranted(authContext);
+		permGranted.setPermissions(authContext.getValue(permNames));
 		permGranted.setDeny(true);
 		this.getPermissionsGranted().add(permGranted);
 
@@ -238,79 +239,79 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 
 
-	public long getPermissionsValue(String permContextName)
+	public long getPermissionsValue(String authContextName)
 	{
-		Long perms = this.getPermsUnionMap().get(permContextName);
+		Long perms = this.getPermsUnionMap().get(authContextName);
 		return (perms != null) ? perms : 0;
 	}
 
 
-	public void grantPermissions(PermissionContext permContext, long permsGranted)
+	public void grantPermissions(AuthorizationContext authContext, long permsGranted)
 	{
-		this.validatePermissions(permContext, permsGranted);
+		this.validatePermissions(authContext, permsGranted);
 
 		// if the permission granted is 0, remove the record; note that this will
-		// not revoke all permissions for this PermissionContext, as there may be
-		// other permissions in this PermissionContext that are inherited from the
+		// not revoke all permissions for this AuthorizationContext, as there may be
+		// other permissions in this AuthorizationContext that are inherited from the
 		// Roles of this entity
 		if (log.isInfoEnabled())
-			log.info("granting permissions '" + permsGranted + "' in PermissionContext '" + permContext.getName() + "' to entity '" + this.name + "'");
+			log.info("granting permissions '" + permsGranted + "' in AuthorizationContext '" + authContext.getName() + "' to entity '" + this.name + "'");
 
 		if (permsGranted == 0)
-			this.getPermissionsGranted().remove(new PermissionGrantedKey(permContext, false));
+			this.getPermissionsGranted().remove(new PermissionGrantedKey(authContext, false));
 		else 
-			this.setPermissionGranted(permContext, false, permsGranted); 
+			this.setPermissionGranted(authContext, false, permsGranted); 
 
 		// recompute union of inherited and granted permissions
 		this.permsUnionMap = null;
 	}
 
 
-	public void grantPermissions(String[] permsGranted, PermissionContext permContext) {
-		this.grantPermissions(permContext, permContext.getValue(permsGranted));
+	public void grantPermissions(String[] permsGranted, AuthorizationContext authContext) {
+		this.grantPermissions(authContext, authContext.getValue(permsGranted));
 	}
 
-	public void grantPermission(String permGranted, PermissionContext permContext) {
-		this.grantPermissions(new String[] {permGranted}, permContext);
+	public void grantPermission(String permGranted, AuthorizationContext authContext) {
+		this.grantPermissions(new String[] {permGranted}, authContext);
 	}
 
 
-	public void denyPermissions(PermissionContext permContext, long permsDenied)
+	public void denyPermissions(AuthorizationContext authContext, long permsDenied)
 	{
-		this.validatePermissions(permContext, permsDenied);
+		this.validatePermissions(authContext, permsDenied);
 		// if the permission denied is 0, remove the corresponding isDeny record; 
 		if (log.isInfoEnabled())
-			log.info("denying permissions " + permsDenied + " in PermissionContext '" + permContext.getName() + "' from entity '" + this.name + "'");
+			log.info("denying permissions " + permsDenied + " in AuthorizationContext '" + authContext.getName() + "' from entity '" + this.name + "'");
 
 		if (permsDenied == 0)
-			this.getPermissionsGranted().remove(new PermissionGrantedKey(permContext, true));
+			this.getPermissionsGranted().remove(new PermissionGrantedKey(authContext, true));
 		else 
-			this.setPermissionGranted(permContext, true, permsDenied); 
+			this.setPermissionGranted(authContext, true, permsDenied); 
 	}
 
-	public void denyPermissions(String[] permsDenied, PermissionContext permContext)
+	public void denyPermissions(String[] permsDenied, AuthorizationContext authContext)
 	{
-		this.denyPermissions(permContext, permContext.getPermissionsAsNumber(permsDenied));
+		this.denyPermissions(authContext, authContext.getPermissionsAsNumber(permsDenied));
 	}
 
-	public void denyPermission(String permDenied, PermissionContext permContext)
+	public void denyPermission(String permDenied, AuthorizationContext authContext)
 	{
-		this.denyPermissions(new String[] {permDenied}, permContext);
+		this.denyPermissions(new String[] {permDenied}, authContext);
 	}
 
 
 	/** @return the permissions granted directly to this AuthorizationHolder, as a Long */
-	private Long getPermissionGranted(PermissionContext permContext, boolean isDeny)
+	private Long getPermissionGranted(AuthorizationContext authContext, boolean isDeny)
 	{
-		PermissionGrantedKey permGrantedKey = new PermissionGrantedKey(permContext, isDeny);
+		PermissionGrantedKey permGrantedKey = new PermissionGrantedKey(authContext, isDeny);
 		return this.getPermissionsGranted().get(permGrantedKey);
 	}
 
 
 	/** Grant a permission directly to this Role */
-	private void setPermissionGranted(PermissionContext permContext, boolean isDeny, Long value)
+	private void setPermissionGranted(AuthorizationContext authContext, boolean isDeny, Long value)
 	{
-		PermissionGrantedKey permGrantedKey = new PermissionGrantedKey(permContext, isDeny);
+		PermissionGrantedKey permGrantedKey = new PermissionGrantedKey(authContext, isDeny);
 		this.getPermissionsGranted().put(permGrantedKey, value);
 	}
 
@@ -329,23 +330,23 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 
 	/** 
-	 * validates that the perms provided are between 0 and permContext.getMaxValue(),
-	 * @throws IllegalArgumentException the perms provided are not between 0 and permContext.getMaxValue(),
+	 * validates that the perms provided are between 0 and authContext.getMaxValue(),
+	 * @throws IllegalArgumentException the perms provided are not between 0 and authContext.getMaxValue(),
 	 */
-	private void validatePermissions(PermissionContext permContext, long perms)
+	private void validatePermissions(AuthorizationContext authContext, long perms)
 	{
 		String msg = null;
 
-		if (permContext == null)
-			msg = "Attempting to assign permissions to entity '" + this.name + "' with null PermissionContext";
+		if (authContext == null)
+			msg = "Attempting to assign permissions to entity '" + this.name + "' with null AuthorizationContext";
 
 		else if ( perms < 0 ) 
-			msg = "Attempting to assign a negative permission bitmask in the context of PermissionContext '" + permContext.getName() + "' to entity '" + this.name + "'";
+			msg = "Attempting to assign a negative permission bitmask in the context of AuthorizationContext '" + authContext.getName() + "' to entity '" + this.name + "'";
 
-		else if ( perms > permContext.getMaxValue() ) 
+		else if ( perms > authContext.getMaxValue() ) 
 			msg = "The permission bitmask that you are trying to assign: '" + perms 
-				+ "' has a value greater than the maximum '" + permContext.getMaxValue() 
-				+ "' that can be assigned in the context of PermissionContext '" + permContext.getName() 
+				+ "' has a value greater than the maximum '" + authContext.getMaxValue() 
+				+ "' that can be assigned in the context of AuthorizationContext '" + authContext.getName() 
 				+ "' to entity '" + this.name + "'";
 
 		if (msg != null) 
@@ -357,27 +358,27 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 
 	/*
-	public Long getPermissionsGranted(String permContextName) 
+	public Long getPermissionsGranted(String authContextName) 
 	{
 		throw new UnsupportedOperationException(
-				"getPermissionsGranted(permContextName) has not yet been implemented");
-		//return this.getPermissionsGranted().get(new PermissionContext(permContextName));
+				"getPermissionsGranted(authContextName) has not yet been implemented");
+		//return this.getPermissionsGranted().get(new AuthorizationContext(authContextName));
 	}
 	*/
 	
 
 	/*
-	public void setPermissionsGranted(String permContextName, Long permissions) 
+	public void setPermissionsGranted(String authContextName, Long permissions) 
 	{
 		throw new UnsupportedOperationException(
-				"setPermissionsGranted(permContextName, permissions) has not yet been implemented");
+				"setPermissionsGranted(authContextName, permissions) has not yet been implemented");
 	}
 	*/
 
 	
 
 	/** 
-	 * Iterates over all aggregated Roles and, for each PermissionContext, 
+	 * Iterates over all aggregated Roles and, for each AuthorizationContext, 
 	 * calculates the union of all Permissions granted; 
 	 * this is where the heavy lifting of this bitmask-based implementation occurs
 	 */
@@ -394,13 +395,13 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 				if (log.isDebugEnabled()) 
 				{
 					// pre-eventively gather all permission context names to yield cleaner debug logs
-					log.debug(this.name + ": aggregating permissions from aggregated Roles for permission contexts: " + this.getPermissionContexts().keySet());
+					log.debug(this.name + ": aggregating permissions from aggregated Roles for permission contexts: " + this.getAuthorizationContexts().keySet());
 				}
 
 				for (Role aggrRole : this.getRoles())
 				{
 					//if (log.isDebugEnabled()) log.debug("begin iterating over " + aggrRole.getName());
-					for (String context : aggrRole.getPermissionContexts().keySet())
+					for (String context : aggrRole.getAuthorizationContexts().keySet())
 					{
 						long permsUnion = (permsUnionMap.get(context) != null) ? permsUnionMap.get(context).longValue() : 0;
 						long aggrRolePerms = aggrRole.getPermissionsValue(context);
@@ -422,7 +423,7 @@ public class AuthorizationHolderBase implements AuthorizationHolder, Serializabl
 
 				for (PermissionGrantedKey permGrantedKey : this.getPermissionsGranted().keySet())
 				{
-					String context = permGrantedKey.getPermissionContext().getName();
+					String context = permGrantedKey.getAuthorizationContext().getName();
 
 					long inheritedPerms = (permsUnionMap.get(context) != null) ? permsUnionMap.get(context).longValue() : 0;
 					//long permGranted    = permissionsGranted.get(permGrantedKey).getPermissions();

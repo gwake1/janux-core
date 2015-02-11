@@ -23,7 +23,9 @@ import org.slf4j.LoggerFactory;
 import org.janux.bus.persistence.EntityNotFoundException;
 import org.janux.bus.persistence.TransactionalTestAbstract;
 import org.janux.bus.test.TransactionalBusTestAbstractGeneric;
+
 import org.janux.security.*;
+import org.janux.security.metadata.*;
 
 
 /**
@@ -32,11 +34,11 @@ import org.janux.security.*;
  *
  * @see TransactionalTestAbstract
  */
-public class PermissionContextDaoGenericTest extends TransactionalBusTestAbstractGeneric
+public class AuthorizationContextDaoGenericTest extends TransactionalBusTestAbstractGeneric
 {
  Logger log = LoggerFactory.getLogger(this.getClass());
 
-	protected PermissionContextDaoGeneric permContextDaoGeneric;
+	protected AuthorizationContextDaoGeneric authContextDaoGeneric;
 
 	private static final int NUM_PERM_CTX = 4;
 	private static final String ACCOUNT = "CTX_ACCOUNT";
@@ -49,45 +51,45 @@ public class PermissionContextDaoGenericTest extends TransactionalBusTestAbstrac
 	private static final String HOL_APPROVE = "APPROVE";
 	private static final String HOL_TAKE    = "TAKE";
 
-	public PermissionContextDaoGenericTest() {
+	public AuthorizationContextDaoGenericTest() {
 		super();
 	}
 
-	public PermissionContextDaoGenericTest(String name) {
+	public AuthorizationContextDaoGenericTest(String name) {
 		super(name);
 	}
 
 	public void testLoadAll() 
 	{
-		SortedSet<PermissionContext> set = permContextDaoGeneric.loadAll();
+		SortedSet<AuthorizationContext> set = authContextDaoGeneric.loadAll();
 		assertNotNull(set);
 		assertEquals("perm num", NUM_PERM_CTX, set.size());
 
 		Iterator i = set.iterator();
-		PermissionContext permContext;
+		AuthorizationContext authContext;
 
-		permContext = (PermissionContext)i.next();
-		assertEquals(ACCOUNT, permContext.getName());
+		authContext = (AuthorizationContext)i.next();
+		assertEquals(ACCOUNT, authContext.getName());
 
-		permContext = (PermissionContext)i.next();
-		assertEquals(ROLE, permContext.getName());
+		authContext = (AuthorizationContext)i.next();
+		assertEquals(ROLE, authContext.getName());
 
-		permContext = (PermissionContext)i.next();
-		assertEquals(HOLIDAY, permContext.getName());
+		authContext = (AuthorizationContext)i.next();
+		assertEquals(HOLIDAY, authContext.getName());
 
-		permContext = (PermissionContext)i.next();
-		assertEquals(WORK, permContext.getName());
+		authContext = (AuthorizationContext)i.next();
+		assertEquals(WORK, authContext.getName());
 	}
 
 
 	public void testLoadByName() 
 	{
-		PermissionContext permContext = permContextDaoGeneric.loadByName(HOLIDAY);
-		assertContext(permContext);
+		AuthorizationContext authContext = authContextDaoGeneric.loadByName(HOLIDAY);
+		assertContext(authContext);
 
 		try
 		{ 
-			permContextDaoGeneric.loadByName("BOGUS");
+			authContextDaoGeneric.loadByName("BOGUS");
 			fail("Loading BOGUS permission context should have thrown EntityNotFoundException");
 		}
 		catch (EntityNotFoundException e) { 
@@ -97,18 +99,18 @@ public class PermissionContextDaoGenericTest extends TransactionalBusTestAbstrac
 
 	public void testFindByName() 
 	{
-		PermissionContext permContext = permContextDaoGeneric.findByName(HOLIDAY);
-		assertContext(permContext);
+		AuthorizationContext authContext = authContextDaoGeneric.findByName(HOLIDAY);
+		assertContext(authContext);
 
-		assertNull(permContextDaoGeneric.findByName("BOGUS"));
+		assertNull(authContextDaoGeneric.findByName("BOGUS"));
 	}
 
-	private void assertContext(PermissionContext permContext)
+	private void assertContext(AuthorizationContext authContext)
 	{
-		assertNotNull(permContext);
-		assertEquals(HOLIDAY, permContext.getName());
+		assertNotNull(authContext);
+		assertEquals(HOLIDAY, authContext.getName());
 
-		List<PermissionBit> bits = permContext.getPermissionBits();
+		List<PermissionBit> bits = authContext.getPermissionBits();
 		assertNotNull(bits);
 		assertEquals("num " + HOLIDAY + " bits", NUM_HOLIDAY_PERM_BITS, bits.size());
 
@@ -117,17 +119,17 @@ public class PermissionContextDaoGenericTest extends TransactionalBusTestAbstrac
 		bit = bits.get(0);
 		assertEquals(HOL_DECLARE, bit.getName());
 		assertEquals(HOL_DECLARE + " sort order", new Integer(1), bit.getSortOrder());
-		assertEquals(bit, permContext.getPermissionBit(HOL_DECLARE));
+		assertEquals(bit, authContext.getPermissionBit(HOL_DECLARE));
 
 		bit = bits.get(1);
 		assertEquals(HOL_APPROVE, bit.getName());
 		assertEquals(HOL_APPROVE + " sort order", new Integer(0), bit.getSortOrder());
-		assertEquals(bit, permContext.getPermissionBit(HOL_APPROVE));
+		assertEquals(bit, authContext.getPermissionBit(HOL_APPROVE));
 
 		bit = bits.get(2);
 		assertEquals(HOL_TAKE, bit.getName());
 		assertEquals(HOL_TAKE + " sort order", new Integer(2), bit.getSortOrder());
-		assertEquals(bit, permContext.getPermissionBit(HOL_TAKE));
+		assertEquals(bit, authContext.getPermissionBit(HOL_TAKE));
 	}
 
 } // end class PermissionDaoTest

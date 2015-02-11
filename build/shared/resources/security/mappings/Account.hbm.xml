@@ -10,7 +10,7 @@
 	name="AccountImpl" 
 	table="sec_account"
 >
-	<meta attribute="implements">Account, PermissionsCapable, org.acegegisecurity.userdetail.UserDetails</meta>
+	<meta attribute="implements">Account, AuthorizationHolder, org.acegegisecurity.userdetail.UserDetails</meta>
 	<meta attribute="class-description">Represents a login account in the application</meta>
 
 	<id name="id" type="java.lang.Integer" unsaved-value="-1">

@@ -69,7 +69,7 @@ Copyright 2005-2012 janux.org -->
 				<directory>${janux.home}/modules/bus/src/test/resources</directory>
 				<includes>
 					<include>mappings/Account.hbm.xml</include>
-					<include>mappings/PermissionContext.hbm.xml</include>
+					<include>mappings/AuthorizationContext.hbm.xml</include>
 					<include>mappings/Role.hbm.xml</include>
 				</includes>
 			</resource>

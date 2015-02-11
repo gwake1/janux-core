@@ -19,6 +19,8 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.janux.security.metadata.*;
+
 /**
  ***************************************************************************************************
  *
@@ -38,7 +40,7 @@ public class AuthorizationHolderTest extends TestCase
 
 	static final String PERM_MAN = "MANAGER";
 	
-	private PermissionContext  workContext = mock.getPermissionContext(mock.CTX_WORK);
+	private AuthorizationContext  workContext = mock.getAuthorizationContext(mock.CTX_WORK);
 	private String WORK = workContext.getName();
 	private AuthorizationHolderBase authHolder = new AuthorizationHolderBase(PERM_MAN);
 
@@ -84,9 +86,9 @@ public class AuthorizationHolderTest extends TestCase
 		assertNull(authHolder.permissionsGranted.get(new PermissionGrantedKey(workContext, false)));
 
 		try { 
-			log.debug("Test null permissionContext");
+			log.debug("Test null authContext");
 			authHolder.grantPermissions(null, 0);
-			fail("null permissionContexts are not allowed");
+			fail("null authContexts are not allowed");
 		}
 		catch (IllegalArgumentException e) {
 			// all is well

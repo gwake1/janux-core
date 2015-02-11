@@ -16,6 +16,7 @@ package org.janux.security;
 
 import java.util.SortedSet;
 
+import org.janux.security.metadata.*;
 import org.janux.bus.persistence.EntityNotFoundException;
 
 /**
@@ -79,8 +80,8 @@ public interface AccountService
 	public SortedSet<Role> loadAllRoles();
 
 
-	/** Loads all PermissionContexts defined in the system */
-	public SortedSet<PermissionContext> loadAllPermissionContexts();
+	/** Loads all AuthorizationContexts defined in the system */
+	public SortedSet<AuthorizationContext> loadAllAuthorizationContexts();
 	
 	
 	public void setAccountPassword(Account account, String passwordToEncrypt);

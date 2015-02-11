@@ -20,6 +20,8 @@ import org.janux.security.*;
 import org.janux.security.persist.*;
 import org.janux.bus.persistence.EntityNotFoundException;
 
+import org.janux.security.metadata.AuthorizationContext;
+
 /**
  * @author  <a href="mailto:philippe.paravicini@janux.biz">Philippe Paravicini</a>
  * @see AccountService
@@ -28,14 +30,14 @@ public class AccountServiceImplGeneric implements AccountService
 {
 	private AccountDaoGeneric<Account> accountDaoGeneric;
 	private RoleDaoGeneric<Role> roleDaoGeneric;
-	private PermissionContextDaoGeneric<PermissionContext> permissionContextDaoGeneric;
+	private AuthorizationContextDaoGeneric<AuthorizationContext> authContextDaoGeneric;
 
 
-	public AccountServiceImplGeneric(AccountDaoGeneric accountDaoGeneric,RoleDaoGeneric roleDaoGeneric,PermissionContextDaoGeneric permissionContextDaoGeneric)
+	public AccountServiceImplGeneric(AccountDaoGeneric accountDaoGeneric,RoleDaoGeneric roleDaoGeneric,AuthorizationContextDaoGeneric authContextDaoGeneric)
 	{
 		this.accountDaoGeneric = accountDaoGeneric;
 		this.roleDaoGeneric = roleDaoGeneric;
-		this.permissionContextDaoGeneric = permissionContextDaoGeneric;
+		this.authContextDaoGeneric = authContextDaoGeneric;
 	}
 
 
@@ -88,9 +90,9 @@ public class AccountServiceImplGeneric implements AccountService
 	}
 
 
-	public SortedSet<PermissionContext> loadAllPermissionContexts()
+	public SortedSet<AuthorizationContext> loadAllAuthorizationContexts()
 	{
-		return this.permissionContextDaoGeneric.loadAll();
+		return this.authContextDaoGeneric.loadAll();
 	}
 
 

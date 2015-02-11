@@ -12,7 +12,7 @@ limitations under the License.
 
 Copyright 2005-2012 janux.org */
 
-package org.janux.security;
+package org.janux.security.metadata;
 
 import org.janux.util.CompUtils;
 
@@ -32,7 +32,7 @@ public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 	private short	position = -1;
 
 	private String description;
-	private PermissionContext permContext;
+	private AuthorizationContext authContext;
 	private Integer sortOrder;
 
 
@@ -81,13 +81,13 @@ public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 	}
 
 
-	public PermissionContext getPermissionContext() {
-		return this.permContext;
+	public AuthorizationContext getAuthorizationContext() {
+		return this.authContext;
 	}
 
 
-	public void setPermissionContext(PermissionContext bitmask) {
-		this.permContext = bitmask;
+	public void setAuthorizationContext(AuthorizationContext bitmask) {
+		this.authContext = bitmask;
 	}
 
 
@@ -125,7 +125,7 @@ public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 
 	/** 
 	 * two PermissionBit objects are equal if they have the same position 
-	 * and are defined by the same PermissionContext
+	 * and are defined by the same AuthorizationContext
 	 */
 	public boolean equals(Object other)
 	{
@@ -134,7 +134,7 @@ public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 		PermissionBit castOther = (PermissionBit)other; 
 
 		return new EqualsBuilder()
-			.append(this.getPermissionContext(), castOther.getPermissionContext())
+			.append(this.getAuthorizationContext(), castOther.getAuthorizationContext())
 			.append(this.getPosition(), castOther.getPosition())
 			.isEquals();
 	}
@@ -143,7 +143,7 @@ public class PermissionBitImpl implements PermissionBit, java.io.Serializable
 	public int hashCode() 
 	{
 		return new HashCodeBuilder()
-		.append(this.getPermissionContext())
+		.append(this.getAuthorizationContext())
 		.append(this.getPosition())
 		.toHashCode();
 	}

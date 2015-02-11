@@ -103,8 +103,8 @@ public class RoleImpl extends AuthorizationHolderBase implements Persistent, Rol
 
 
 	/*
-	public Set<String> getPermissionContextStrings() {
-		return this.getPermissionsManager().getPermissionContextStrings();
+	public Set<String> getAuthorizationContextStrings() {
+		return this.getPermissionsManager().getAuthorizationContextStrings();
 	}
 	*/
 

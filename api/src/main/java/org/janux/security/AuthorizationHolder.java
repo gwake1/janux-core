@@ -15,6 +15,7 @@ Copyright 2005-2012 janux.org */
 package org.janux.security;
 
 import java.util.Map;
+import org.janux.security.metadata.*;
 
 /**
  *************************************************************************************************
@@ -35,19 +36,19 @@ public interface AuthorizationHolder extends PermissionsCapable
 {
 
 	/** 
-	 * Returns a map of all the PermissionContexts in which this AuthorizationHolder Entity has been
+	 * Returns a map of all the AuthorizationContexts in which this AuthorizationHolder Entity has been
 	 * granted a Permission, whether directly or via a Sub-Role; the map is keyed by the
-	 * PermissionContext's Name
+	 * AuthorizationContext's Name
 	 */
-	Map<String, PermissionContext> getPermissionContexts();
+	Map<String, AuthorizationContext> getAuthorizationContexts();
 
 
 	/** 
-	 * Given a PermissionContext, this method returns the permissions, represented as Strings, that
+	 * Given a AuthorizationContext, this method returns the permissions, represented as Strings, that
 	 * this AuthorizationHolder Entity has in that permission context, or an empty array if the
-	 * AuthorizationHolder Entity has no permissions in that PermissionContext
+	 * AuthorizationHolder Entity has no permissions in that AuthorizationContext
 	 */
-	String[] getPermissions(String permissionContext);
+	String[] getPermissions(String authorizationContext);
 
 
 	/** 
@@ -56,12 +57,12 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 *
 	 * @since 0.5.0
 	 */
-	boolean can(String[] permissionNames, String permissionContext);
+	boolean can(String[] permissionNames, String authorizationContext);
 
 	/**
 	 * @deprecated as of 0.5.0 use {@link can(String[], String)} instead
 	 */
-	boolean hasPermissions(String permissionContext, String[] permissionNames);
+	boolean hasPermissions(String authorizationContext, String[] permissionNames);
 
 	/** 
 	 * Given a permission context, and the name of a permission available in that context, 
@@ -69,26 +70,26 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 *
 	 * @since 0.5.0
 	 */
-	boolean can(String permissionName, String permissionContext);
+	boolean can(String permissionName, String authorizationContext);
 
 	/**
 	 * @deprecated as of 0.5.0 use {@link can(String, String)} instead, but note that the
 	 * parameter order in that method are inverted
 	 */
-	boolean hasPermission(String permissionContext, String permissionName);
+	boolean hasPermission(String authorizationContext, String permissionName);
 
 	/** 
 	 * Given a permission context, and a list of names of permissions available in that context, this
 	 * method sets the permissions indicated to this AuthorizationHolder Entity; if permissions had
-	 * already been set for that PermissionContext, this method will override them; if you want to add
+	 * already been set for that AuthorizationContext, this method will override them; if you want to add
 	 * Permissions without overriding existing permissions, use {@link #addPermissions()} instead
 	 *
-	 * @param permissiontContext the name of a PermissionContext
+	 * @param permissiontContext the name of a AuthorizationContext
 	 * @param permissionNames 
-	 * 	the name of permissions available in the named PermissionContext, 
+	 * 	the name of permissions available in the named AuthorizationContext, 
 	 * 	that are to be granted to this AuthorizationHolder Entity
 	 */
-	//void setPermissions(String permissionContext, String[] permissionNames);
+	//void setPermissions(String authorizationContext, String[] permissionNames);
 
 
 	/** 
@@ -96,12 +97,12 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 * this method adds the permissions indicated to this AuthorizationHolder Entity; this method does
 	 * not override any existing Permissions, but simply adds to them
 	 *
-	 * @param permissiontContext the name of a PermissionContext
+	 * @param permissiontContext the name of a AuthorizationContext
 	 * @param permissionNames 
-	 * 	the name of permissions available in the named PermissionContext, 
+	 * 	the name of permissions available in the named AuthorizationContext, 
 	 * 	that are to be granted to this AuthorizationHolder Entity
 	 */
-	//void grantPermissions(String permissionContext, String[] permissionNames);
+	//void grantPermissions(String authorizationContext, String[] permissionNames);
 
 
 	/** 
@@ -111,20 +112,20 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 * inherited from a Role; if you are not composing Permissions from a Role, it would be best to
 	 * just set the Permissions to what they should be
 	 *
-	 * @param permissiontContext the name of a PermissionContext
+	 * @param permissiontContext the name of a AuthorizationContext
 	 * @param permissionNames 
-	 * 	the name of permissions available in the named PermissionContext, 
+	 * 	the name of permissions available in the named AuthorizationContext, 
 	 * 	that are to be subtracted to this AuthorizationHolder Entity
 	 */
-	//void revokePermissions(String permissionContext, String[] permissionNames);
+	//void revokePermissions(String authorizationContext, String[] permissionNames);
 
 
 	/** 
 	 * In the case of an implementation that uses bitmasks to store permissions, and given a
-	 * PermissionContext, this method returns the permissions that this AuthorizationHolder Entity has
+	 * AuthorizationContext, this method returns the permissions that this AuthorizationHolder Entity has
 	 * in that permission context, represented as a long value
 	 */
-	long getPermissionsValue(String permissionContext);
+	long getPermissionsValue(String authorizationContext);
 
 
 	/** 
@@ -134,12 +135,12 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 *
 	 * @since 0.5.0
 	 */
-	boolean can(long permissionsValue, String permissionContext);
+	boolean can(long permissionsValue, String authorizationContext);
 
 	/**
 	 * @deprecated as of 0.5.0 use {@link can(long, String)} instead
 	 */
-	boolean hasPermissions(String permissionContext, long permissionsValue);
+	boolean hasPermissions(String authorizationContext, long permissionsValue);
 
 
 	/** 
@@ -147,7 +148,7 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 * that context, this method grants the permissions indicated to this AuthorizationHolder Entity.
 	 * <p>
 	 * The permissions granted by this method replace any direct permissions that the AuthorizationHolder may
-	 * already have in this PermissionContext, and are in addition to any permissions that this entity
+	 * already have in this AuthorizationContext, and are in addition to any permissions that this entity
 	 * may inherit from its Roles.  If you would like to remove all Permissions granted directly to
 	 * this entity within a Permission Context, pass an empty or null array.
 	 * </p><p>
@@ -158,19 +159,19 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 *
 	 * @see #denyPermissions
 	 *
-	 * @param permissionContext a valid PermissionContext
+	 * @param authorizationContext a valid AuthorizationContext
 	 * @param permissionsGranted
 	 * 	an array of strings representing permissions that are to be granted to this AuthorizationHolder
-	 * 	Entity, for example ["READ","UPDATE"]; the permissions must be available in the named PermissionContext
+	 * 	Entity, for example ["READ","UPDATE"]; the permissions must be available in the named AuthorizationContext
 	 */
-	void grantPermissions(String[] permissionsGranted, PermissionContext permissionContext);
+	void grantPermissions(String[] permissionsGranted, AuthorizationContext authorizationContext);
 
 
 	/** 
-	 * Same as {@link #grantPermissions(String[], PermissionContext)}
+	 * Same as {@link #grantPermissions(String[], AuthorizationContext)}
 	 * but takes a single permission as an argument, rather than an array 
 	 */
-	void grantPermission(String permissionGranted, PermissionContext permissionContext);
+	void grantPermission(String permissionGranted, AuthorizationContext authorizationContext);
 
 
 	/** 
@@ -178,24 +179,24 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 * permission context and a long value representing multiple permissions available in that
 	 * context, this method grants the permissions indicated to this AuthorizationHolder Entity.
 	 * <p>
-	 * Note that it's more explicit to use {@link #grantPermissions(PermissionContext,
+	 * Note that it's more explicit to use {@link #grantPermissions(AuthorizationContext,
 	 * String[])}, and possibly safer since some implementations may not use bitmasks
 	 * </p>
 	 * @see #grantPermissions(PermissionContex, String[])
 	 * @see #denyPermissions
 	 *
-	 * @param permissionContext a valid PermissionContext
+	 * @param authorizationContext a valid AuthorizationContext
 	 * @param permissionsValue
 	 * 	a long value representing permissions that are to be granted to this AuthorizationHolder Entity; 
-	 * 	the permissions must be available in the named PermissionContext
+	 * 	the permissions must be available in the named AuthorizationContext
 	 */
-	void grantPermissions(PermissionContext permissionContext, long permissionsValue);
+	void grantPermissions(AuthorizationContext authorizationContext, long permissionsValue);
 
 	/**
-	 * Explicitly denies a set of Permissions within a PermissionContext; this method should be used
+	 * Explicitly denies a set of Permissions within a AuthorizationContext; this method should be used
 	 * only to deny permissions that are inherited from Roles associated to this AuthorizationHolder
 	 * entity; this method is not meant to be used as the opposite action to method 
-	 * {@link #grantPermissions(PermissionContext, long)}, although it could be abused that way,
+	 * {@link #grantPermissions(AuthorizationContext, long)}, although it could be abused that way,
 	 * <p>
 	 * For example, assuming a Role 'PRODUCT ADMIN' that has the Permissions READ, UPDATE, CREATE, DISABLE,
 	 * PURGE in the PRODUCT Permission Context (plus possibly other Permissions in other Permission
@@ -207,29 +208,29 @@ public interface AuthorizationHolder extends PermissionsCapable
 	 * any other Roles, and that we want to revoke its 'PURGE' Permission, in the Permission Context
 	 * 'PRODUCT'.  We could call denyPermissions to do so, but this will create an 'isDeny' bitmask in
 	 * addition to the existing 'allow' bitmask one through which the 'PURGE' Permission was
-	 * originally granted. Instead, it would be simpler to call {@link #grantPermissions(PermissionContext,long)} 
+	 * originally granted. Instead, it would be simpler to call {@link #grantPermissions(AuthorizationContext,long)} 
 	 * again with the proper 'allow' bitmask that no longer enables the 'PURGE' permission.  
 	 * </p>
 	 */
-	void denyPermissions(String[] permissionsDenied, PermissionContext permissionContext);
+	void denyPermissions(String[] permissionsDenied, AuthorizationContext authorizationContext);
 
 	/** 
-	 * Same as {@link #denyPermissions(String[], PermissionContext)} 
+	 * Same as {@link #denyPermissions(String[], AuthorizationContext)} 
 	 * but takes a single permission as an argument, rather than an array 
 	 */
-	void denyPermission(String permissionDenied, PermissionContext permissionContext);
+	void denyPermission(String permissionDenied, AuthorizationContext authorizationContext);
 
 	/**
-	 * Equivalent to {@link #denyPermissions(String[], PermissionContext)} in implementations that use
+	 * Equivalent to {@link #denyPermissions(String[], AuthorizationContext)} in implementations that use
 	 * bitmasks to define permissions
 	 *
-	 * @see #denyPermissions(PermissionContext, String[])
+	 * @see #denyPermissions(AuthorizationContext, String[])
 	 */
-	void denyPermissions(PermissionContext permissionContext, long permissionsDenied);
+	void denyPermissions(AuthorizationContext authorizationContext, long permissionsDenied);
 
 	// do we need these to explicitly act upon the permissions granted to the entity directly ?
-	//void setPermissionsGranted(PermissionContext permissionContext, boolean isDeny, long permissionsValue);
-	//void Long getPermissionsGranted(PermissionContext permissionContext, boolean isDeny, long permissionsValue);
+	//void setPermissionsGranted(AuthorizationContext authorizationContext, boolean isDeny, long permissionsValue);
+	//void Long getPermissionsGranted(AuthorizationContext authorizationContext, boolean isDeny, long permissionsValue);
 
 	/** If true, this Role is a super user with all Permissions */
 	boolean isSuper();

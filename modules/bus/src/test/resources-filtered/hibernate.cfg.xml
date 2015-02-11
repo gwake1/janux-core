@@ -16,7 +16,7 @@
 		<property name="hibernate.connection.password">${janux.db.password}</property>
 
 		<!-- <mapping resource="/mappings/Permission.hbm.xml"/> -->
-		<mapping resource="/mappings/PermissionContext.hbm.xml"/>
+		<mapping resource="/mappings/AuthorizationContext.hbm.xml"/>
 		<mapping resource="/mappings/Role.hbm.xml"/>
 		<mapping resource="/mappings/Account.hbm.xml"/>
 

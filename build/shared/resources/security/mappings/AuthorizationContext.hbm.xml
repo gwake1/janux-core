@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"
+>
+<hibernate-mapping package="org.janux.security.metadata" >
+
+<class 
+	name="AuthorizationContextImpl" 
+	table="sec_authorization_context"
+>
+	<meta attribute="implements">AuthorizationContext</meta>
+
+	<meta attribute="class-description">Represents a set of individual
+	Permissions defined for a specific business context; for example, we may
+	befine a 'PERMS_PARTY' permission group to define the Permissions for
+	Creating/Reading/Updating/Deleting Party objects.
+	</meta>
+
+	<id name="id" type="java.lang.Integer" unsaved-value="-1">
+		<meta attribute="use-in-tostring">true</meta>
+		<generator class="native"/>
+	</id>
+
+	<property name="name" type="string" not-null="true" unique="true">
+		<meta attribute="field-description">Unique short-hard name for this AuthorizationContext</meta>
+		<meta attribute="use-in-equals">true</meta>
+		<meta attribute="use-in-tostring">true</meta>
+	</property>
+
+	<property name="description" type="text">
+		<meta attribute="field-description">Human readable description of this AuthorizationContext</meta>
+	</property>
+
+	<property name="sortOrder" type="java.lang.Integer">
+		<meta attribute="field-description">
+Used to define a default order for AuthorizationContexts when displayed outside the
+context of a specific Role
+		</meta>
+	</property>
+
+	<property name="enabled" type="boolean">
+		<meta attribute="use-in-tostring">true</meta>
+		<column name="enabled" not-null="true" default="1"/>
+	</property>
+
+
+	<list name="permissionBits"
+		table="sec_permission_bit"
+		lazy="false"
+	>
+		<meta attribute="field-description">
+The list of permissions that this AuthorizationContext defines
+		</meta> 
+		<meta attribute="use-in-tostring">true</meta>
+
+		<key column="contextId" foreign-key='fk_PermissionBit__AuthorizationContext'/>
+		<list-index column="position"/>
+
+		<composite-element class="PermissionBitImpl">
+			<parent name="authorizationContext"/>
+
+			<property name="name" type="string">
+				<meta attribute="field-description">short-hand name for this Permission (e.g.: READ)</meta>
+				<meta attribute="use-in-tostring">true</meta>
+			</property>
+
+			<!-- 
+				the position column is already mapped as the index of the list, and cannot be mapped again;
+				we use the "formula" attribute here to retrieve the value of the column and 
+				assign it to a property of the PermissionBit
+			-->
+			<property name="position" formula="position">
+				<meta attribute="use-in-tostring">true</meta>
+				<meta attribute="use-in-equals">true</meta>
+			</property>
+
+			<property name="description" type="text">
+				<meta attribute="field-description">Human readable description of this Permission</meta>
+			</property>
+
+			<property name="sortOrder" type="int">
+				<meta attribute="field-description">used to specify a display ordering of the bits in the context of a AuthorizationContext</meta>
+				<meta attribute="use-in-tostring">true</meta>
+			</property>
+		</composite-element>
+
+	</list>
+
+</class>
+
+</hibernate-mapping>

@@ -20,6 +20,8 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.janux.security.metadata.*;
+
 /**
  ***************************************************************************************************
  * Creates an Authorization Schema programmatically that can be used for testing; by Authorization
@@ -62,19 +64,19 @@ public class MockAuthorizationSchema
 	public static final String[] STANDARD_PERMS = 
 		new String[] {READ, UPDATE, CREATE, DELETE, PURGE};
 
-	/** Name and Description of PermissionContexts that will have a standard set of permissions */
+	/** Name and Description of AuthorizationContexts that will have a standard set of permissions */
 	public static final Map<String,String> STANDARD_CONTEXT_DESCRIPTIONS = new HashMap<String,String>() {{
 		put(WIDGET,    "Widgets managed by the system");
 		put(EQUIPMENT, "Equipment used to produce a Widget");
 		put(USER,      "User Records");
 	}};
 
-	public static Map<String, PermissionContext> permissionContexts;
+	public static Map<String, AuthorizationContext> authContexts;
 	public static Map<String, Role> roles;
 
 	public MockAuthorizationSchema() {
-		if (permissionContexts == null) {
-			permissionContexts = this.createPermissionContexts();
+		if (authContexts == null) {
+			authContexts = this.createAuthorizationContexts();
 		} 
 
 		if (roles == null) {
@@ -83,22 +85,22 @@ public class MockAuthorizationSchema
 	}
 
 
-	/** Creates a map of PermissionContexts programmatically */
-	private Map<String, PermissionContext> createPermissionContexts() 
+	/** Creates a map of AuthorizationContexts programmatically */
+	private Map<String, AuthorizationContext> createAuthorizationContexts() 
 	{
-		Map<String, PermissionContext> permissionContexts = new HashMap<String, PermissionContext>();
+		Map<String, AuthorizationContext> authContexts = new HashMap<String, AuthorizationContext>();
 
 		for (String name : STANDARD_CONTEXT_DESCRIPTIONS.keySet()) {
-			permissionContexts.put(name, this.createPermissionContext(
+			authContexts.put(name, this.createAuthorizationContext(
 						name, STANDARD_CONTEXT_DESCRIPTIONS.get(name), STANDARD_PERMS ));
 		}
 
-		// add a non-standard PermissionContext
-		permissionContexts.put(CAMERA, this.createPermissionContext(
+		// add a non-standard AuthorizationContext
+		authContexts.put(CAMERA, this.createAuthorizationContext(
 					CAMERA, "Defines permissions available to control security cameras", 
 					new String[] {VIEW, START, STOP, ROTATE}));
 
-		return permissionContexts;
+		return authContexts;
 	}
 
 
@@ -124,12 +126,12 @@ public class MockAuthorizationSchema
 		Role role = new RoleImpl(WIDGET_DESIGNER, "A Widget Designer");
 
 		role.grantPermissions(
-				new String[] {READ, UPDATE, CREATE, DELETE}, permissionContexts.get(WIDGET));
+				new String[] {READ, UPDATE, CREATE, DELETE}, authContexts.get(WIDGET));
 
 		role.grantPermissions(
-				new String[] {READ, UPDATE}, permissionContexts.get(EQUIPMENT));
+				new String[] {READ, UPDATE}, authContexts.get(EQUIPMENT));
 
-		role.grantPermission(READ, permissionContexts.get(USER));
+		role.grantPermission(READ, authContexts.get(USER));
 
 		return role;
 	}
@@ -141,10 +143,10 @@ public class MockAuthorizationSchema
 		Role role = new RoleImpl(FACILITY_MANAGER, "A Facilities manager");
 
 		role.grantPermissions(
-				new String[] {READ, UPDATE, CREATE, DELETE}, permissionContexts.get(EQUIPMENT));
+				new String[] {READ, UPDATE, CREATE, DELETE}, authContexts.get(EQUIPMENT));
 
-		role.grantPermission(READ, permissionContexts.get(WIDGET));
-		role.grantPermission(READ, permissionContexts.get(USER));
+		role.grantPermission(READ, authContexts.get(WIDGET));
+		role.grantPermission(READ, authContexts.get(USER));
 
 		return role;
 	}
@@ -159,13 +161,13 @@ public class MockAuthorizationSchema
 		role.getRoles().add(role1);
 		role.getRoles().add(role2);
 
-		role.denyPermissions(new String[] {CREATE, DELETE}, permissionContexts.get(WIDGET));
-		role.denyPermission(CREATE, permissionContexts.get(EQUIPMENT));
+		role.denyPermissions(new String[] {CREATE, DELETE}, authContexts.get(WIDGET));
+		role.denyPermission(CREATE, authContexts.get(EQUIPMENT));
 
 		// test that we can deny a permission that has not been inherited through a
 		// Role; in other words, a redundant and unnecessary 'deny' but it should
 		// not cause anything to break
-		role.denyPermission(CREATE, permissionContexts.get(USER));
+		role.denyPermission(CREATE, authContexts.get(USER));
 
 		return role;
 	}
@@ -180,21 +182,21 @@ public class MockAuthorizationSchema
 
 
 	/** 
-	 * Creates a PermissionContext with the set of Permission Names passed;
+	 * Creates a AuthorizationContext with the set of Permission Names passed;
 	 * creates a default description for the Permission
 	 */
-	private PermissionContext createPermissionContext(String name, String entity, String[] permNames) 
+	private AuthorizationContext createAuthorizationContext(String name, String entity, String[] permNames) 
 	{
-		PermissionContext permContext = new PermissionContextImpl(
+		AuthorizationContext authContext = new AuthorizationContextImpl(
 				name, String.format("Defines permissions available on %s", entity));
 
 		for (int i = 0; i < permNames.length; i++) {
 			String permName = permNames[i];
-			permContext.addPermissionBit(new PermissionBitImpl(permName,
+			authContext.addPermissionBit(new PermissionBitImpl(permName,
 					String.format("Grants permission to %s %s", permName, entity)));
 		}
 
-		return permContext;
+		return authContext;
 	}
 
 } // end class MockAuthorizationSchema

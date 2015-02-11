@@ -44,14 +44,14 @@ CREATE INDEX idx_aggrRoleSortOrder ON sec_role_aggr_role ( sortOrder);
 -- a Permission Context (Bitmask) represents a set of permissions in a specific context,
 -- for example, Create/Read/Update/Hide/Purge in the context of a Party;
 -- a Permission Context has a one-to-many relationship with PermissionBits, which it owns
-create table sec_permission_context (
+create table sec_authorization_context (
 	id int4 not null, 
 	name varchar(255) not null unique, 
 	description text, 
 	sortOrder int4, 
 	enabled bool default true not null, 
 	primary key (id));
-CREATE INDEX idx_permissionContextSortOrder ON sec_permission_context ( sortOrder);
+CREATE INDEX idx_permissionContextSortOrder ON sec_authorization_context ( sortOrder);
 
 -- a PermissionBit represents an individual bit in a bit mask
 -- PermissionBits do not have meaning outside of the Permission Context that contains them

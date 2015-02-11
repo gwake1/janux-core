@@ -25,7 +25,7 @@
 	<bean id="accountServiceGeneric" class="org.janux.security.AccountServiceImplGeneric">
 		<constructor-arg><ref local="accountDaoGeneric"/></constructor-arg>
 		<constructor-arg><ref local="roleDaoGeneric"/></constructor-arg>
-		<constructor-arg><ref local="permContextDaoGeneric"/></constructor-arg>
+		<constructor-arg><ref local="authContextDaoGeneric"/></constructor-arg>
 	</bean>
 
 	<!-- manages Account objects -->
@@ -45,12 +45,12 @@
 	</bean>
 
 
-	<!-- manages PermissionContext objects -->
+	<!-- manages Role objects -->
 	<bean id="roleDaoGeneric" class="org.janux.security.persist.RoleDaoHibImplGeneric" parent="abstractGenericDao">
 	</bean>
 
-	<!-- manages PermissionContext objects -->
-	<bean id="permContextDaoGeneric" class="org.janux.security.persist.PermissionContextDaoHibImplGeneric" parent="abstractGenericDao">
+	<!-- manages AuthorizationContext objects -->
+	<bean id="authContextDaoGeneric" class="org.janux.security.persist.AuthorizationContextDaoHibImplGeneric" parent="abstractGenericDao">
 	</bean>
 
 	<aop:config>

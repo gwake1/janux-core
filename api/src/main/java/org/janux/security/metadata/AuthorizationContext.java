@@ -12,15 +12,15 @@ limitations under the License.
 
 Copyright 2005-2012 janux.org */
 
-package org.janux.security;
+package org.janux.security.metadata;
 
 import java.util.List;
 import org.janux.util.Sorteable;
 
 /**
  ***************************************************************************************************
- * A PermissionContext represents a set of individual Permissions defined for a specific business
- * context; for example, a PermissionContext named 'PERSON' may define five Permissions with names
+ * An AuthorizationContext represents a set of individual Permissions defined for a specific business
+ * context; for example, a AuthorizationContext named 'PERSON' may define five Permissions with names
  * 'READ', 'UPDATE', 'CREATE', 'DISABLE', 'PURGE', that define the kind of operations on Persons
  * that may be restricted by the security system.
  * <p>
@@ -30,17 +30,17 @@ import org.janux.util.Sorteable;
  * base-2 the five permissions would read 00001, 00010, 00100, 01000, 10000, respectively.
  * </p><p>
  * In order to grant READ/UPDATE permissions to a Role, a Role would be assigned the value 3=1+2
- * (in base-2: 00011) in the context of PermissionContext PERSON; a Role with a value of PERSON value of 
+ * (in base-2: 00011) in the context of AuthorizationContext PERSON; a Role with a value of PERSON value of 
  * 31 = 1 + 2 + 4 + 8 + 16 would have all Permissions, or 11111 in base-2.
- * </p>	
+ * </p>
  *
  * @author  <a href="mailto:philippe.paravicini@janux.org">Philippe Paravicini</a>
- * @since 0.1
+ * @since 0.5.0 (renamed in 0.5.0 from PermissionContext, which dates from 0.1)
  ***************************************************************************************************
  */
-public interface PermissionContext extends Sorteable
+public interface AuthorizationContext extends Sorteable
 {
-	/** A unique name for this PermissionContext, in the context of the Application */
+	/** A unique name for this AuthorizationContext, in the context of the Application */
 	String getName();
 	public void setName(String name);
 
@@ -52,11 +52,11 @@ public interface PermissionContext extends Sorteable
 	 */
 	List<PermissionBit> getPermissionBits();
 
-	/** Returns a PermissionBit by its unique name within the PermissionContext */
+	/** Returns a PermissionBit by its unique name within the AuthorizationContext */
 	PermissionBit getPermissionBit(String name);
 
 	/** 
-	 * Adds a PermissionBit to this PermissionContext - the implementation
+	 * Adds a PermissionBit to this AuthorizationContext - the implementation
 	 * should make sure that there are no two PermissionBits with the same name,
 	 * and that the value of PermissionBit.getPosition() is sequential and without gaps
 	 */
@@ -84,11 +84,11 @@ public interface PermissionContext extends Sorteable
 	String getDescription();
 	public void setDescription(String description);
 
-	/** The order in which this PermissionContext should be displayed */
+	/** The order in which this AuthorizationContext should be displayed */
 	Integer getSortOrder();
 	public void setSortOrder(Integer sortOrder);
 
-	/** Determines whether or not this PermissionContext is being used */
+	/** Determines whether or not this AuthorizationContext is being used */
 	boolean isEnabled();
 	void setEnabled(boolean visible);
 }

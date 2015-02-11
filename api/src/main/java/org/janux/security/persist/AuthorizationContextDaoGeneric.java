@@ -16,46 +16,46 @@ package org.janux.security.persist;
 
 import java.util.SortedSet;
 
-import org.janux.security.PermissionContext;
+import org.janux.security.metadata.AuthorizationContext;
 import org.janux.bus.persistence.EntityNotFoundException;
 import org.janux.bus.persistence.GenericDaoReadOnly;
 import org.janux.bus.persistence.GenericDaoWrite;
 import org.janux.bus.search.SearchCriteria;
 
 /**
- * Used to create, save, retrieve, update and delete PermissionContext objects from
+ * Used to create, save, retrieve, update and delete AuthorizationContext objects from
  * persistent storage
  *
  * @author  <a href="mailto:philippe.paravicini@janux.org">Philippe Paravicini</a>
  * @since 0.4
  */
 
-public interface PermissionContextDaoGeneric<T extends PermissionContext> 
+public interface AuthorizationContextDaoGeneric<T extends AuthorizationContext> 
 	extends GenericDaoWrite<T, Integer>,
 	GenericDaoReadOnly<T, Integer, SearchCriteria>
 {
-	/**  Loads all PermissionContexts defined in the system, sorted by sortOrder */
-	public SortedSet<PermissionContext> loadAll();
+	/**  Loads all AuthorizationContexts defined in the system, sorted by sortOrder */
+	public SortedSet<AuthorizationContext> loadAll();
 
 
 	/**
-	 * Returns a PermissionContext by names, or <code>null</code> if the PermissionContext is not found.
+	 * Returns a AuthorizationContext by names, or <code>null</code> if the AuthorizationContext is not found.
 	 *
-	 * @param name the PermissionContext name
+	 * @param name the AuthorizationContext name
 	 */
-	public PermissionContext findByName(String name);
+	public AuthorizationContext findByName(String name);
 
 
 	/**
-	 * loads an PermissionContext object, or throws exception if PermissionContext with that name is not found
+	 * loads an AuthorizationContext object, or throws exception if AuthorizationContext with that name is not found
 	 *
-	 * @param name a name that uniquely identifies this PermissionContext
+	 * @param name a name that uniquely identifies this AuthorizationContext
 	 *
-	 * @throws EntityNotFoundException if a PermissionContext object with that name is not found
+	 * @throws EntityNotFoundException if a AuthorizationContext object with that name is not found
 	 */
-	public PermissionContext loadByName(String name) throws EntityNotFoundException;
+	public AuthorizationContext loadByName(String name) throws EntityNotFoundException;
 
 
-	/** returns a new PermissionContext instance */
-	public PermissionContext newPermissionContext();
+	/** returns a new AuthorizationContext instance */
+	public AuthorizationContext newAuthorizationContext();
 }

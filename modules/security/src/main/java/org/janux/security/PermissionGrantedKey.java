@@ -18,13 +18,14 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import org.janux.security.metadata.*;
 import org.janux.util.JanuxToStringStyle;
 
 /**
  ***************************************************************************************************
  * This is an implementation class used to represent the key that indexes a Permission Granted map.
  * Generally, when assigning permissions to a AuthorizationHolder entity in the context of a
- * PermissionContext, a single bitmask is sufficient to assign a combination of Permissions, and it
+ * AuthorizationContext, a single bitmask is sufficient to assign a combination of Permissions, and it
  * is not necessary to have multiple bitmasks for the same Permission Context, since, in
  * the case of multiple bitmasks for the same Permission Context, it would be possible to derive an
  * equivalent single bitmask by bitwise 'or-ing' the multiple bitmasks.
@@ -46,7 +47,7 @@ import org.janux.util.JanuxToStringStyle;
  * want to make sure that we add to the inherited permissions, as well as be assured that other
  * permissions are denied.  In other to do this, it necessary to assign two PermissionGranted
  * bitmasks, one with isDeny set to false, and one set to true.  Therefore, the key to the
- * permission granted map is the bean herewith which considers both the PermissionContext and the
+ * permission granted map is the bean herewith which considers both the AuthorizationContext and the
  * isDeny flag.
  * 
  * @author  <a href="mailto:philippe.paravicini@janux.org">Philippe Paravicini</a>
@@ -58,22 +59,22 @@ public class PermissionGrantedKey implements java.io.Serializable
 	private static final long serialVersionUID = 1;
 
 	private boolean deny = false;
-	private PermissionContext permissionContext;
+	private AuthorizationContext authContext;
 
 	public PermissionGrantedKey() {}
 
-	public PermissionGrantedKey(PermissionContext permContext, boolean isDeny) 
+	public PermissionGrantedKey(AuthorizationContext authContext, boolean isDeny) 
 	{
-		this.permissionContext = permContext;
+		this.authContext = authContext;
 		this.deny = isDeny;
 	}
 
-	public PermissionContext getPermissionContext() {
-		return this.permissionContext;
+	public AuthorizationContext getAuthorizationContext() {
+		return this.authContext;
 	}
 	
-	public void setPermissionContext(PermissionContext permissionContext) {
-		this.permissionContext = permissionContext;
+	public void setAuthorizationContext(AuthorizationContext authContext) {
+		this.authContext = authContext;
 	}
 
 
@@ -93,16 +94,16 @@ public class PermissionGrantedKey implements java.io.Serializable
 
 		ToStringBuilder sb = new ToStringBuilder(this, style);
 
-		return sb.append("context", getPermissionContext().getName())
+		return sb.append("context", getAuthorizationContext().getName())
 			.append("isDeny" , isDeny())
 			.toString();
 	}
 
 
 	/** 
-	 * Two PermissionGranted objects are equal if they refer to the same PermissionContext, Role and
+	 * Two PermissionGranted objects are equal if they refer to the same AuthorizationContext, Role and
 	 * have the same value for the isDeny flag - in other words, only one PermissionGranted object may
-	 * exist for each Role/PermissionContext/isDeny combination
+	 * exist for each Role/AuthorizationContext/isDeny combination
 	 */
 	public boolean equals(Object other)
 	{
@@ -111,7 +112,7 @@ public class PermissionGrantedKey implements java.io.Serializable
 		PermissionGrantedKey castOther = (PermissionGrantedKey)other; 
 
 		return new EqualsBuilder()
-			.append(this.getPermissionContext().getName(), castOther.getPermissionContext().getName())
+			.append(this.getAuthorizationContext().getName(), castOther.getAuthorizationContext().getName())
 			.append(this.isDeny(), castOther.isDeny())
 			.isEquals();
 	}
@@ -120,7 +121,7 @@ public class PermissionGrantedKey implements java.io.Serializable
 	public int hashCode() 
 	{
 		return new HashCodeBuilder()
-		.append(this.getPermissionContext().getName())
+		.append(this.getAuthorizationContext().getName())
 		.append(this.isDeny())
 		.toHashCode();
 	}   

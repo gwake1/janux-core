@@ -1,6 +1,6 @@
 \i security/seedAccount.sql;
 \i security/seedRole.sql;
-\i security/seedPermissionContext.sql;
+\i security/seedAuthorizationContext.sql;
 \i security/seedPermissionBit.sql;
 
 \i security/seedAccountRole.sql;

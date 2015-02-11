@@ -20,6 +20,8 @@ import java.util.TreeSet;
 
 import org.janux.security.*;
 import org.janux.security.persist.*;
+import org.janux.security.metadata.*;
+
 import org.janux.bus.persistence.EntityNotFoundException;
 import org.janux.bus.persistence.GenericDaoHibImpl;
 import org.janux.bus.search.SearchCriteria;
@@ -27,26 +29,27 @@ import org.janux.util.Chronometer;
 import org.janux.util.SortOrderComparator;
 import org.springframework.dao.DataAccessException;
 
+
 /**
  * @author  <a href="mailto:philippe.paravicini@janux.biz">Philippe Paravicini</a>
- * @see PermissionContextDaoGeneric
+ * @see AuthorizationContextDaoGeneric
  * @since 0.4
  */
-public class PermissionContextDaoHibImplGeneric 
-	extends GenericDaoHibImpl<PermissionContextImpl, Integer, SearchCriteria>
-	implements PermissionContextDaoGeneric<PermissionContextImpl>
+public class AuthorizationContextDaoHibImplGeneric 
+	extends GenericDaoHibImpl<AuthorizationContextImpl, Integer, SearchCriteria>
+	implements AuthorizationContextDaoGeneric<AuthorizationContextImpl>
 {
-	public SortedSet<PermissionContext> loadAll()
+	public SortedSet<AuthorizationContext> loadAll()
 	{
 		Chronometer timer = new Chronometer(true);
 		if (log.isDebugEnabled()) log.debug("attempting to load all permission contexts...");
 
 		@SuppressWarnings("unchecked")
-		List<PermissionContextImpl> list = getHibernateTemplate().loadAll(this.getPersistentClass());
+		List<AuthorizationContextImpl> list = getHibernateTemplate().loadAll(this.getPersistentClass());
 
-		SortedSet<PermissionContext> set = new TreeSet<PermissionContext>(new SortOrderComparator());
+		SortedSet<AuthorizationContext> set = new TreeSet<AuthorizationContext>(new SortOrderComparator());
 
-		for (PermissionContext context : list) {
+		for (AuthorizationContext context : list) {
 			if (log.isDebugEnabled()) log.debug(context.getName() + ": " + context);
 			set.add(context);
 		}
@@ -57,18 +60,18 @@ public class PermissionContextDaoHibImplGeneric
 	}
 
 
-	public PermissionContext findByName(String name)
+	public AuthorizationContext findByName(String name)
 	{
 		Chronometer timer = new Chronometer(true);
 
-		if (log.isDebugEnabled()) log.debug("attempting to find PermissionContext with name '" + name + "'");
+		if (log.isDebugEnabled()) log.debug("attempting to find AuthorizationContext with name '" + name + "'");
 
-		List list = getHibernateTemplate().find("from PermissionContextImpl where name=?", name);
+		List list = getHibernateTemplate().find("from AuthorizationContextImpl where name=?", name);
 
-		PermissionContext context = (list.size() > 0) ? (PermissionContext)list.get(0) : null;
+		AuthorizationContext context = (list.size() > 0) ? (AuthorizationContext)list.get(0) : null;
 
 		if (context == null) {
-			log.warn("Unable to find PermissionContext with name: '" + name + "'");
+			log.warn("Unable to find AuthorizationContext with name: '" + name + "'");
 			return null;
 		}
 
@@ -79,9 +82,9 @@ public class PermissionContextDaoHibImplGeneric
 	}
 
 
-	public PermissionContext loadByName(String name) throws EntityNotFoundException
+	public AuthorizationContext loadByName(String name) throws EntityNotFoundException
 	{
-		PermissionContext context = this.findByName(name);
+		AuthorizationContext context = this.findByName(name);
 
 		if (context == null) 
 			throw new EntityNotFoundException("Unable to retrieve context with name: '" + name + "'");
@@ -90,8 +93,8 @@ public class PermissionContextDaoHibImplGeneric
 	}
 
 
-	public PermissionContext newPermissionContext()
+	public AuthorizationContext newAuthorizationContext()
 	{
-		return new PermissionContextImpl();
+		return new AuthorizationContextImpl();
 	}
 }

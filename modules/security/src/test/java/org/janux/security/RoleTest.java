@@ -71,7 +71,7 @@ public class RoleTest extends TestCase
 		assertEquals(0, role.getRoles().size());
 		assertTrue(role.isEnabled());
 
-		assertEquals(3, role.getPermissionContexts().keySet().size());
+		assertEquals(3, role.getAuthorizationContexts().keySet().size());
 		assertEquals(1+2+4+8, role.getPermissionsValue(WIDGET));
 
 		List permsGranted = Arrays.asList(role.getPermissions(WIDGET));

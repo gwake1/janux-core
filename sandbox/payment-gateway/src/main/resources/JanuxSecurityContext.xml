@@ -24,7 +24,7 @@
 	<bean id="accountServiceGeneric" class="org.janux.bus.security.AccountServiceImplGeneric">
 		<constructor-arg><ref local="accountDaoGeneric"/></constructor-arg>
 		<constructor-arg><ref local="roleDaoGeneric"/></constructor-arg>
-		<constructor-arg><ref local="permContextDaoGeneric"/></constructor-arg>
+		<constructor-arg><ref local="authContextDaoGeneric"/></constructor-arg>
 	</bean>
 
 	<bean 
@@ -40,8 +40,8 @@
 	/>
 
 	<bean 
-		id="permContextDaoGeneric" 
-		class="org.janux.bus.security.PermissionContextDaoHibImplGeneric" 
+		id="authContextDaoGeneric" 
+		class="org.janux.bus.security.AuthorizationContextDaoHibImplGeneric" 
 		parent="secAbstractGenericDao"
 	/>
 
@@ -65,7 +65,7 @@
 			<list>
 				<value>/mappings/Account.hbm.xml</value>                                                            
 				<value>/mappings/Role.hbm.xml</value>                                                               
-				<value>/mappings/PermissionContext.hbm.xml</value>
+				<value>/mappings/AuthorizationContext.hbm.xml</value>
 			</list>
 		</property>                            
 	</bean>

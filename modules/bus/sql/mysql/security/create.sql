@@ -45,7 +45,7 @@ create table sec_role_aggr_role (
 -- a Permission Context (Bitmask) represents a set of permissions in a specific context,
 -- for example, Create/Read/Update/Hide/Purge in the context of a Party;
 -- a Permission Context has a one-to-many relationship with PermissionBits, which it owns
-create table sec_permission_context (
+create table sec_authorization_context (
 	id integer unsigned not null auto_increment
 	,name varchar(255) not null unique default ''
 	,description text
